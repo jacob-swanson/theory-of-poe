@@ -1,0 +1,28 @@
+{
+  "name": "theory-of-poe",
+  "version": "0.0.1-snapshot",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Jacob Swanson <jacob.swanson.n@gmail.com>",
+  "private": true,
+  "devDependencies": {
+    "@types/jsdom": "^11.0.6",
+    "jsdom": "^11.11.0",
+    "rimraf": "^2.6.2",
+    "typescript": "^2.9.2"
+  },
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "rimraf dist/* && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "theory-of-poe": "./dist/bin/cli.js"
+  },
+  "bin": {
+    "theory-of-poe": "./dist/bin/cli.js"
+  },
+  "dependencies": {
+    "@types/prettier": "^1.13.1",
+    "isomorphic-fetch": "^2.2.1",
+    "prettier": "^1.13.5"
+  }
+}
