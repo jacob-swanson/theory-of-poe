@@ -1,9 +1,14 @@
-import * as prettier from 'prettier';
 import * as fs from 'fs';
+import { LoggerFactory } from 'js-utils';
 
 export class PassiveSkillTreeDataScraper {
-    public async scrape() {
-        const response = await fetch('https://www.pathofexile.com/passive-skill-tree');
+    protected log = LoggerFactory.forClass(this);
+
+    protected readonly passiveTreeUrl = 'https://www.pathofexile.com/passive-skill-tree';
+
+    public async downloadData(): Promise<string> {
+        this.log.info(`Scraping "${this.passiveTreeUrl}" for passive skill tree data`);
+        const response = await fetch(this.passiveTreeUrl);
         const body = await response.text();
 
         const dataRegex = new RegExp('var passiveSkillTreeData = .+?;');
@@ -11,26 +16,30 @@ export class PassiveSkillTreeDataScraper {
         if (dataResult === null) {
             throw new Error('Data regex did not return a result');
         }
-        const data = dataResult[0];
+        const dataJs = dataResult[0];
 
         const optsRegex = /var opts = [.\s\S]*?;/;
         const optsResult = optsRegex.exec(body);
         if (optsResult === null) {
             throw new Error('Opts regex did not return a result');
         }
-        const opts = optsResult[0];
+        let optsJs = optsResult[0];
+        optsJs = optsJs.replace('var opts =', 'return');
 
-        const versionRegex = /version:\s?'(.*)'/;
-        let versionResult = versionRegex.exec(optsResult[0]);
-        if (versionResult === null) {
-            throw new Error('Version regex did not return a result');
-        }
-        const version = versionResult[1];
+        let javascript = `(function() {${dataJs} + '\n' + ${optsJs}}())`;
+        const data = eval(javascript);
 
-        let javascript = data + '\n' + opts;
-        javascript = javascript.replace('var passiveSkillTreeData', 'const passiveSkillTreeData');
-        javascript = javascript.replace('var opts', 'export const opts');
-        javascript = prettier.format(javascript, {parser: 'typescript'});
-        fs.writeFileSync(`./src/passive-skill-tree/data/${version}.ts`, javascript);
+        const version = data.version;
+        this.log.info(`Got version "${version}"`);
+
+        const destination = `./src/passive-skill-tree/data/${version}.json`;
+        this.log.info(`Writing data to "${destination}"`);
+        fs.writeFileSync(destination, JSON.stringify(data));
+
+        return version;
+    }
+
+    public async downloadImages(version: string) {
+        const module = require('')
     }
 }

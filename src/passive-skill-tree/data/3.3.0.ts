@@ -76898,7 +76898,7 @@ const passiveSkillTreeData = {
   },
   imageZoomLevels: [0.1246, 0.2109, 0.2972, 0.3835]
 };
-export const opts = {
+export const data = {
   passiveSkillTreeData: passiveSkillTreeData,
   ascClasses: {
     "1": {

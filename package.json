@@ -21,6 +21,7 @@
     "theory-of-poe": "./dist/bin/cli.js"
   },
   "dependencies": {
+    "@types/node": "^10.3.5",
     "@types/prettier": "^1.13.1",
     "isomorphic-fetch": "^2.2.1",
     "prettier": "^1.13.5"
