@@ -53,6 +53,7 @@ export interface PassiveTreeJson {
         notableInactive: SpriteSheetJson[];
         keystoneInactive: SpriteSheetJson[];
         mastery: SpriteSheetJson[];
+        [key: string] : SpriteSheetJson[];
     }
     imageZoomLevels: number[];
 }

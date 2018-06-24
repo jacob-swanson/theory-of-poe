@@ -21,10 +21,12 @@
     "theory-of-poe": "./dist/bin/cli.js"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.110",
     "@types/node": "^10.3.5",
     "@types/prettier": "^1.13.1",
     "clime": "^0.5.9",
     "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.10",
     "prettier": "^1.13.5",
     "tslint": "^5.10.0"
   }

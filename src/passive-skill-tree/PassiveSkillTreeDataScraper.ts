@@ -1,15 +1,24 @@
 import * as fs from "fs";
-import { FilesystemUtils, JsonObject, LoggerFactory } from "js-utils";
+import { FilesystemUtils, JsonObject, LoggerFactory, NodeHttpClient } from "js-utils";
 import * as path from "path";
 import * as Url from "url";
+import {PassiveTreeJson} from "./PassiveTreeJson";
+import * as _ from 'lodash';
+import {PassiveSkillTreeOptionsJson} from "./PassiveSkillTreeOptionsJson";
+
+const log = LoggerFactory.byName("PassiveSkillTreeDataScraper");
 
 export class PassiveSkillTreeDataScraper {
-    protected log = LoggerFactory.forClass(this);
-
+    protected readonly httpClient = new NodeHttpClient();
     protected readonly passiveTreeUrl = "https://www.pathofexile.com/passive-skill-tree";
 
-    public async scrapePassiveTreeData(): Promise<JsonObject> {
-        this.log.info(`Scraping "${this.passiveTreeUrl}" for passive skill tree data`);
+    /**
+     * Scrape JSON data from pathofexile.com.
+     *
+     * @returns {Promise<PassiveSkillTreeOptionsJson>}
+     */
+    public async scrapePassiveTreeData(): Promise<PassiveSkillTreeOptionsJson> {
+        log.info(`Scraping "${this.passiveTreeUrl}" for passive skill tree data`);
         const response = await fetch(this.passiveTreeUrl);
         const body = await response.text();
 
@@ -33,47 +42,55 @@ export class PassiveSkillTreeDataScraper {
         const data = eval(javascript);
 
         const version = data.version;
-        this.log.info(`Got version "${version}"`);
+        log.info(`Got version "${version}"`);
 
         return data;
     }
 
-    public writeData(data: JsonObject) {
-        const destination = `./src/passive-skill-tree/data/${data.version}.json`;
-        this.log.info(`Writing data to "${destination}"`);
-        fs.writeFileSync(destination, JSON.stringify(data, null, 2));
-    }
-
+    /**
+     * Download a file.
+     *
+     * @param {string} url
+     * @param {string} dest
+     * @returns {Promise<void>}
+     */
     protected async download(url: string, dest: string) {
         if (fs.existsSync(dest)) {
-            this.log.debug(`Skipping ${dest}`);
+            log.debug(`Skipping ${dest}`);
             return;
         }
 
-        this.log.info(`Downloading: ${url}`);
-        const response = await httpClient.get(url);
+        log.info(`Downloading: ${url}`);
+        const response = await this.httpClient.get(url);
         const file = fs.createWriteStream(dest);
         await response.pipe(file);
         file.close();
     }
 
-    public async downloadImages(json: JsonObject, outDir: string) {
+    /**
+     * Download image assets and modify the URLs.
+     *
+     * @param {PassiveSkillTreeOptionsJson} json
+     * @param {string} outDir
+     * @returns {Promise<PassiveSkillTreeOptionsJson>}
+     */
+    public async downloadImages(json: PassiveSkillTreeOptionsJson, outDir: string) {
         FilesystemUtils.mkdir(outDir);
 
         FilesystemUtils.mkdir(`${outDir}/assets`);
-        for (const [assetKey, asset] of Object.entries(json.assets)) {
-            for (const [zoomLevel, url] of Object.entries(asset)) {
+        for (const [assetKey, asset] of _.entries(json.passiveSkillTreeData.assets)) {
+            for (const [zoomLevel, url] of _.entries(asset)) {
                 const extension = path.extname(url);
                 const filename = `assets/${assetKey}-${zoomLevel}${extension}`;
                 const dest = `${outDir}/${filename}`;
-                await download(url, dest);
-                json.assets[assetKey][zoomLevel] = filename;
+                await this.download(url, dest);
+                json.passiveSkillTreeData.assets[assetKey][zoomLevel] = filename;
             }
         }
 
-        const imageRoot = json.imageRoot;
+        const imageRoot = json.passiveSkillTreeData.imageRoot;
         FilesystemUtils.mkdir(`${outDir}/skillSprites`);
-        for (const [skillSpriteGroupName, skillSpriteGroup] of _.entries(json.skillSprites)) {
+        for (const [skillSpriteGroupName, skillSpriteGroup] of _.entries(json.passiveSkillTreeData.skillSprites)) {
             let i = 0;
             for (const skillSprite of skillSpriteGroup) {
                 const url = `${imageRoot}build-gen/passive-skill-sprite/${skillSprite.filename}`;
@@ -85,19 +102,19 @@ export class PassiveSkillTreeDataScraper {
                 const filename = `skillSprites/${basename}`;
                 const dest = `${outDir}/${filename}`;
                 await this.download(url, dest);
-                json.skillSprites[skillSpriteGroupName][i].filename = filename;
+                json.passiveSkillTreeData.skillSprites[skillSpriteGroupName][i].filename = filename;
                 i++;
             }
         }
 
         FilesystemUtils.mkdir(`${outDir}/extraImages`);
-        for (const [key, data] of _.entries(json.extraImages)) {
+        for (const [key, data] of Object.entries(json.passiveSkillTreeData.extraImages)) {
             const url = `${imageRoot}${data.image}`;
             const pathname = path.basename(data.image);
             const filename = `extraImages/${pathname}`;
             const dest = `${outDir}/${filename}`;
             await this.download(url, dest);
-            json.extraImages[key].image = filename;
+            json.passiveSkillTreeData.extraImages[key].image = filename;
         }
 
         return json;
