@@ -6,7 +6,7 @@ import { LoggerFactory } from 'js-utils';
 const log = LoggerFactory.byName('theory-of-poe');
 
 try {
-    new PassiveSkillTreeDataScraper().downloadData();
+    new PassiveSkillTreeDataScraper().scrapePassiveTreeData();
 } catch (e) {
     log.error(e);
     process.exit(1);

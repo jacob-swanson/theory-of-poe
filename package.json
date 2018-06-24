@@ -23,7 +23,9 @@
   "dependencies": {
     "@types/node": "^10.3.5",
     "@types/prettier": "^1.13.1",
+    "clime": "^0.5.9",
     "isomorphic-fetch": "^2.2.1",
-    "prettier": "^1.13.5"
+    "prettier": "^1.13.5",
+    "tslint": "^5.10.0"
   }
 }
