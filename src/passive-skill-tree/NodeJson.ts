@@ -1,5 +1,5 @@
 export interface NodeJsonMap {
-    [key: string]: NodeJson
+    [key: string]: NodeJson;
 }
 
 export interface NodeJson {
@@ -24,5 +24,5 @@ export interface NodeJson {
     sa: number;
     sd: string[];
     spc: void[];
-    icon: string
+    icon: string;
 }

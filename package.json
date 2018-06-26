@@ -6,28 +6,30 @@
   "author": "Jacob Swanson <jacob.swanson.n@gmail.com>",
   "private": true,
   "devDependencies": {
-    "@types/jsdom": "^11.0.6",
-    "jsdom": "^11.11.0",
-    "rimraf": "^2.6.2",
-    "typescript": "^2.9.2"
+    "@types/jsdom": "11.0.6",
+    "jsdom": "11.11.0",
+    "rimraf": "2.6.2",
+    "typescript": "2.9.2"
   },
   "scripts": {
-    "prepublish": "npm run build",
-    "build": "rimraf dist/* && tsc",
+    "pretest": "npm run build",
+    "build": "rimraf lib/* && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "theory-of-poe": "./dist/bin/cli.js"
+    "cli": "./lib/bin/cli.js"
   },
   "bin": {
-    "theory-of-poe": "./dist/bin/cli.js"
+    "theory-of-poe": "./lib/bin/cli.js"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.110",
-    "@types/node": "^10.3.5",
-    "@types/prettier": "^1.13.1",
-    "clime": "^0.5.9",
-    "isomorphic-fetch": "^2.2.1",
-    "lodash": "^4.17.10",
-    "prettier": "^1.13.5",
-    "tslint": "^5.10.0"
+    "@jacob-swanson/js-utils": "^0.2.0-snapshot",
+    "@types/lodash": "4.14.110",
+    "@types/node": "10.3.5",
+    "@types/prettier": "1.13.1",
+    "clime": "0.5.9",
+    "isomorphic-fetch": "2.2.1",
+    "js-utils": "^2.1.0",
+    "lodash": "4.17.10",
+    "prettier": "1.13.5",
+    "tslint": "5.10.0"
   }
 }

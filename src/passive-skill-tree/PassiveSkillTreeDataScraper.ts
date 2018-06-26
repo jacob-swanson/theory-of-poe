@@ -1,12 +1,10 @@
 import * as fs from "fs";
-import { FilesystemUtils, JsonObject, LoggerFactory, NodeHttpClient } from "js-utils";
 import * as path from "path";
 import * as Url from "url";
-import {PassiveTreeJson} from "./PassiveTreeJson";
-import * as _ from 'lodash';
+import * as _ from "lodash";
 import {PassiveSkillTreeOptionsJson} from "./PassiveSkillTreeOptionsJson";
 
-const log = LoggerFactory.byName("PassiveSkillTreeDataScraper");
+const log = LoggerFactory.getLogger("PassiveSkillTreeDataScraper");
 
 export class PassiveSkillTreeDataScraper {
     protected readonly httpClient = new NodeHttpClient();
@@ -48,33 +46,16 @@ export class PassiveSkillTreeDataScraper {
     }
 
     /**
-     * Download a file.
-     *
-     * @param {string} url
-     * @param {string} dest
-     * @returns {Promise<void>}
-     */
-    protected async download(url: string, dest: string) {
-        if (fs.existsSync(dest)) {
-            log.debug(`Skipping ${dest}`);
-            return;
-        }
-
-        log.info(`Downloading: ${url}`);
-        const response = await this.httpClient.get(url);
-        const file = fs.createWriteStream(dest);
-        await response.pipe(file);
-        file.close();
-    }
-
-    /**
      * Download image assets and modify the URLs.
      *
      * @param {PassiveSkillTreeOptionsJson} json
      * @param {string} outDir
      * @returns {Promise<PassiveSkillTreeOptionsJson>}
      */
-    public async downloadImages(json: PassiveSkillTreeOptionsJson, outDir: string) {
+    public async downloadImages(
+        json: PassiveSkillTreeOptionsJson,
+        outDir: string
+    ): Promise<PassiveSkillTreeOptionsJson> {
         FilesystemUtils.mkdir(outDir);
 
         FilesystemUtils.mkdir(`${outDir}/assets`);
@@ -108,7 +89,7 @@ export class PassiveSkillTreeDataScraper {
         }
 
         FilesystemUtils.mkdir(`${outDir}/extraImages`);
-        for (const [key, data] of Object.entries(json.passiveSkillTreeData.extraImages)) {
+        for (const [key, data] of _.entries(json.passiveSkillTreeData.extraImages)) {
             const url = `${imageRoot}${data.image}`;
             const pathname = path.basename(data.image);
             const filename = `extraImages/${pathname}`;
@@ -118,5 +99,25 @@ export class PassiveSkillTreeDataScraper {
         }
 
         return json;
+    }
+
+    /**
+     * Download a file.
+     *
+     * @param {string} url
+     * @param {string} dest
+     * @returns {Promise<void>}
+     */
+    protected async download(url: string, dest: string): Promise<void> {
+        if (fs.existsSync(dest)) {
+            log.debug(`Skipping ${dest}`);
+            return;
+        }
+
+        log.info(`Downloading: ${url}`);
+        const response = await this.httpClient.get(url);
+        const file = fs.createWriteStream(dest);
+        await response.pipe(file);
+        file.close();
     }
 }

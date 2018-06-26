@@ -1,7 +1,7 @@
 import {PassiveTreeJson} from "./PassiveTreeJson";
 
 export interface PassiveSkillTreeOptionsJson {
-    passiveSkillTreeData: PassiveTreeJson
+    passiveSkillTreeData: PassiveTreeJson;
     ascClasses: {
         [key: string]: {
             name: string;

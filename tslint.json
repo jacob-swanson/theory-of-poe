@@ -5,7 +5,17 @@
   ],
   "jsRules": {},
   "rules": {
-    "member-ordering": false
+    "member-ordering": false,
+    "eofline": false,
+    "ordered-imports": false,
+    "no-empty": false,
+    "interface-name": false,
+    "trailing-comma": false,
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration"
+    ]
   },
   "rulesDirectory": []
 }

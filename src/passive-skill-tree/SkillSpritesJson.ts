@@ -13,13 +13,13 @@ export interface SkillSpriteJson {
 }
 
 export enum SkillSpriteGroups {
-    keystoneActive = 'keystoneActive',
-    keystoneInactive = 'keystoneInactive',
-    mastery = 'mastery',
-    normalActive = 'normalActive',
-    normalInactive = 'normalInactive',
-    notableActive = 'notableActive',
-    notableInactive = 'notableInactive'
+    keystoneActive = "keystoneActive",
+    keystoneInactive = "keystoneInactive",
+    mastery = "mastery",
+    normalActive = "normalActive",
+    normalInactive = "normalInactive",
+    notableActive = "notableActive",
+    notableInactive = "notableInactive"
 }
 
 export interface SkillSpritesJson {

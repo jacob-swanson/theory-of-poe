@@ -1,10 +1,9 @@
-import { GroupJson } from './GroupJson';
-import { CharacterDataJson } from './CharacterDataJson';
-import { RootJson } from './RootJson';
-import { NodeJsonMap } from './NodeJson';
-import { ExtraImagesJson } from './ExtraImagesJson';
-import { SpriteSheetJson } from './SpriteSheetJson';
-
+import {GroupJson} from "./GroupJson";
+import {CharacterDataJson} from "./CharacterDataJson";
+import {RootJson} from "./RootJson";
+import {NodeJsonMap} from "./NodeJson";
+import {ExtraImagesJson} from "./ExtraImagesJson";
+import {SpriteSheetJson} from "./SpriteSheetJson";
 
 export interface PassiveTreeJson {
     characterData: CharacterDataJson;
@@ -53,7 +52,7 @@ export interface PassiveTreeJson {
         notableInactive: SpriteSheetJson[];
         keystoneInactive: SpriteSheetJson[];
         mastery: SpriteSheetJson[];
-        [key: string] : SpriteSheetJson[];
-    }
+        [key: string]: SpriteSheetJson[];
+    };
     imageZoomLevels: number[];
 }

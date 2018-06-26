@@ -7,5 +7,5 @@ export interface SpriteSheetJson {
             w: number;
             h: number;
         }
-    }
+    };
 }
