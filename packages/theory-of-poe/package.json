@@ -1,10 +1,15 @@
 {
   "name": "@jacob-swanson/theory-of-poe",
-  "version": "0.3.0-snapshot",
+  "version": "0.4.0-snapshot",
   "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "files": [
+    "lib/",
+    "package.json",
+    "README.md"
+  ],
   "license": "MIT",
   "author": "Jacob Swanson <jacob.swanson.n@gmail.com>",
-  "private": true,
   "devDependencies": {
     "@types/jsdom": "11.0.6",
     "@types/node": "^10.3.6",
@@ -20,7 +25,7 @@
     "theory-of-poe": "./lib/bin/cli.js"
   },
   "dependencies": {
-    "@jacob-swanson/js-utils": "^0.3.0-snapshot",
+    "@jacob-swanson/js-utils": "^0.4.0-snapshot",
     "@types/lodash": "4.14.110",
     "@types/node": "^10.3.6",
     "@types/prettier": "1.13.1",

@@ -1,6 +1,6 @@
 {
   "name": "@jacob-swanson/js-utils",
-  "version": "0.3.0-snapshot",
+  "version": "0.4.0-snapshot",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "author": "Jacob Swanson <jacob.swanson.n@gmail.com>",
