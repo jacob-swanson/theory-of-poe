@@ -3,6 +3,7 @@ import * as path from "path";
 import * as Url from "url";
 import * as _ from "lodash";
 import {PassiveSkillTreeOptionsJson} from "./PassiveSkillTreeOptionsJson";
+import {FilesystemUtils, LoggerFactory, NodeHttpClient} from "@jacob-swanson/js-utils";
 
 const log = LoggerFactory.getLogger("PassiveSkillTreeDataScraper");
 

@@ -1,6 +1,6 @@
 {
   "name": "@jacob-swanson/theory-of-poe",
-  "version": "0.4.0-snapshot",
+  "version": "0.4.1",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "files": [
@@ -8,6 +8,7 @@
     "package.json",
     "README.md"
   ],
+  "private": true,
   "license": "MIT",
   "author": "Jacob Swanson <jacob.swanson.n@gmail.com>",
   "devDependencies": {

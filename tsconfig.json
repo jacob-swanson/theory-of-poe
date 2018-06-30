@@ -1,19 +1,9 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "declaration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "noImplicitReturns": true,
-    "sourceMap": true,
-    "rootDir": "./src",
-    "outDir": "./lib"
-  },
-  "include": [
-    "src/**/*"
-  ]
+    "baseUrl": "./packages",
+    "paths": {
+      "@jacob-swanson/*": ["./*/src"]
+    }
+  }
 }
