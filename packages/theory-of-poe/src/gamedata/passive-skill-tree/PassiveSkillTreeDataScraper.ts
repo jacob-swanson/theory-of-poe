@@ -2,8 +2,8 @@ import * as fs from "fs";
 import * as path from "path";
 import * as Url from "url";
 import * as _ from "lodash";
-import {PassiveSkillTreeOptionsJson} from "./PassiveSkillTreeOptionsJson";
 import {FilesystemUtils, LoggerFactory, NodeHttpClient} from "@jacob-swanson/js-utils";
+import {PassiveSkillTreeOptionsJson} from "./external-model/PassiveSkillTreeOptionsJson";
 
 const log = LoggerFactory.getLogger("PassiveSkillTreeDataScraper");
 
@@ -72,7 +72,9 @@ export class PassiveSkillTreeDataScraper {
 
         const imageRoot = json.passiveSkillTreeData.imageRoot;
         FilesystemUtils.mkdir(`${outDir}/skillSprites`);
-        for (const [skillSpriteGroupName, skillSpriteGroup] of _.entries(json.passiveSkillTreeData.skillSprites)) {
+
+        for (const skillSpriteGroupName in json.passiveSkillTreeData.skillSprites) {
+            const skillSpriteGroup = json.passiveSkillTreeData.skillSprites[skillSpriteGroupName];
             let i = 0;
             for (const skillSprite of skillSpriteGroup) {
                 const url = `${imageRoot}build-gen/passive-skill-sprite/${skillSprite.filename}`;
@@ -90,7 +92,8 @@ export class PassiveSkillTreeDataScraper {
         }
 
         FilesystemUtils.mkdir(`${outDir}/extraImages`);
-        for (const [key, data] of _.entries(json.passiveSkillTreeData.extraImages)) {
+        for (const key in json.passiveSkillTreeData.extraImages) {
+            const data = json.passiveSkillTreeData.extraImages[key];
             const url = `${imageRoot}${data.image}`;
             const pathname = path.basename(data.image);
             const filename = `extraImages/${pathname}`;

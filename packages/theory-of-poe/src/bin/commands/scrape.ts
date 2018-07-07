@@ -1,7 +1,7 @@
 import {Command, command, param} from "clime";
-import {PassiveSkillTreeDataScraper} from "../../passive-skill-tree/PassiveSkillTreeDataScraper";
 import * as path from "path";
 import * as fs from "fs";
+import {PassiveSkillTreeDataScraper} from "../../gamedata/passive-skill-tree/PassiveSkillTreeDataScraper";
 
 @command({description: "Scrape passive tree data from pathofexile.com"})
 export default class extends Command {
