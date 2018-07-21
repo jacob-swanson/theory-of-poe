@@ -1,15 +1,35 @@
 {
+  "name": "theory-of-poe",
+  "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "test": "lerna run test",
-    "prepare": "lerna run prepare",
-    "clean": "rimraf packages/**/lib"
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-brands-svg-icons": "^5.1.0-11",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "^0.1.0-11",
+    "@types/lodash": "^4.14.110",
+    "@types/pixi.js": "^4.8.0",
+    "bulma": "^0.7.1",
+    "clime": "^0.5.9",
+    "lodash": "^4.17.10",
+    "mobx": "^5.0.3",
+    "pixi.js": "^4.8.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-pixi-fiber": "^0.4.9",
+    "react-scripts-ts": "2.16.0"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
   "devDependencies": {
-    "lerna": "^2.11.0"
+    "@types/jest": "^23.1.4",
+    "@types/node": "^10.5.2",
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "typescript": "^2.9.2"
   }
 }
