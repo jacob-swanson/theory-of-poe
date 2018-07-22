@@ -22,6 +22,22 @@
     min-width: 20vh;
 }
 
+.App-LeftSidebar .navbar-brand {
+    width: 100%;
+}
+
+.App-LeftSidebar .navbar-item {
+    width: 100%;
+}
+
+.App-LeftSidebar .menu {
+    padding: 10px;
+}
+
+.App-RightSidebar .menu {
+    padding: 10px;
+}
+
 .App-RightSidebar {
     min-width: 20vh;
 }

@@ -1,8 +1,6 @@
 import * as React from "react";
 import "./App.css";
 import "bulma/css/bulma.css";
-import {Header} from "./Header";
-import {Footer} from "./Footer";
 import {Content} from "./Content";
 import {LeftSidebar} from "./LeftSidebar";
 import {RightSidebar} from "./RightSidebar";
@@ -14,7 +12,6 @@ import {PassiveSkillTree} from "./PassiveSkillTree";
 export const App = () => (
     <div className="App">
         <PassiveSkillTree/>
-        <Header/>
         <Content>
             <LeftSidebar/>
             <Tabs>
@@ -22,6 +19,5 @@ export const App = () => (
             </Tabs>
             <RightSidebar/>
         </Content>
-        <Footer/>
     </div>
 );
