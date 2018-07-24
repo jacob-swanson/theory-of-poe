@@ -1,7 +1,6 @@
 import * as React from "react";
 import "./App.css";
 import "bulma/css/bulma.css";
-import {Content} from "./Content";
 import {LeftSidebar} from "./LeftSidebar";
 import {RightSidebar} from "./RightSidebar";
 import {Tabs} from "./Tabs";
@@ -13,9 +12,9 @@ import {DetailsPage} from "./pages/DetailsPage";
 
 
 export const App = () => (
-    <div className="App">
+    <div className="App rows">
         <PassiveSkillTree/>
-        <Content>
+        <div className="item columns">
             <LeftSidebar/>
             <Tabs>
                 <Route path="/passive-skill-tree" component={PassiveSkillTreePage}/>
@@ -23,6 +22,6 @@ export const App = () => (
                 <Route path="/details" component={DetailsPage}/>
             </Tabs>
             <RightSidebar/>
-        </Content>
+        </div>
     </div>
 );

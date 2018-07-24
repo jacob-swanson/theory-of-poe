@@ -2,57 +2,27 @@ html {
     overflow-y: hidden !important;
 }
 
-.App {
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-}
-
-.Header {
-    background-color: hotpink;
-}
-
-.Footer {
-    background-color: brown;
-}
-
-.App-Content {
-    flex: 1;
+.columns {
     display: flex;
     flex-direction: row;
+    margin: 0 !important;
 }
 
-.App-LeftSidebar {
-    display: flex;
-    flex-direction: column;
-    min-width: 20vh;
-}
-
-.App-LeftSidebar .sidebar-content {
-    padding: 10px;
-    overflow: auto;
-}
-
-.App-RightSidebar .menu {
-    padding: 10px;
-}
-
-.App-RightSidebar {
-    min-width: 20vh;
-}
-
-.App-Tabs {
-    flex: 1;
+.rows {
     display: flex;
     flex-direction: column;
 }
 
-.App-Tabs .tabs {
-    margin-bottom: 0 !important;
+.item {
+    flex: 1;
 }
 
-.App-Tab {
-    flex: 1;
+.is-narrow {
+    flex: none;
+}
+
+.App {
+    height: 100vh;
 }
 
 .App-PassiveSkillTree {

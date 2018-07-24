@@ -6,7 +6,7 @@ export interface TabProps {
 }
 
 export const Tab: StatelessComponent<TabProps> = ({children, className}) => {
-    className = ["App-Tab has-background-white", className].join(" ");
+    className = ["App-Tab has-background-white item", className].join(" ");
     return (
         <div className={className}>{children}</div>
     );

@@ -16,7 +16,7 @@ export class Tabs extends React.Component {
     public render() {
         const {children} = this.props;
         return (
-            <div className="App-Tabs">
+            <div className="App-Tabs item rows">
                 <nav className="App-Header navbar is-dark">
                     <div className="navbar-brand">
                         <div className={`navbar-burger ${this.navbarActive ? "is-active" : ""}`} onClick={this.toggleNavbar}>

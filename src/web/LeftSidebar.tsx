@@ -3,7 +3,7 @@ import {faStroopwafel} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const LeftSidebar = () => (
-    <aside className="App-LeftSidebar has-background-light">
+    <aside className="App-LeftSidebar has-background-light item is-narrow">
         <nav className="App-Header navbar is-dark">
             <div className="navbar-brand">
                 <a className="navbar-item" href="#">
