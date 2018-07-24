@@ -5,8 +5,11 @@ import {Content} from "./Content";
 import {LeftSidebar} from "./LeftSidebar";
 import {RightSidebar} from "./RightSidebar";
 import {Tabs} from "./Tabs";
-import {Tab} from "./Tab";
 import {PassiveSkillTree} from "./PassiveSkillTree";
+import {Route} from "react-router";
+import {PassiveSkillTreePage} from "./pages/PassiveSkillTreePage";
+import {GearPage} from "./pages/GearPage";
+import {DetailsPage} from "./pages/DetailsPage";
 
 
 export const App = () => (
@@ -15,7 +18,9 @@ export const App = () => (
         <Content>
             <LeftSidebar/>
             <Tabs>
-                <Tab title="Passive Tree"/>
+                <Route path="/passive-skill-tree" component={PassiveSkillTreePage}/>
+                <Route path="/gear" component={GearPage}/>
+                <Route path="/details" component={DetailsPage}/>
             </Tabs>
             <RightSidebar/>
         </Content>

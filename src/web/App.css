@@ -1,6 +1,10 @@
+html {
+    overflow-y: hidden !important;
+}
+
 .App {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
     flex-direction: column;
 }
 
@@ -19,19 +23,14 @@
 }
 
 .App-LeftSidebar {
+    display: flex;
+    flex-direction: column;
     min-width: 20vh;
 }
 
-.App-LeftSidebar .navbar-brand {
-    width: 100%;
-}
-
-.App-LeftSidebar .navbar-item {
-    width: 100%;
-}
-
-.App-LeftSidebar .menu {
+.App-LeftSidebar .sidebar-content {
     padding: 10px;
+    overflow: auto;
 }
 
 .App-RightSidebar .menu {
