@@ -1,0 +1,12 @@
+.LeftSidebar-Content {
+    padding: 10px;
+}
+
+.LeftSidebar-Collapse {
+    width: 1em;
+    background-color: lightblue;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+

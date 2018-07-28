@@ -1,0 +1,7 @@
+.Item {
+    flex: 1 1 auto;
+}
+
+.Item .is-narrow {
+    flex: none !important;
+}

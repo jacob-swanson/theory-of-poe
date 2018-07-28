@@ -1,26 +1,3 @@
-html {
-    overflow-y: hidden !important;
-}
-
-.columns {
-    display: flex;
-    flex-direction: row;
-    margin: 0 !important;
-}
-
-.rows {
-    display: flex;
-    flex-direction: column;
-}
-
-.item {
-    flex: 1;
-}
-
-.is-narrow {
-    flex: none;
-}
-
 .App {
     height: 100vh;
 }

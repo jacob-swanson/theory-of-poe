@@ -1,4 +1,4 @@
 import * as React from "react";
-import {Tab} from "../Tab";
+import {Item} from "../layout/Item";
 
-export const DetailsPage = () => (<Tab>Details</Tab>);
+export const DetailsPage = () => (<Item className="has-background-white">Details</Item>);

@@ -1,7 +1,7 @@
 import {PassiveSkillTreeVersion} from "./PassiveSkillTreeVersion";
-import {PassiveTreeJson} from "./external-data/PassiveTreeJson";
 import {LoggerFactory} from "../../utils/logger/LoggerFactory";
 import {HttpClient} from "../../utils/http-client/HttpClient";
+import {PassiveSkillTreeOptionsJson} from "./external-data/PassiveSkillTreeOptionsJson";
 
 const log = LoggerFactory.getLogger("PassiveSkillTreeService");
 
@@ -19,7 +19,7 @@ export class PassiveSkillTreeService {
      */
     public getVersions(): PassiveSkillTreeVersion[] {
         return [
-            {version: "3.3.0"}
+            {version: "3.3.1"}
         ];
     }
 
@@ -28,11 +28,11 @@ export class PassiveSkillTreeService {
      *
      * @param version
      */
-    public async getDataForVersion(version: PassiveSkillTreeVersion): Promise<PassiveTreeJson> {
+    public async getDataForVersion(version: PassiveSkillTreeVersion): Promise<PassiveSkillTreeOptionsJson> {
         log.trace(`Fetching data for version ${version.version}`);
         const urls = this.getUrls(version);
         const response = await this.httpClient.get(urls.data);
-        return response.json<PassiveTreeJson>();
+        return await response.json<PassiveSkillTreeOptionsJson>();
     }
 
     /**

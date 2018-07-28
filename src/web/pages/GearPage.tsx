@@ -1,4 +1,4 @@
 import * as React from "react";
-import {Tab} from "../Tab";
+import {Item} from "../layout/Item";
 
-export const GearPage = () => (<Tab>Gear</Tab>);
+export const GearPage = () => (<Item className="has-background-white">Gear</Item>);

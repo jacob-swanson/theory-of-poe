@@ -1,27 +1,23 @@
 import * as React from "react";
-import {Sprite, Stage} from "react-pixi-fiber";
-import bunny from "./bunny.png";
-import * as PIXI from "pixi.js";
+import {Component} from "react";
 import {observer} from "mobx-react";
 import {observable} from "mobx";
 import * as _ from "lodash";
+import {SmallGroup} from "./passive-skill-tree/groups/SmallGroup";
+import {PassiveSkillTreeOptionsJson} from "../gamedata/passive-skill-tree/external-data/PassiveSkillTreeOptionsJson";
+import {LoggerFactory} from "../utils/logger/LoggerFactory";
+import {Stage} from "./webgl/Stage";
 
-declare module "react-pixi-fiber" {
-    export interface StageProperties extends Component<PIXI.Container> {
-        className?: string
-    }
-}
-
-function Bunny(props: any) {
-    return (
-        <Sprite texture={PIXI.Texture.fromImage(bunny)} {...props} />
-    );
+export interface PassiveSkillTreeProps {
+    data: PassiveSkillTreeOptionsJson
 }
 
 @observer
-export class PassiveSkillTree extends React.Component {
+export class PassiveSkillTree extends Component<PassiveSkillTreeProps> {
     @observable protected width = window.innerWidth;
     @observable protected height = window.innerHeight;
+
+    private log = LoggerFactory.getLogger(this);
 
     private onWindowResize = _.debounce(() => {
         this.width = window.innerWidth;
@@ -38,11 +34,30 @@ export class PassiveSkillTree extends React.Component {
     }
 
     public render() {
+        const groups = this.getGroups();
+        this.log.debug("Got groups", groups.length);
         return (
-            <Stage className="App-PassiveSkillTree" width={this.width} height={this.height}
-                   options={{backgroundColor: 0x10bb99}}>
-                <Bunny x={this.width / 2} y={this.height / 2}/>
-            </Stage>
+            <Stage className="App-PassiveSkillTree" width={this.width} height={this.height} backgroundColor={0x10bb99}/>
         );
+    }
+
+    private getGroups() {
+        if (!this.props.data) {
+            return [];
+        }
+        return Object.entries(this.props.data.passiveSkillTreeData.groups)
+            .map(([key, json]) => {
+                const x = json.x * 0.3835;
+                const y = json.y * 0.3835;
+
+                if (json.oo[3]) {
+                    return <SmallGroup key={key} x={x} y={y}/>;
+                } else if (json.oo[2]) {
+                    return <SmallGroup key={key} x={x} y={y}/>;
+                } else if (json.oo[1]) {
+                    return <SmallGroup key={key} x={x} y={y}/>;
+                }
+                return null;
+            }).filter(group => !!group);
     }
 }
