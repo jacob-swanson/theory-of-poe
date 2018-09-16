@@ -1,18 +1,18 @@
 import * as React from "react";
 import {Component} from "react";
-import {ReactPixiRenderer} from "./ReactPixiRenderer";
+import {ReactPIXIRenderer} from "./ReactPIXIRenderer";
 
 export interface StageProps {
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
     backgroundColor?: number;
     className?: string;
 }
 
 export class Stage extends Component<StageProps> {
-    private canvas: HTMLCanvasElement | null = null;
-    private app: PIXI.Application | null = null;
-    private mountNode = null;
+    protected canvas: HTMLCanvasElement | null = null;
+    protected app: PIXI.Application | null = null;
+    protected mountNode = null;
 
     public componentDidMount(): void {
         const {children, backgroundColor} = this.props;
@@ -28,8 +28,10 @@ export class Stage extends Component<StageProps> {
             view: this.canvas
         };
         this.app = new PIXI.Application(pixiOptions);
-        this.mountNode = ReactPixiRenderer.createContainer(this.app.stage, false, false);
-        ReactPixiRenderer.updateContainer(children, this.mountNode, this);
+        this.mountNode = ReactPIXIRenderer.createContainer(this.app.stage, false, false);
+        ReactPIXIRenderer.updateContainer(children, this.mountNode, this);
+
+
     }
 
     public render() {

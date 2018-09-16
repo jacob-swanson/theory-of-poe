@@ -1,8 +1,14 @@
 import {Json} from "../Json";
 import {LogLevel} from "./LogLevel";
 
+const logLevels: LogLevel[] = ["trace", "debug", "info", "warn", "error"];
+
 export abstract class Logger {
-    public abstract log(level: LogLevel, message: string, ...context: Json[]): void;
+    protected logLevel: number = 1;
+
+    constructor(logLevel: LogLevel = "debug") {
+        this.logLevel = logLevels.indexOf(logLevel);
+    }
 
     public debug(message: string, ...context: any[]): void {
         this.log("debug", message, ...context);
@@ -23,4 +29,12 @@ export abstract class Logger {
     public trace(message: string, ...context: any[]): void {
         this.log("trace", message, ...context);
     }
+
+    public log(level: LogLevel, message: string, ...context: Json[]): void {
+        if (logLevels.indexOf(level) >= this.logLevel) {
+            this.writeLine(level, message, ...context);
+        }
+    }
+
+    protected abstract writeLine(level: LogLevel, message: string, ...context: Json[]): void;
 }

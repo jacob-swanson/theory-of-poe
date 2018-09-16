@@ -17,7 +17,7 @@ export class PassiveSkillTreeService {
     /**
      * Get list of passive tree versions.
      */
-    public getVersions(): PassiveSkillTreeVersion[] {
+    public async getVersions(): Promise<PassiveSkillTreeVersion[]> {
         return [
             {version: "3.3.1"}
         ];

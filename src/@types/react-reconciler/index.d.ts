@@ -62,20 +62,16 @@ declare namespace ReactReconciler {
 
         computeUniqueAsyncExpiration(): ExpirationTime,
 
-        // Used to extract the return value from the initial render. Legacy API.
         getPublicRootInstance(
             container: OpaqueRoot
         ): React.Component<any, any> | TI | I | null,
 
-        // Use for findDOMNode/findHostNode. Legacy API.
         findHostInstance(component: Fiber): I | TI | null,
 
-        // Used internally for filtering out portals. Legacy API.
         findHostInstanceWithNoPortals(component: Fiber): I | TI | null,
     }
 
     export interface HydrationHostConfig<T, P, I, TI, HI, C, CX, PL> {
-        // Optional hydration
         canHydrateInstance(instance: HI, type: T, props: P): null | I,
 
         canHydrateTextInstance(instance: HI, text: string): null | TI,
@@ -150,14 +146,11 @@ declare namespace ReactReconciler {
     }
 
     export interface MutableUpdatesHostConfig<T, P, I, TI, C, PL> {
-        commitUpdate(
-            instance: I,
-            updatePayload: PL,
-            type: T,
-            oldProps: P,
-            newProps: P,
-            internalInstanceHandle: {}
-        ): void,
+        appendChild(parentInstance: I, child: I | TI): void,
+
+        appendChildToContainer(container: C, child: I | TI): void,
+
+        commitTextUpdate(textInstance: TI, oldText: string, newText: string): void,
 
         commitMount(
             instance: I,
@@ -166,13 +159,14 @@ declare namespace ReactReconciler {
             internalInstanceHandle: {}
         ): void,
 
-        commitTextUpdate(textInstance: TI, oldText: string, newText: string): void,
-
-        resetTextContent(instance: I): void,
-
-        appendChild(parentInstance: I, child: I | TI): void,
-
-        appendChildToContainer(container: C, child: I | TI): void,
+        commitUpdate(
+            instance: I,
+            updatePayload: PL,
+            type: T,
+            oldProps: P,
+            newProps: P,
+            internalInstanceHandle: {}
+        ): void,
 
         insertBefore(parentInstance: I, child: I | TI, beforeChild: I | TI): void,
 
@@ -185,6 +179,8 @@ declare namespace ReactReconciler {
         removeChild(parentInstance: I, child: I | TI): void,
 
         removeChildFromContainer(container: C, child: I | TI): void,
+
+        resetTextContent(instance: I): void,
     }
 
     export interface PersistentUpdatesHostConfig<T, P, I, TI, C, CC, PL> {
@@ -208,17 +204,24 @@ declare namespace ReactReconciler {
         replaceContainerChildren(container: C, newChildren: CC): void,
     }
 
-    export interface HostConfig<T, P, I, TI, HI, PI, C, CC, CX, PL> {
-        useSyncScheduling?: boolean,
+    export interface HostConfig<T, P, I, TI, HI, PI, C, CC, CX, PL> extends Partial<MutableUpdatesHostConfig<T, P, I, TI, C, PL>> {
         hydration?: HydrationHostConfig<T, P, I, TI, HI, C, CX, PL>,
-        mutation?: MutableUpdatesHostConfig<T, P, I, TI, C, PL>,
+        // mutation?: MutableUpdatesHostConfig<T, P, I, TI, C, PL>,
         persistence?: PersistentUpdatesHostConfig<T, P, I, TI, C, CC, PL>,
+        isPrimaryRenderer: boolean;
+        supportsMutation: boolean;
+        supportsPersistence: boolean;
+        supportsHydration: boolean;
+
+        getPublicInstance(instance: I | TI): PI,
 
         getRootHostContext(rootContainerInstance: C): CX,
 
         getChildHostContext(parentHostContext: CX, type: T, instance: C): CX,
 
-        getPublicInstance(instance: I | TI): PI,
+        prepareForCommit(): void,
+
+        resetAfterCommit(): void,
 
         createInstance(
             type: T,
@@ -265,15 +268,12 @@ declare namespace ReactReconciler {
 
         cancelDeferredCallback(callbackID: number): void,
 
-        prepareForCommit(): void,
-
-        resetAfterCommit(): void,
-
         now(): number,
     }
 }
 
 declare module "react-reconciler" {
     function ReactFiberReconciler<T, P, I, TI, HI, PI, C, CC, CX, PL>(hostConfig: ReactReconciler.HostConfig<T, P, I, TI, HI, PI, C, CC, CX, PL>): ReactReconciler.Reconciler<C, I, TI>
+
     export = ReactFiberReconciler;
 }

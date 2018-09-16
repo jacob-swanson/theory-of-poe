@@ -3,10 +3,11 @@ import {Component} from "react";
 import {observer} from "mobx-react";
 import {observable} from "mobx";
 import * as _ from "lodash";
-import {SmallGroup} from "./passive-skill-tree/groups/SmallGroup";
-import {PassiveSkillTreeOptionsJson} from "../gamedata/passive-skill-tree/external-data/PassiveSkillTreeOptionsJson";
-import {LoggerFactory} from "../utils/logger/LoggerFactory";
-import {Stage} from "./webgl/Stage";
+import {SmallGroup} from "./groups/SmallGroup";
+import {PassiveSkillTreeOptionsJson} from "../../gamedata/passive-skill-tree/external-data/PassiveSkillTreeOptionsJson";
+import {LoggerFactory} from "../../utils/logger/LoggerFactory";
+import {Stage} from "../webgl/Stage";
+import "./PassiveSkillTree.css";
 
 export interface PassiveSkillTreeProps {
     data: PassiveSkillTreeOptionsJson
@@ -37,7 +38,9 @@ export class PassiveSkillTree extends Component<PassiveSkillTreeProps> {
         const groups = this.getGroups();
         this.log.debug("Got groups", groups.length);
         return (
-            <Stage className="App-PassiveSkillTree" width={this.width} height={this.height} backgroundColor={0x10bb99}/>
+            <Stage className="PassiveSkillTree" width={this.width} height={this.height} backgroundColor={0x10bb99}>
+                {groups}
+            </Stage>
         );
     }
 

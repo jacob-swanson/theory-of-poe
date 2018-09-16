@@ -10,6 +10,6 @@ export class NullLogger extends Logger {
         super();
     }
 
-    public log(level: LogLevel, message: string, ...context: Json[]): void {
+    public writeLine(level: LogLevel, message: string, ...context: Json[]): void {
     }
 }

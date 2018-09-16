@@ -8,12 +8,12 @@ import {LogLevel} from "./LogLevel";
 export class ConsoleLogger extends Logger {
     protected readonly tag: string;
 
-    constructor(tag: string) {
-        super();
+    constructor(tag: string, logLevel: LogLevel = "debug") {
+        super(logLevel);
         this.tag = tag;
     }
 
-    public log(level: LogLevel, message: string, ...context: Json[]): void {
+    protected writeLine(level: LogLevel, message: string, ...context: Json[]): void {
         /* tslint:disable:no-console */
         const datetime = new Date().toISOString();
         const output = `[${datetime}] [${this.tag}] [${level}] ${message}`;
