@@ -1,3 +1,4 @@
 .Sidebar {
     overflow: auto;
+    min-width: 200px;
 }

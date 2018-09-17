@@ -10,18 +10,6 @@ export class InteractiveStage extends Stage {
     private prevY = 0;
     private distanceMoved = 0;
 
-    public componentDidMount() {
-        super.componentDidMount();
-
-        if (!this.app) {
-            throw new Error('app not set')
-        }
-
-        this.app.renderer.plugins.interaction.on('mousedown', this.onMouseDown);
-        this.app.renderer.plugins.interaction.on('mousemove', this.onMouseMove);
-        this.app.renderer.plugins.interaction.on('pointerup', this.onMouseUp);
-    }
-
     private onMouseDown = (e: InteractionEvent) => {
         log.trace("InteractiveStage.onMouseDown", {e});
 
@@ -32,8 +20,6 @@ export class InteractiveStage extends Stage {
     };
 
     private onMouseMove = (e: InteractionEvent) => {
-        log.trace("InteractiveStage.onMouseMove", {e});
-
         if (!this.isDragging || this.app == null) {
             return;
         }
@@ -50,9 +36,64 @@ export class InteractiveStage extends Stage {
         this.prevY = e.data.global.y;
     };
 
+    private onWheel = (e: WheelEvent) => {
+        if (!this.app) {
+            throw new Error("app not set");
+        }
+
+        e.preventDefault();
+        const scale = this.app.stage.scale;
+        const delta = e.deltaY || e.wheelDelta;
+        const direction = delta > 0 ? -1 : 1;
+        const newScale = {
+            x: scale.x + direction * 0.2 * scale.x,
+            y: scale.y + direction * 0.2 * scale.y
+        };
+
+
+        const stagePosition = {
+            x: this.app.stage.x,
+            y: this.app.stage.y
+        };
+        const mouseScreenPosition = this.app.renderer.plugins.interaction.mouse.global;
+        const mouseWorldPosition = {
+            x: (mouseScreenPosition.x - stagePosition.x) / scale.x,
+            y: (mouseScreenPosition.y - stagePosition.y) / scale.y
+        };
+        const newMouseScreenPosition = {
+            x: mouseWorldPosition.x * newScale.x + stagePosition.x,
+            y: mouseWorldPosition.y * newScale.y + stagePosition.y
+        };
+        const positionDelta = {
+            x: newMouseScreenPosition.x - mouseScreenPosition.x,
+            y: newMouseScreenPosition.y - mouseScreenPosition.y
+        };
+
+        this.app.stage.scale = new PIXI.Point(newScale.x, newScale.y);
+        this.app.stage.x -= positionDelta.x;
+        this.app.stage.y -= positionDelta.y;
+    };
+
     private onMouseUp = (e: InteractionEvent) => {
         log.trace("InteractiveStage.onMouseUp", {e});
 
         this.isDragging = false;
     };
+
+    public componentDidMount() {
+        super.componentDidMount();
+        if (!this.app) {
+            throw new Error("app not set");
+        }
+
+        this.app.renderer.plugins.interaction.on("mousedown", this.onMouseDown);
+        this.app.renderer.plugins.interaction.on("mousemove", this.onMouseMove);
+        this.app.renderer.plugins.interaction.on("pointerup", this.onMouseUp);
+    }
+
+    protected getAdditionalProps(): {} {
+        return {
+            onWheel: this.onWheel
+        };
+    }
 }

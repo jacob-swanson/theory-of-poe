@@ -8,6 +8,7 @@ import {PassiveSkillTreeOptionsJson} from "../../gamedata/passive-skill-tree/ext
 import {LoggerFactory} from "../../utils/logger/LoggerFactory";
 import {Stage} from "../webgl/Stage";
 import "./PassiveSkillTree.css";
+import {InteractiveStage} from "../webgl/InteractiveStage";
 
 export interface PassiveSkillTreeProps {
     data: PassiveSkillTreeOptionsJson
@@ -20,27 +21,13 @@ export class PassiveSkillTree extends Component<PassiveSkillTreeProps> {
 
     private log = LoggerFactory.getLogger(this);
 
-    private onWindowResize = _.debounce(() => {
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-    }, 64);
-
-    public componentDidMount(): void {
-        this.onWindowResize();
-        window.addEventListener("resize", this.onWindowResize);
-    }
-
-    public componentWillUnmount(): void {
-        window.removeEventListener("resize", this.onWindowResize);
-    }
-
     public render() {
         const groups = this.getGroups();
         this.log.debug("Got groups", groups.length);
         return (
-            <Stage className="PassiveSkillTree" width={this.width} height={this.height} backgroundColor={0x10bb99}>
+            <InteractiveStage className="PassiveSkillTree" backgroundColor={0x10bb99}>
                 {groups}
-            </Stage>
+            </InteractiveStage>
         );
     }
 
