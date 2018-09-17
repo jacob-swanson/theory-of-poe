@@ -1,10 +1,14 @@
-import {Stage} from "./Stage";
+import {Stage, StageProps} from "./Stage";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 import InteractionEvent = PIXI.interaction.InteractionEvent;
 
 const log = new ConsoleLogger("InteractiveStage", "trace");
 
-export class InteractiveStage extends Stage {
+export interface InteractiveStageProps extends StageProps{
+    zoomPercent?: number
+}
+
+export class InteractiveStage extends Stage<InteractiveStageProps> {
     private isDragging = false;
     private prevX = 0;
     private prevY = 0;
@@ -45,9 +49,10 @@ export class InteractiveStage extends Stage {
         const scale = this.app.stage.scale;
         const delta = e.deltaY || e.wheelDelta;
         const direction = delta > 0 ? -1 : 1;
+        const zoomPercent = this.props.zoomPercent || 0.2;
         const newScale = {
-            x: scale.x + direction * 0.2 * scale.x,
-            y: scale.y + direction * 0.2 * scale.y
+            x: scale.x + direction * zoomPercent * scale.x,
+            y: scale.y + direction * zoomPercent * scale.y
         };
 
 
