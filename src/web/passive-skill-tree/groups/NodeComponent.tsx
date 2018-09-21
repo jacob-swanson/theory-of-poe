@@ -1,7 +1,11 @@
 import * as React from "react";
-import {StatelessComponent} from "react";
+import {Component} from "react";
 import {NodeAllocationState, NodeState, NodeType} from "../../stores/passive-skill-tree/NodeState";
 import {SkillSpriteGroups} from "../../../gamedata/passive-skill-tree/external-data/SkillSpritesJson";
+import {observer} from "mobx-react";
+import {ConsoleLogger} from "../../../utils/logger/ConsoleLogger";
+
+const log = new ConsoleLogger("NodeComponent");
 
 const frameByTypeByState = {
     [NodeAllocationState.Allocated]: {
@@ -51,15 +55,16 @@ function renderFrame(node: NodeState) {
 
 const iconByTypeByState = {
     [NodeAllocationState.Allocated]: {
-        [NodeType.Normal]: "normalInactive",
-        [NodeType.Keystone]: "keystoneActive",
-        [NodeType.Notable]: "notableActive"
+        [NodeType.Normal]: SkillSpriteGroups.normalActive,
+        [NodeType.Keystone]: SkillSpriteGroups.keystoneActive,
+        [NodeType.Notable]: SkillSpriteGroups.notableActive,
+        [NodeType.Mastery]: SkillSpriteGroups.mastery
     },
     [NodeAllocationState.Unallocated]: {
-        [NodeType.Normal]: "normalInactive",
-        [NodeType.Keystone]: "keystoneInactive",
-        [NodeType.Notable]: "notableInactive",
-        [NodeType.Mastery]: "mastery"
+        [NodeType.Normal]: SkillSpriteGroups.normalInactive,
+        [NodeType.Keystone]: SkillSpriteGroups.keystoneInactive,
+        [NodeType.Notable]: SkillSpriteGroups.notableInactive,
+        [NodeType.Mastery]: SkillSpriteGroups.mastery
     }
 };
 
@@ -119,11 +124,16 @@ export interface NodeComponentProps {
     node: NodeState
 }
 
-export const NodeComponent: StatelessComponent<NodeComponentProps> = ({node}) => {
-    return (
-        <pixi-container position={node.position}>
-            {renderIcon(node)}
-            {renderFrame(node)}
-        </pixi-container>
-    );
-};
+@observer
+export class NodeComponent extends Component<NodeComponentProps> {
+    public render() {
+        const {node} = this.props;
+        const onClick = node.isAllocatable ? node.toggleAllocated : undefined;
+        return (
+            <pixi-container position={node.position} onClick={onClick}>
+                {renderIcon(node)}
+                {renderFrame(node)}
+            </pixi-container>
+        );
+    }
+}

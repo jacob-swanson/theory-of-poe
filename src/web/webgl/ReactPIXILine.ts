@@ -9,7 +9,7 @@ export interface ReactPIXILineProps {
 }
 
 export class ReactPIXILine extends PIXI.Graphics implements ReactPIXIComponent<ReactPIXILineProps> {
-    public type: "ReactPIXIComponent";
+    public isReactPIXIComponent: "ReactPIXIComponent";
 
     public update(oldProps: ReactPIXILineProps, newProps: ReactPIXILineProps): void {
         this.lineStyle(newProps.width, newProps.color);

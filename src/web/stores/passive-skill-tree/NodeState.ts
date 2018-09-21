@@ -1,6 +1,9 @@
 import {GroupState} from "./GroupState";
 import {Point} from "../../webgl/ReactPIXIInternals";
-import {computed, observable} from "mobx";
+import {action, computed, observable} from "mobx";
+import {ConsoleLogger} from "../../../utils/logger/ConsoleLogger";
+
+const log = new ConsoleLogger("NodeState");
 
 export enum NodeType {
     Mastery,
@@ -21,6 +24,10 @@ export class NodeState {
 
     @observable public isAllocated: boolean = false;
 
+    @action public toggleAllocated = () => {
+        this.isAllocated = !this.isAllocated;
+    };
+
     constructor(public readonly id: string,
                 public readonly name: string,
                 public readonly orbit: number,
@@ -38,8 +45,6 @@ export class NodeState {
 
         const x = r * Math.cos(theta) + this.group.position.x;
         const y = r * Math.sin(theta) + this.group.position.y;
-        // const x = r * Math.cos(theta);
-        // const y = r * Math.sin(theta);
 
         return {x, y};
     }
@@ -65,9 +70,5 @@ export class NodeState {
         } else {
             return NodeAllocationState.Unallocated;
         }
-    }
-
-    public toggleAllocated() {
-        this.isAllocated = !this.isAllocated;
     }
 }

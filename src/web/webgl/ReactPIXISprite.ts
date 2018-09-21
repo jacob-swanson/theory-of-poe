@@ -1,6 +1,9 @@
 import {ReactPIXIComponent} from "./ReactPIXIComponent";
 import * as PIXI from "pixi.js";
 import {Rectangle, Point} from "./ReactPIXIInternals";
+import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
+
+const log = new ConsoleLogger("ReactPIXISprite");
 
 export interface ReactPIXISpriteProps {
     url?: string;
@@ -12,7 +15,7 @@ export interface ReactPIXISpriteProps {
 }
 
 export class ReactPIXISprite extends PIXI.Sprite implements ReactPIXIComponent<ReactPIXISpriteProps> {
-    public type: "ReactPIXIComponent";
+    public isReactPIXIComponent: "ReactPIXIComponent";
 
     private setTextureFrame = (frame: Rectangle) => {
         if (!this.texture) {
