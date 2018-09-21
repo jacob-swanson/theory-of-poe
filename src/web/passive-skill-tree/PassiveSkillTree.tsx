@@ -3,17 +3,11 @@ import {Component} from "react";
 import {observer} from "mobx-react";
 import "./PassiveSkillTree.css";
 import {InteractiveStage} from "../webgl/InteractiveStage";
-import {NodeJson} from "../../gamedata/passive-skill-tree/external-data/NodeJson";
 import {PassiveTreeState} from "../stores/passive-skill-tree/PassiveTreeState";
-import {GroupStateBackground} from "../stores/passive-skill-tree/GroupState";
 import {GroupComponent} from "./groups/GroupComponent";
 
 export interface PassiveSkillTreeProps {
     data: PassiveTreeState
-}
-
-interface NodesByGroup {
-    [key: number]: NodeJson[]
 }
 
 @observer
@@ -34,7 +28,7 @@ export class PassiveSkillTree extends Component<PassiveSkillTreeProps> {
 
         const groups = [];
         for (const group of data.groups.values()) {
-            groups.push(<GroupComponent key={group.id} group={group}/>)
+            groups.push(<GroupComponent key={group.id} group={group}/>);
         }
         return groups;
     }

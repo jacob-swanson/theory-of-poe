@@ -2,7 +2,7 @@ import {Stage, StageProps} from "./Stage";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 import InteractionEvent = PIXI.interaction.InteractionEvent;
 
-const log = new ConsoleLogger("InteractiveStage", "trace");
+const log = new ConsoleLogger("InteractiveStage", "debug");
 
 export interface InteractiveStageProps extends StageProps{
     zoomPercent?: number

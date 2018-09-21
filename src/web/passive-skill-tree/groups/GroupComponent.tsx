@@ -6,19 +6,19 @@ import {NodeComponent} from "./NodeComponent";
 function renderBackground(group: GroupState) {
     switch (group.background) {
         case GroupStateBackground.Large:
-            return [
-                <pixi-sprite
-                    key="top-half"
-                    anchor={{x: 0.5, y: 1}}
-                    url="gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"
-                />,
-                <pixi-sprite
-                    key="bottom-half"
-                    scale={{x: 1, y: -1}}
-                    anchor={{x: 0.5, y: 1}}
-                    url="gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"
-                />
-            ];
+            return (
+                <pixi-container>
+                    <pixi-sprite
+                        anchor={{x: 0.5, y: 1}}
+                        url="gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"
+                    />
+                    <pixi-sprite
+                        scale={{x: 1, y: -1}}
+                        anchor={{x: 0.5, y: 1}}
+                        url="gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"
+                    />
+                </pixi-container>
+            );
         case GroupStateBackground.Medium:
             return (
                 <pixi-sprite
@@ -43,7 +43,7 @@ function renderNodes(group: GroupState) {
     const nodes = [];
     for (const node of group.nodes.values()) {
         nodes.push(
-            <NodeComponent node={node}/>
+            <NodeComponent key={node.id} node={node}/>
         );
     }
     return nodes;

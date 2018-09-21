@@ -5,6 +5,7 @@ import {Point} from "./ReactPIXIInternals";
 export interface ReactPIXIContainerProps {
     url?: string;
     position?: Point;
+    children?: any;
 }
 
 export class ReactPIXIContainer extends PIXI.Container implements ReactPIXIComponent<ReactPIXIContainerProps> {
