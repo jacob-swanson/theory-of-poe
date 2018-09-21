@@ -29,7 +29,7 @@ export class PassiveSkillTreeService {
      * @param version
      */
     public async getDataForVersion(version: PassiveSkillTreeVersion): Promise<PassiveSkillTreeOptionsJson> {
-        log.trace(`Fetching data for version ${version.version}`);
+        log.debug(`Fetching data for version ${version.version}`);
         const urls = this.getUrls(version);
         const response = await this.httpClient.get(urls.data);
         return await response.json<PassiveSkillTreeOptionsJson>();

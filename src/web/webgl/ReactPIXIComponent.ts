@@ -1,4 +1,5 @@
-export interface ReactPIXIComponent<T = {}> {
-    type: 'ReactPIXIComponent';
+export interface ReactPIXIComponent<T extends {} = {}> {
+    type: "ReactPIXIComponent";
+
     update(oldProps: T, newProps: T): void;
 }

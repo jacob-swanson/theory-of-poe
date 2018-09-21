@@ -1,6 +1,8 @@
+import {Dictionary} from "../../../utils/Dictionary";
+
 export interface GroupJson {
     x: number;
     y: number;
-    oo: { [orbit: string]: boolean };
+    oo: Dictionary<boolean>;
     n: number[];
 }

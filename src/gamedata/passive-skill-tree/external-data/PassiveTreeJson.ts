@@ -1,58 +1,44 @@
 import {GroupJson} from "./GroupJson";
 import {CharacterDataJson} from "./CharacterDataJson";
 import {RootJson} from "./RootJson";
-import {NodeJsonMap} from "./NodeJson";
+import {NodeJson} from "./NodeJson";
 import {ExtraImagesJson} from "./ExtraImagesJson";
-import {SpriteSheetJson} from "./SpriteSheetJson";
+import {Dictionary} from "../../../utils/Dictionary";
+import {SkillSpritesJson} from "./SkillSpritesJson";
+
+export interface PassiveTreeConstantsJson {
+    classes: {
+        StrClass: number;
+        DexClass: number;
+        IntClass: number;
+        StrDexClass: number;
+        StrIntClass: number;
+        DexIntClass: number;
+        StrDexIntClass: number;
+    };
+    characterAttributes: {
+        Strength: number;
+        Dexterity: number;
+        Intelligence: number;
+    };
+    PSSCentreInnerRadius: number;
+    skillsPerOrbit: number[];
+    orbitRadii: number[];
+}
 
 export interface PassiveTreeJson {
     characterData: CharacterDataJson;
-    groups: {
-        [key: string]: GroupJson
-    };
+    groups: Dictionary<GroupJson>;
     root: RootJson;
-    nodes: NodeJsonMap;
-    extraImages: {
-        [key: string]: ExtraImagesJson;
-    };
+    nodes: Dictionary<NodeJson>;
+    extraImages: Dictionary<ExtraImagesJson>;
     min_x: number;
     min_y: number;
     max_x: number;
     max_y: number;
-    assets: {
-        [key: string]: {
-            [key: string]: string;
-        }
-    };
-    constants: {
-        classes: {
-            StrClass: number;
-            DexClass: number;
-            IntClass: number;
-            StrDexClass: number;
-            StrIntClass: number;
-            DexIntClass: number;
-            StrDexIntClass: number;
-        };
-        characterAttributes: {
-            Strength: number;
-            Dexterity: number;
-            Intelligence: number;
-        };
-        PSSCentreInnerRadius: number;
-        skillsPerOrbit: number[];
-        orbitRadii: number[];
-    };
+    assets: Dictionary<Dictionary<string>>;
+    constants: PassiveTreeConstantsJson;
     imageRoot: string;
-    skillSprites: {
-        normalActive: SpriteSheetJson[];
-        notableActive: SpriteSheetJson[];
-        keystoneActive: SpriteSheetJson[];
-        normalInactive: SpriteSheetJson[];
-        notableInactive: SpriteSheetJson[];
-        keystoneInactive: SpriteSheetJson[];
-        mastery: SpriteSheetJson[];
-        [key: string]: SpriteSheetJson[];
-    };
+    skillSprites: SkillSpritesJson;
     imageZoomLevels: number[];
 }

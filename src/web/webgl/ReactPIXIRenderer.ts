@@ -4,6 +4,7 @@ import {emptyObject} from "../../utils/emptyObject";
 import {ReactPIXISprite} from "./ReactPIXISprite";
 import {ReactPIXIComponent} from "./ReactPIXIComponent";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
+import {ReactPIXIContainer} from "./ReactPIXIContainer";
 
 const log = new ConsoleLogger("ReactPIXIRenderer");
 
@@ -28,12 +29,14 @@ function appendChild(parentInstance: PIXI.DisplayObject, child: PIXI.DisplayObje
     parentInstance.addChild(child);
 }
 
-function createInstanceFromType(type: Types) {
+function createInstanceFromType(type: Types): PIXI.DisplayObject & ReactPIXIComponent {
     log.trace("ReactPIXIRenderer.createInstanceFromType", {type});
 
     switch (type) {
         case Types.Sprite:
             return new ReactPIXISprite();
+        case Types.Container:
+            return new ReactPIXIContainer();
         default:
             throw new Error("Type not supported");
     }

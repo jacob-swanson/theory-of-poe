@@ -22,12 +22,6 @@ export enum SkillSpriteGroups {
     notableInactive = "notableInactive"
 }
 
-export interface SkillSpritesJson {
-    keystoneActive: SkillSpriteJson[];
-    keystoneInactive: SkillSpriteJson[];
-    mastery: SkillSpriteJson[];
-    normalActive: SkillSpriteJson[];
-    normalInactive: SkillSpriteJson[];
-    notableActive: SkillSpriteJson[];
-    notableInactive: SkillSpriteJson[];
-}
+export type SkillSpritesJson = {
+    [key in SkillSpriteGroups]: SkillSpriteJson[];
+};
