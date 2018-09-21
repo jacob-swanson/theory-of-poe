@@ -1,19 +1,23 @@
 import {ReactPIXISprite, ReactPIXISpriteProps} from "./ReactPIXISprite";
 import {ReactPIXIContainer, ReactPIXIContainerProps} from "./ReactPIXIContainer";
+import {ReactPIXILine, ReactPIXILineProps} from "./ReactPIXILine";
 
 export enum Types {
     Sprite = "pixi-sprite",
-    Container = "pixi-container"
+    Container = "pixi-container",
+    Line = "pixi-line"
 }
 
 export interface ClassMap {
     [Types.Sprite]: ReactPIXISprite;
     [Types.Container]: ReactPIXIContainer;
+    [Types.Line]: ReactPIXILine;
 }
 
 export interface PropertiesMap {
-    [Types.Sprite]: ReactPIXISpriteProps
-    [Types.Container]: ReactPIXIContainerProps
+    [Types.Sprite]: ReactPIXISpriteProps;
+    [Types.Container]: ReactPIXIContainerProps;
+    [Types.Line]: ReactPIXILineProps;
 }
 
 export interface Point {

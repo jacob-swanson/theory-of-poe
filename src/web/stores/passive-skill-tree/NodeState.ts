@@ -26,17 +26,20 @@ export class NodeState {
                 public readonly orbit: number,
                 public readonly orbitIndex: number,
                 public readonly icon: string,
-                public readonly type: NodeType) {
+                public readonly type: NodeType,
+                public readonly isAscendancyStart: boolean,
+                public readonly ascendancyName: string | null,
+                public readonly isJewelSocket: boolean) {
     }
 
     get position(): Point {
         const r = this.group.passiveTree.orbitRadii[this.orbit];
         const theta = 2 * Math.PI * this.orbitIndex / this.group.passiveTree.skillsPerOrbit[this.orbit] - Math.PI / 2;
 
-        // const x = r * Math.cos(theta) + this.group.position.x;
-        // const y = r * Math.sin(theta) + this.group.position.y;
-        const x = r * Math.cos(theta);
-        const y = r * Math.sin(theta);
+        const x = r * Math.cos(theta) + this.group.position.x;
+        const y = r * Math.sin(theta) + this.group.position.y;
+        // const x = r * Math.cos(theta);
+        // const y = r * Math.sin(theta);
 
         return {x, y};
     }

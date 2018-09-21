@@ -5,6 +5,7 @@ import {ReactPIXISprite} from "./ReactPIXISprite";
 import {ReactPIXIComponent} from "./ReactPIXIComponent";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 import {ReactPIXIContainer} from "./ReactPIXIContainer";
+import {ReactPIXILine} from "./ReactPIXILine";
 
 const log = new ConsoleLogger("ReactPIXIRenderer");
 
@@ -37,6 +38,8 @@ function createInstanceFromType(type: Types): PIXI.DisplayObject & ReactPIXIComp
             return new ReactPIXISprite();
         case Types.Container:
             return new ReactPIXIContainer();
+        case Types.Line:
+            return new ReactPIXILine();
         default:
             throw new Error("Type not supported");
     }

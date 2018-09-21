@@ -102,7 +102,10 @@ function createNodes(json: PassiveSkillTreeOptionsJson): Map<string, NodeState> 
                 nodeJson.o,
                 nodeJson.oidx,
                 nodeJson.icon,
-                getNodeType(nodeJson)
+                getNodeType(nodeJson),
+                nodeJson.isAscendancyStart,
+                nodeJson.ascendancyName,
+                nodeJson.isJewelSocket
             )
         );
     }

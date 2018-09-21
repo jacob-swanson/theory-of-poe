@@ -73,6 +73,11 @@ function getIconGroup(node: NodeState): SkillSpriteGroups {
     return iconByTypeByState[state][node.type];
 }
 
+/**
+ * Get the sprite sheet URL and frame for the icon.
+ *
+ * @param node
+ */
 function findIcon(node: NodeState) {
     const path = node.icon;
     const iconGroup = getIconGroup(node);
