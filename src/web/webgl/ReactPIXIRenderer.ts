@@ -6,6 +6,8 @@ import {ReactPIXIComponent} from "./ReactPIXIComponent";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 import {ReactPIXIContainer} from "./ReactPIXIContainer";
 import {ReactPIXILine} from "./ReactPIXILine";
+import {ReactPIXIArcTo} from "./ReactPIXIArcTo";
+import {ReactPIXIArc} from "./ReactPIXIArc";
 
 const log = new ConsoleLogger("ReactPIXIRenderer", "debug");
 
@@ -40,8 +42,12 @@ function createInstanceFromType(type: Types): PIXI.DisplayObject & ReactPIXIComp
             return new ReactPIXIContainer();
         case Types.Line:
             return new ReactPIXILine();
+        case Types.ArcTo:
+            return new ReactPIXIArcTo();
+        case Types.Arc:
+            return new ReactPIXIArc();
         default:
-            throw new Error("Type not supported");
+            throw new Error(`Type ${type} not supported`);
     }
 }
 
