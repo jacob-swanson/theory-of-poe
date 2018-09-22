@@ -4,9 +4,9 @@ import {observer} from "mobx-react";
 import "./PassiveSkillTree.css";
 import {InteractiveStage} from "../webgl/InteractiveStage";
 import {PassiveTreeState} from "../stores/passive-skill-tree/PassiveTreeState";
-import {GroupComponent} from "./groups/GroupComponent";
-import {NodeComponent} from "./groups/NodeComponent";
-import {LinkComponent} from "./groups/LinkComponent";
+import {GroupComponent} from "./GroupComponent";
+import {NodeComponent} from "./NodeComponent";
+import {LinkComponent} from "./LinkComponent";
 
 export interface PassiveSkillTreeProps {
     data: PassiveTreeState

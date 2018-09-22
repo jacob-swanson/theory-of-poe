@@ -6,13 +6,14 @@ import {ConsoleLogger} from "../../../utils/logger/ConsoleLogger";
 const log = new ConsoleLogger("NodeState");
 
 export enum NodeType {
-    Mastery,
-    Notable,
-    Keystone,
-    Normal,
-    AscendancySmall,
-    AscendancyLarge,
-    ClassStart
+    Mastery = "Mastery",
+    Notable = "Notable",
+    Keystone = "Keystone",
+    Normal = "Normal",
+    AscendancySmall = "AscendancySmall",
+    AscendancyLarge = "AscendancyLarge",
+    ClassStart = "ClassStart",
+    JewelSocket = "JewelSocket"
 }
 
 export enum NodeAllocationState {
@@ -49,8 +50,7 @@ export class NodeState {
                 public readonly type: NodeType,
                 public readonly isAscendancyStart: boolean,
                 public readonly ascendancyName: string | null,
-                public readonly characterClassName: CharacterClass | null,
-                public readonly isJewelSocket: boolean) {
+                public readonly characterClassName: CharacterClass | null) {
     }
 
     get position(): Point {

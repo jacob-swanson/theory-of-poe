@@ -1,4 +1,4 @@
-import {NodeAllocationState, NodeState} from "../../stores/passive-skill-tree/NodeState";
+import {NodeAllocationState, NodeState} from "../stores/passive-skill-tree/NodeState";
 import * as React from "react";
 import {Component} from "react";
 import {observer} from "mobx-react";

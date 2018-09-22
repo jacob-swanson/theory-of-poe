@@ -1,6 +1,6 @@
 import * as React from "react";
 import {StatelessComponent} from "react";
-import {GroupState, GroupStateBackground} from "../../stores/passive-skill-tree/GroupState";
+import {GroupState, GroupStateBackground} from "../stores/passive-skill-tree/GroupState";
 
 const ascendancyBackgroundsByAscendancyName = {
     Ascendant: "gamedata/3.3.1/assets/ClassesAscendant-0.3835.png",

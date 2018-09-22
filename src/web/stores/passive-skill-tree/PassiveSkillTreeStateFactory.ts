@@ -77,6 +77,8 @@ function getGroupBackground(oo: Dictionary<boolean>): GroupStateBackground {
 function getNodeType(nodeJson: NodeJson): NodeType {
     if (nodeJson.spc.length > 0) {
         return NodeType.ClassStart;
+    } else if (nodeJson.isJewelSocket) {
+        return NodeType.JewelSocket;
     } else if (nodeJson.m) {
         return NodeType.Mastery;
     } else if (nodeJson.ks) {
@@ -120,8 +122,7 @@ function createNodes(json: PassiveSkillTreeOptionsJson): Map<string, NodeState> 
                 getNodeType(nodeJson),
                 nodeJson.isAscendancyStart,
                 nodeJson.ascendancyName,
-                getClassStart(nodeJson),
-                nodeJson.isJewelSocket
+                getClassStart(nodeJson)
             )
         );
     }
