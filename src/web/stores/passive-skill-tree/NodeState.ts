@@ -9,13 +9,26 @@ export enum NodeType {
     Mastery,
     Notable,
     Keystone,
-    Normal
+    Normal,
+    AscendancySmall,
+    AscendancyLarge,
+    ClassStart
 }
 
 export enum NodeAllocationState {
     Unallocated,
     Allocated,
     CanAllocate
+}
+
+export enum CharacterClass {
+    Witch = 3,
+    Shadow = 6,
+    Ranger = 2,
+    Duelist = 4,
+    Marauder = 1,
+    Templar = 5,
+    Scion = 0
 }
 
 export class NodeState {
@@ -36,6 +49,7 @@ export class NodeState {
                 public readonly type: NodeType,
                 public readonly isAscendancyStart: boolean,
                 public readonly ascendancyName: string | null,
+                public readonly characterClassName: CharacterClass | null,
                 public readonly isJewelSocket: boolean) {
     }
 
@@ -50,7 +64,7 @@ export class NodeState {
     }
 
     get isAllocatable(): boolean {
-        return this.type !== NodeType.Mastery;
+        return this.type !== NodeType.Mastery && this.type !== NodeType.ClassStart && !this.isAscendancyStart;
     }
 
     @computed get canAllocate(): boolean {
@@ -70,5 +84,9 @@ export class NodeState {
         } else {
             return NodeAllocationState.Unallocated;
         }
+    }
+
+    @computed get isClassStart(): boolean {
+        return this.characterClassName !== null;
     }
 }

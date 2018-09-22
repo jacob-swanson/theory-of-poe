@@ -23,6 +23,6 @@ export interface NodeJson {
     reminderText: string;
     sa: number;
     sd: string[];
-    spc: void[];
+    spc: number[];
     icon: string;
 }

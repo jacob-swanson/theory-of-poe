@@ -8,6 +8,7 @@ const log = new ConsoleLogger("Stage");
 
 export interface StageProps {
     backgroundColor?: number;
+    transparent?: boolean;
     className?: string;
 }
 
@@ -28,7 +29,7 @@ export class Stage<P extends StageProps = StageProps> extends Component<P> {
     private onResizeDebounce = _.debounce(this.onResize, (1 / 60) * 2 * 1000);
 
     public componentDidMount(): void {
-        const {children, backgroundColor} = this.props;
+        const {children, backgroundColor, transparent} = this.props;
 
         if (!this.canvas) {
             throw new Error("canvas missing");
@@ -39,6 +40,7 @@ export class Stage<P extends StageProps = StageProps> extends Component<P> {
             width: size.width,
             height: size.height,
             backgroundColor,
+            transparent,
             view: this.canvas
         };
         this.app = new PIXI.Application(pixiOptions);

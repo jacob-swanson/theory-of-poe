@@ -27,7 +27,7 @@ export class PassiveSkillTreePage extends Component<RouteComponentProps<any>> {
 
     public render() {
         return (
-            <Content className="PassiveSkillTreePage" isTransparent={true}>
+            <Content className="PassiveSkillTreePage">
                 {this.data ? <PassiveSkillTree data={this.data}/> : null}
             </Content>
         );

@@ -3,13 +3,15 @@ import {ReactPIXIContainer, ReactPIXIContainerProps} from "./ReactPIXIContainer"
 import {ReactPIXILine, ReactPIXILineProps} from "./ReactPIXILine";
 import {ReactPIXIArcTo, ReactPIXIArcToProps} from "./ReactPIXIArcTo";
 import {ReactPIXIArc, ReactPIXIArcProps} from "./ReactPIXIArc";
+import {ReactPIXITilingSprite, ReactPIXITilingSpriteProps} from "./ReactPIXITilingSprite";
 
 export enum Types {
     Sprite = "pixi-sprite",
     Container = "pixi-container",
     Line = "pixi-line",
     ArcTo = "pixi-arc-to",
-    Arc = "pixi-arc"
+    Arc = "pixi-arc",
+    TilingSprite = "pixi-tiling-sprite"
 }
 
 export interface ClassMap {
@@ -18,6 +20,7 @@ export interface ClassMap {
     [Types.Line]: ReactPIXILine;
     [Types.ArcTo]: ReactPIXIArcTo;
     [Types.Arc]: ReactPIXIArc;
+    [Types.TilingSprite]: ReactPIXITilingSprite;
 }
 
 export interface PropertiesMap {
@@ -26,6 +29,7 @@ export interface PropertiesMap {
     [Types.Line]: ReactPIXILineProps;
     [Types.ArcTo]: ReactPIXIArcToProps;
     [Types.Arc]: ReactPIXIArcProps;
+    [Types.TilingSprite]: ReactPIXITilingSpriteProps;
 }
 
 export interface Point {

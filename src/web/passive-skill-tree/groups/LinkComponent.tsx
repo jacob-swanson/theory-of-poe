@@ -46,7 +46,7 @@ export class LinkComponent extends Component<LinkComponentProps> {
         const {from, to} = this.props;
         const linkType = from.group === to.group && from.orbit === to.orbit ? LinkType.Arc : LinkType.Line;
         const isAllocated = from.isAllocated && to.isAllocated;
-        const color = isAllocated ? 0xA1EE33 : 0xE4E4E4;
+        const color = isAllocated ? 0x839574 : 0x373B33;
         const width = isAllocated ? 10 : 5;
 
         return linkType === LinkType.Line ?
@@ -68,11 +68,11 @@ export class LinkComponent extends Component<LinkComponentProps> {
         const fromTheta = 2 * Math.PI * from.orbitIndex / from.group.passiveTree.skillsPerOrbit[from.orbit] - Math.PI / 2;
         const toTheta = 2 * Math.PI * to.orbitIndex / to.group.passiveTree.skillsPerOrbit[to.orbit] - Math.PI / 2;
 
-        let fromArcLength = fromTheta - toTheta;
-        if (fromArcLength < 0) {
-            fromArcLength += 2 * Math.PI;
+        let arcTheta = fromTheta - toTheta;
+        if (arcTheta < 0) {
+            arcTheta += 2 * Math.PI;
         }
-        const clockwise = fromArcLength < Math.PI;
+        const clockwise = arcTheta < Math.PI;
 
         return <pixi-arc
             center={center}

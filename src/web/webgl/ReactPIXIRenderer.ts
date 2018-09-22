@@ -8,6 +8,7 @@ import {ReactPIXIContainer} from "./ReactPIXIContainer";
 import {ReactPIXILine} from "./ReactPIXILine";
 import {ReactPIXIArcTo} from "./ReactPIXIArcTo";
 import {ReactPIXIArc} from "./ReactPIXIArc";
+import {ReactPIXITilingSprite} from "./ReactPIXITilingSprite";
 
 const log = new ConsoleLogger("ReactPIXIRenderer", "debug");
 
@@ -32,7 +33,7 @@ function appendChild(parentInstance: PIXI.DisplayObject, child: PIXI.DisplayObje
     parentInstance.addChild(child);
 }
 
-function createInstanceFromType(type: Types): PIXI.DisplayObject & ReactPIXIComponent {
+function createInstanceFromType(type: Types, props: Props): PIXI.DisplayObject & ReactPIXIComponent {
     log.trace("ReactPIXIRenderer.createInstanceFromType", {type});
 
     switch (type) {
@@ -46,6 +47,8 @@ function createInstanceFromType(type: Types): PIXI.DisplayObject & ReactPIXIComp
             return new ReactPIXIArcTo();
         case Types.Arc:
             return new ReactPIXIArc();
+        case Types.TilingSprite:
+            return new ReactPIXITilingSprite(props as any);
         default:
             throw new Error(`Type ${type} not supported`);
     }
@@ -60,7 +63,7 @@ function createInstance(type: Types, props: Props, rootContainerInstance: PIXI.C
         internalInstanceHandle
     });
 
-    const instance = createInstanceFromType(type);
+    const instance = createInstanceFromType(type, props);
     instance.update({}, props);
     return instance;
 }

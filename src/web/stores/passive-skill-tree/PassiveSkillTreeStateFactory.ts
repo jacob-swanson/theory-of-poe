@@ -1,5 +1,5 @@
 import {PassiveSkillTreeOptionsJson} from "../../../gamedata/passive-skill-tree/external-data/PassiveSkillTreeOptionsJson";
-import {NodeState, NodeType} from "./NodeState";
+import {CharacterClass, NodeState, NodeType} from "./NodeState";
 import {PassiveTreeState} from "./PassiveTreeState";
 import {GroupState, GroupStateBackground} from "./GroupState";
 import {Dictionary} from "../../../utils/Dictionary";
@@ -75,15 +75,30 @@ function getGroupBackground(oo: Dictionary<boolean>): GroupStateBackground {
 }
 
 function getNodeType(nodeJson: NodeJson): NodeType {
-    if (nodeJson.m) {
+    if (nodeJson.spc.length > 0) {
+        return NodeType.ClassStart;
+    } else if (nodeJson.m) {
         return NodeType.Mastery;
     } else if (nodeJson.ks) {
         return NodeType.Keystone;
     } else if (nodeJson.not) {
-        return NodeType.Notable;
+        return nodeJson.ascendancyName ? NodeType.AscendancyLarge : NodeType.Notable;
     } else {
-        return NodeType.Normal;
+        return nodeJson.ascendancyName ? NodeType.AscendancySmall : NodeType.Normal;
     }
+}
+
+/**
+ * Get name of the starting class.
+ *
+ * @param nodeJson
+ */
+function getClassStart(nodeJson: NodeJson): CharacterClass | null {
+    if (nodeJson.spc.length !== 1) {
+        return null;
+    }
+
+    return nodeJson.spc[0];
 }
 
 /**
@@ -105,6 +120,7 @@ function createNodes(json: PassiveSkillTreeOptionsJson): Map<string, NodeState> 
                 getNodeType(nodeJson),
                 nodeJson.isAscendancyStart,
                 nodeJson.ascendancyName,
+                getClassStart(nodeJson),
                 nodeJson.isJewelSocket
             )
         );

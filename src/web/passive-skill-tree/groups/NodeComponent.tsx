@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component} from "react";
-import {NodeAllocationState, NodeState, NodeType} from "../../stores/passive-skill-tree/NodeState";
+import {CharacterClass, NodeAllocationState, NodeState, NodeType} from "../../stores/passive-skill-tree/NodeState";
 import {SkillSpriteGroups} from "../../../gamedata/passive-skill-tree/external-data/SkillSpritesJson";
 import {observer} from "mobx-react";
 import {ConsoleLogger} from "../../../utils/logger/ConsoleLogger";
@@ -11,17 +11,23 @@ const frameByTypeByState = {
     [NodeAllocationState.Allocated]: {
         [NodeType.Normal]: "gamedata/3.3.1/assets/PSSkillFrameActive-0.3835.png",
         [NodeType.Keystone]: "gamedata/3.3.1/assets/KeystoneFrameAllocated-0.3835.png",
-        [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameAllocated-0.3835.png"
+        [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameAllocated-0.3835.png",
+        [NodeType.AscendancySmall]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameSmallAllocated-0.3835.png",
+        [NodeType.AscendancyLarge]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameLargeAllocated-0.3835.png"
     },
     [NodeAllocationState.CanAllocate]: {
         [NodeType.Normal]: "gamedata/3.3.1/assets/PSSkillFrameHighlighted-0.3835.png",
         [NodeType.Keystone]: "gamedata/3.3.1/assets/KeystoneFrameCanAllocate-0.3835.png",
-        [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameCanAllocate-0.3835.png"
+        [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameCanAllocate-0.3835.png",
+        [NodeType.AscendancySmall]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameSmallCanAllocate-0.3835.png",
+        [NodeType.AscendancyLarge]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameLargeCanAllocate-0.3835.png"
     },
     [NodeAllocationState.Unallocated]: {
         [NodeType.Normal]: "gamedata/3.3.1/assets/PSSkillFrame-0.3835.png",
         [NodeType.Keystone]: "gamedata/3.3.1/assets/KeystoneFrameUnallocated-0.3835.png",
-        [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameUnallocated-0.3835.png"
+        [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameUnallocated-0.3835.png",
+        [NodeType.AscendancySmall]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameSmallNormal-0.3835.png",
+        [NodeType.AscendancyLarge]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameLargeNormal-0.3835.png"
     }
 };
 
@@ -41,10 +47,15 @@ function getFrameUrl(node: NodeState): string | null {
  * @param node
  */
 function renderFrame(node: NodeState) {
+    if (node.isAscendancyStart) {
+        return null;
+    }
+
     const url = getFrameUrl(node);
     if (url === null) {
         return null;
     }
+
     return (
         <pixi-sprite
             anchor={{x: 0.5, y: 0.5}}
@@ -58,14 +69,28 @@ const iconByTypeByState = {
         [NodeType.Normal]: SkillSpriteGroups.normalActive,
         [NodeType.Keystone]: SkillSpriteGroups.keystoneActive,
         [NodeType.Notable]: SkillSpriteGroups.notableActive,
-        [NodeType.Mastery]: SkillSpriteGroups.mastery
+        [NodeType.Mastery]: SkillSpriteGroups.mastery,
+        [NodeType.AscendancySmall]: SkillSpriteGroups.normalActive,
+        [NodeType.AscendancyLarge]: SkillSpriteGroups.notableActive
     },
     [NodeAllocationState.Unallocated]: {
         [NodeType.Normal]: SkillSpriteGroups.normalInactive,
         [NodeType.Keystone]: SkillSpriteGroups.keystoneInactive,
         [NodeType.Notable]: SkillSpriteGroups.notableInactive,
-        [NodeType.Mastery]: SkillSpriteGroups.mastery
+        [NodeType.Mastery]: SkillSpriteGroups.mastery,
+        [NodeType.AscendancySmall]: SkillSpriteGroups.normalInactive,
+        [NodeType.AscendancyLarge]: SkillSpriteGroups.notableInactive
     }
+};
+
+const classStartIconByCharacterClass = {
+    [CharacterClass.Witch]: "gamedata/3.3.1/assets/centerwitch-0.3835.png",
+    [CharacterClass.Shadow]: "gamedata/3.3.1/assets/centershadow-0.3835.png",
+    [CharacterClass.Ranger]: "gamedata/3.3.1/assets/centerranger-0.3835.png",
+    [CharacterClass.Duelist]: "gamedata/3.3.1/assets/centerduelist-0.3835.png",
+    [CharacterClass.Marauder]: "gamedata/3.3.1/assets/centermarauder-0.3835.png",
+    [CharacterClass.Templar]: "gamedata/3.3.1/assets/centertemplar-0.3835.png",
+    [CharacterClass.Scion]: "gamedata/3.3.1/assets/centerscion-0.3835.png"
 };
 
 /**
@@ -84,8 +109,24 @@ function getIconGroup(node: NodeState): SkillSpriteGroups {
  * @param node
  */
 function findIcon(node: NodeState) {
+    if (node.isAscendancyStart) {
+        return {
+            url: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyMiddle-0.3835.png"
+        }
+    }
+
+    if (node.isClassStart) {
+        return {
+            url: node.isAllocated ? classStartIconByCharacterClass[node.characterClassName!!] : "gamedata/3.3.1/assets/PSStartNodeBackgroundInactive-0.3835.gif"
+        }
+    }
+
     const path = node.icon;
     const iconGroup = getIconGroup(node);
+    if (!iconGroup) {
+        log.warn("Icon group was undefined", {node});
+        return {}
+    }
     const spriteSheets = node.group.passiveTree.skillSprites[iconGroup];
     if (!spriteSheets) {
         throw new Error(`Sprite sheet ${iconGroup} not found`);

@@ -15,8 +15,6 @@ export interface ReactPIXISpriteProps {
 }
 
 export class ReactPIXISprite extends PIXI.Sprite implements ReactPIXIComponent<ReactPIXISpriteProps> {
-    public isReactPIXIComponent: "ReactPIXIComponent";
-
     private setTextureFrame = (frame: Rectangle) => {
         if (!this.texture) {
             return;

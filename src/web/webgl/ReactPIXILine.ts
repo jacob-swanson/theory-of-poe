@@ -12,6 +12,7 @@ export class ReactPIXILine extends PIXI.Graphics implements ReactPIXIComponent<R
     public isReactPIXIComponent: "ReactPIXIComponent";
 
     public update(oldProps: ReactPIXILineProps, newProps: ReactPIXILineProps): void {
+        this.clear();
         this.lineStyle(newProps.width, newProps.color);
         this.moveTo(newProps.from.x, newProps.from.y);
         this.lineTo(newProps.to.x, newProps.to.y);
