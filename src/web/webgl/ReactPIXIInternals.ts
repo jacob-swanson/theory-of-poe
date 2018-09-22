@@ -42,6 +42,13 @@ export interface Rectangle extends Point {
     height: number;
 }
 
+export interface BoundRectangle {
+    left: number;
+    top: number;
+    right: number;
+    bottom: number;
+}
+
 /**
  * Augment the global JSX namespace to include our custom component type map as
  * intrinsic elements.

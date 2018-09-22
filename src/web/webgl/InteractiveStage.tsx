@@ -4,8 +4,10 @@ import InteractionEvent = PIXI.interaction.InteractionEvent;
 
 const log = new ConsoleLogger("InteractiveStage", "debug");
 
-export interface InteractiveStageProps extends StageProps{
-    zoomPercent?: number
+export interface InteractiveStageProps extends StageProps {
+    zoomPercent?: number;
+    maxScale?: number;
+    minScale?: number;
 }
 
 export class InteractiveStage extends Stage<InteractiveStageProps> {
@@ -14,8 +16,8 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
     private prevY = 0;
     private distanceMoved = 0;
 
-    private onMouseDown = (e: InteractionEvent) => {
-        log.trace("InteractiveStage.onMouseDown", {e});
+    private onDragStart = (e: InteractionEvent) => {
+        log.trace("InteractiveStage.onDragStart", {e});
 
         this.isDragging = true;
         this.prevX = e.data.global.x;
@@ -23,7 +25,7 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.distanceMoved = 0;
     };
 
-    private onMouseMove = (e: InteractionEvent) => {
+    private onDragMove = (e: InteractionEvent) => {
         if (!this.isDragging || this.app == null) {
             return;
         }
@@ -33,8 +35,11 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
 
         this.distanceMoved += Math.abs(dx) + Math.abs(dy);
 
-        this.app.stage.x += dx;
-        this.app.stage.y += dy;
+        const nextX = this.app.stage.x + dx;
+        const nextY = this.app.stage.y + dy;
+
+        this.app.stage.x = nextX;
+        this.app.stage.y = nextY;
 
         this.prevX = e.data.global.x;
         this.prevY = e.data.global.y;
@@ -45,16 +50,26 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
             throw new Error("app not set");
         }
 
-        e.preventDefault();
         const scale = this.app.stage.scale;
         const delta = e.deltaY || e.wheelDelta;
         const direction = delta > 0 ? -1 : 1;
         const zoomPercent = this.props.zoomPercent || 0.2;
-        const newScale = {
+        let newScale = {
             x: scale.x + direction * zoomPercent * scale.x,
             y: scale.y + direction * zoomPercent * scale.y
         };
-
+        if (this.props.minScale) {
+            newScale = {
+                x: Math.max(newScale.x, this.props.minScale),
+                y: Math.max(newScale.y, this.props.minScale)
+            };
+        }
+        if (this.props.maxScale) {
+            newScale = {
+                x: Math.min(newScale.x, this.props.maxScale),
+                y: Math.min(newScale.y, this.props.maxScale)
+            };
+        }
 
         const stagePosition = {
             x: this.app.stage.x,
@@ -79,10 +94,21 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.app.stage.y -= positionDelta.y;
     };
 
-    private onMouseUp = (e: InteractionEvent) => {
-        log.trace("InteractiveStage.onMouseUp", {e});
+    private onDragEnd = (e: InteractionEvent) => {
+        log.trace("InteractiveStage.onDragEnd", {e});
 
         this.isDragging = false;
+    };
+
+    /**
+     * Prevents selection when the panning and the cursor leaves the canvas.
+     *
+     * @param e
+     */
+    private onCanvasMouseDown = (e: MouseEvent) => {
+        log.trace("InteractiveStage.onCanvasMouseDown", {e});
+
+        e.preventDefault();
     };
 
     public componentDidMount() {
@@ -91,14 +117,19 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
             throw new Error("app not set");
         }
 
-        this.app.renderer.plugins.interaction.on("mousedown", this.onMouseDown);
-        this.app.renderer.plugins.interaction.on("mousemove", this.onMouseMove);
-        this.app.renderer.plugins.interaction.on("pointerup", this.onMouseUp);
+        this.app.renderer.plugins.interaction.on("pointerdown", this.onDragStart);
+        this.app.renderer.plugins.interaction.on("pointermove", this.onDragMove);
+        this.app.renderer.plugins.interaction.on("pointerup", this.onDragEnd);
+        this.app.renderer.plugins.interaction.on("pointerupoutside", this.onDragEnd);
+    }
+
+    public componentWillUnmount() {
     }
 
     protected getAdditionalProps(): {} {
         return {
-            onWheel: this.onWheel
+            onWheel: this.onWheel,
+            onMouseDown: this.onCanvasMouseDown
         };
     }
 }

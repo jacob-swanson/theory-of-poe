@@ -10,8 +10,6 @@ export interface ReactPIXIContainerProps {
 }
 
 export class ReactPIXIContainer extends PIXI.Container implements ReactPIXIComponent<ReactPIXIContainerProps> {
-    public isReactPIXIComponent: "ReactPIXIComponent";
-
     public update(oldProps: ReactPIXIContainerProps, newProps: ReactPIXIContainerProps): void {
         if (newProps.position && oldProps.position !== newProps.position) {
             this.x = newProps.position.x;
@@ -21,7 +19,7 @@ export class ReactPIXIContainer extends PIXI.Container implements ReactPIXICompo
         if (newProps.onClick && oldProps.onClick !== newProps.onClick) {
             this.interactive = true;
             this.buttonMode = true;
-            this.on("pointerdown", newProps.onClick);
+            this.on("pointerup", newProps.onClick);
         }
     }
 }

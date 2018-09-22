@@ -17,7 +17,11 @@ export class PassiveSkillTree extends Component<PassiveSkillTreeProps> {
     public render() {
         const {data} = this.props;
         return (
-            <InteractiveStage className="PassiveSkillTree">
+            <InteractiveStage
+                className="PassiveSkillTree"
+                minScale={0.1}
+                maxScale={5}
+            >
                 {this.renderBackground()}
                 {this.renderGroups(data)}
                 {this.renderLinks(data)}
