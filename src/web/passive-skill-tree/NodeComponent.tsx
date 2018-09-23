@@ -5,7 +5,7 @@ import {SkillSpriteGroups} from "../../gamedata/passive-skill-tree/external-data
 import {observer} from "mobx-react";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 
-const log = new ConsoleLogger("NodeComponent");
+const log = new ConsoleLogger("debug");
 
 const frameByTypeByState = {
     [NodeAllocationState.Allocated]: {
@@ -14,7 +14,8 @@ const frameByTypeByState = {
         [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameAllocated-0.3835.png",
         [NodeType.AscendancySmall]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameSmallAllocated-0.3835.png",
         [NodeType.AscendancyLarge]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameLargeAllocated-0.3835.png",
-        [NodeType.JewelSocket]: "gamedata/3.3.1/assets/JewelFrameAllocated-0.3835.png"
+        [NodeType.JewelSocket]: "gamedata/3.3.1/assets/JewelFrameAllocated-0.3835.png",
+        [NodeType.AscendancyStart]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyMiddle-0.3835.png"
     },
     [NodeAllocationState.CanAllocate]: {
         [NodeType.Normal]: "gamedata/3.3.1/assets/PSSkillFrameHighlighted-0.3835.png",
@@ -22,7 +23,8 @@ const frameByTypeByState = {
         [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameCanAllocate-0.3835.png",
         [NodeType.AscendancySmall]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameSmallCanAllocate-0.3835.png",
         [NodeType.AscendancyLarge]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameLargeCanAllocate-0.3835.png",
-        [NodeType.JewelSocket]: "gamedata/3.3.1/assets/JewelFrameCanAllocate-0.3835.png"
+        [NodeType.JewelSocket]: "gamedata/3.3.1/assets/JewelFrameCanAllocate-0.3835.png",
+        [NodeType.AscendancyStart]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyMiddle-0.3835.png"
     },
     [NodeAllocationState.Unallocated]: {
         [NodeType.Normal]: "gamedata/3.3.1/assets/PSSkillFrame-0.3835.png",
@@ -30,7 +32,8 @@ const frameByTypeByState = {
         [NodeType.Notable]: "gamedata/3.3.1/assets/NotableFrameUnallocated-0.3835.png",
         [NodeType.AscendancySmall]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameSmallNormal-0.3835.png",
         [NodeType.AscendancyLarge]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyFrameLargeNormal-0.3835.png",
-        [NodeType.JewelSocket]: "gamedata/3.3.1/assets/JewelFrameUnallocated-0.3835.png"
+        [NodeType.JewelSocket]: "gamedata/3.3.1/assets/JewelFrameUnallocated-0.3835.png",
+        [NodeType.AscendancyStart]: "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyMiddle-0.3835.png"
     }
 };
 
@@ -50,12 +53,8 @@ const classStartIconByCharacterClass = {
  * @param node
  */
 function getFrameUrl(node: NodeState): string | null {
-    if (node.isAscendancyStart) {
-        return "gamedata/3.3.1/assets/PassiveSkillScreenAscendancyMiddle-0.3835.png";
-    }
-
-    if (node.isClassStart && node.characterClassName !== null) {
-        return node.isAllocated ? classStartIconByCharacterClass[node.characterClassName] : "gamedata/3.3.1/assets/PSStartNodeBackgroundInactive-0.3835.gif";
+    if (node.isClassStart && node.className !== null) {
+        return node.isAllocated ? classStartIconByCharacterClass[node.className] : "gamedata/3.3.1/assets/PSStartNodeBackgroundInactive-0.3835.gif";
     }
 
     const state = node.isAllocated ? NodeAllocationState.Allocated : NodeAllocationState.Unallocated;
@@ -116,7 +115,7 @@ function getIconGroup(node: NodeState): SkillSpriteGroups {
  * @param node
  */
 function findIcon(node: NodeState) {
-    if (node.isAscendancyStart || node.isClassStart) {
+    if (node.type === NodeType.AscendancyStart || node.type === NodeType.ClassStart) {
         return {};
     }
 
@@ -167,6 +166,9 @@ export interface NodeComponentProps {
 export class NodeComponent extends Component<NodeComponentProps> {
     public render() {
         const {node} = this.props;
+
+        log.trace(`Rendering node ${node.id}`);
+
         const onClick = node.isAllocatable ? node.toggleAllocated : undefined;
         return (
             <pixi-container position={node.position} onClick={onClick}>

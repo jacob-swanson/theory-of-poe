@@ -2,11 +2,9 @@ import {NodeAllocationState, NodeState} from "../stores/passive-skill-tree/NodeS
 import * as React from "react";
 import {Component} from "react";
 import {observer} from "mobx-react";
+import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 
-enum LinkType {
-    Arc,
-    Line
-}
+const log = new ConsoleLogger("Link", "debug");
 
 const lineUrlByType = {
     [NodeAllocationState.Allocated]: "gamedata/3.3.1/assets/LineConnectorActive-0.3835.png",
@@ -44,14 +42,17 @@ export interface LinkComponentProps {
 export class LinkComponent extends Component<LinkComponentProps> {
     public render() {
         const {from, to} = this.props;
-        const linkType = from.group === to.group && from.orbit === to.orbit ? LinkType.Arc : LinkType.Line;
+
+        log.trace(`Rendering link ${from.id}-${to.id}`);
+
+        const isArc = from.group === to.group && from.orbit === to.orbit;
         const isAllocated = from.isAllocated && to.isAllocated;
         const color = isAllocated ? 0x839574 : 0x373B33;
         const width = isAllocated ? 10 : 5;
 
-        return linkType === LinkType.Line ?
-            this.renderLine(width, color) :
-            this.renderArc(width, color);
+        return isArc ?
+            this.renderArc(width, color) :
+            this.renderLine(width, color);
     }
 
     private renderLine(width: number, color: number) {

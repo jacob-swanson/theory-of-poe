@@ -75,7 +75,9 @@ function getGroupBackground(oo: Dictionary<boolean>): GroupStateBackground {
 }
 
 function getNodeType(nodeJson: NodeJson): NodeType {
-    if (nodeJson.spc.length > 0) {
+    if (nodeJson.isAscendancyStart) {
+        return NodeType.AscendancyStart;
+    } else if (nodeJson.spc.length > 0) {
         return NodeType.ClassStart;
     } else if (nodeJson.isJewelSocket) {
         return NodeType.JewelSocket;
@@ -100,7 +102,17 @@ function getClassStart(nodeJson: NodeJson): CharacterClass | null {
         return null;
     }
 
-    return nodeJson.spc[0];
+    const spcToClass = [
+        CharacterClass.Scion,
+        CharacterClass.Marauder,
+        CharacterClass.Ranger,
+        CharacterClass.Witch,
+        CharacterClass.Duelist,
+        CharacterClass.Templar,
+        CharacterClass.Shadow
+    ];
+
+    return spcToClass[nodeJson.spc[0]];
 }
 
 /**
@@ -120,7 +132,6 @@ function createNodes(json: PassiveSkillTreeOptionsJson): Map<string, NodeState> 
                 nodeJson.oidx,
                 nodeJson.icon,
                 getNodeType(nodeJson),
-                nodeJson.isAscendancyStart,
                 nodeJson.ascendancyName,
                 getClassStart(nodeJson)
             )

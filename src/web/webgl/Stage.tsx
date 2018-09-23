@@ -46,11 +46,19 @@ export class Stage<P extends StageProps = StageProps> extends Component<P> {
         this.app = new PIXI.Application(pixiOptions);
         this.mountNode = ReactPIXIRenderer.createContainer(this.app.stage, false, false);
         ReactPIXIRenderer.updateContainer(children, this.mountNode, this);
+        // ReactPIXIRenderer.injectIntoDevTools({
+        //     findFiberByHostInstance: () => null,
+        //     bundleType: 1,
+        //     version: "0.1.0",
+        //     rendererPackageName: "theory-of-poe"
+        // });
 
         window.addEventListener("resize", this.onResize);
     }
 
     public componentWillUnmount() {
+        ReactPIXIRenderer.updateContainer(null, this.mountNode, this);
+        this.app!!.destroy();
         window.removeEventListener("resize", this.onResize);
     }
 

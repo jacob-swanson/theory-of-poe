@@ -1,4 +1,4 @@
-import {NodeState} from "./NodeState";
+import {NodeState, NodeType} from "./NodeState";
 import {Point} from "../../webgl/ReactPIXIInternals";
 import {PassiveTreeState} from "./PassiveTreeState";
 
@@ -29,7 +29,7 @@ export class GroupState {
 
     get isAscendancyStart(): boolean {
         for (const node of this.nodes) {
-            if (node.isAscendancyStart) {
+            if (node.type === NodeType.AscendancyStart) {
                 return true;
             }
         }

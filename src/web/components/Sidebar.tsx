@@ -1,18 +1,32 @@
 import * as React from "react";
-import {Component} from "react";
+import {ChangeEvent, Component} from "react";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft} from "@fortawesome/free-solid-svg-icons/faChevronLeft";
 import "./Sidebar.css";
+import {AscendanciesByClass, CharacterClassesBySpc} from "../stores/passive-skill-tree/NodeState";
+import {observer} from "mobx-react";
+import {CharacterState} from "../stores/passive-skill-tree/CharacterState";
 
 export interface SidebarProps {
     isSidebarVisible: boolean;
     toggleSidebar: () => void;
+    character: CharacterState;
 }
 
+@observer
 export class Sidebar extends Component<SidebarProps> {
+    private onCharacterClassChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const {character} = this.props;
+        character.setClass(e.target.value as any);
+    };
+    private onAscendancyChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const {character} = this.props;
+        character.setAscendancy(e.target.value as any);
+    };
+
     public render() {
-        const {isSidebarVisible, toggleSidebar} = this.props;
+        const {isSidebarVisible, toggleSidebar, character} = this.props;
 
         if (!isSidebarVisible) {
             return null;
@@ -39,39 +53,45 @@ export class Sidebar extends Component<SidebarProps> {
                     </div>
                 </nav>
 
-                <p className="menu-label">
-                    General
-                </p>
-                <ul className="menu-list">
-                    <li><a>Dashboard</a></li>
-                    <li><a>Customers</a></li>
-                </ul>
-                <p className="menu-label">
-                    Administration
-                </p>
-                <ul className="menu-list">
-                    <li><a>Team Settings</a></li>
-                    <li>
-                        <a className="is-active">Manage Your Team</a>
-                        <ul>
-                            <li><a>Members</a></li>
-                            <li><a>Plugins</a></li>
-                            <li><a>Add a member</a></li>
-                        </ul>
-                    </li>
-                    <li><a>Invitations</a></li>
-                    <li><a>Cloud Storage Environment Settings</a></li>
-                    <li><a>Authentication</a></li>
-                </ul>
-                <p className="menu-label">
-                    Transactions
-                </p>
-                <ul className="menu-list">
-                    <li><a>Payments</a></li>
-                    <li><a>Transfers</a></li>
-                    <li><a>Balance</a></li>
-                </ul>
+                <div className="field has-addons">
+                    <p className="control">
+                        <span className="select">
+                            <select onChange={this.onCharacterClassChange} value={character.className}>
+                                {this.renderCharacterClassOptions()}
+                            </select>
+                        </span>
+                    </p>
+                    <p className="control">
+                        <span className="select">
+                            <select onChange={this.onAscendancyChange} value={character.ascendancy}>
+                                {this.renderAscendancyOptions()}
+                            </select>
+                        </span>
+                    </p>
+                </div>
             </aside>
         );
+    }
+
+    private renderCharacterClassOptions() {
+        const {character} = this.props;
+        const options = [];
+        for (const characterClass of CharacterClassesBySpc) {
+            options.push(
+                <option key={characterClass} value={characterClass}>{characterClass}</option>
+            );
+        }
+        return options;
+    }
+
+    private renderAscendancyOptions() {
+        const {character} = this.props;
+        const options = [];
+        for (const ascendancy of AscendanciesByClass[character.className]) {
+            options.push(
+                <option key={ascendancy} value={ascendancy}>{ascendancy}</option>
+            );
+        }
+        return options;
     }
 }

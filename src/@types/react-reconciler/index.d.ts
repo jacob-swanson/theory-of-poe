@@ -69,6 +69,8 @@ declare namespace ReactReconciler {
         findHostInstance(component: Fiber): I | TI | null,
 
         findHostInstanceWithNoPortals(component: Fiber): I | TI | null,
+
+        findFiberByHostInstance(instance: I | TI): Fiber
     }
 
     export interface HydrationHostConfig<T, P, I, TI, HI, C, CX, PL> {
@@ -206,7 +208,6 @@ declare namespace ReactReconciler {
 
     export interface HostConfig<T, P, I, TI, HI, PI, C, CC, CX, PL> extends Partial<MutableUpdatesHostConfig<T, P, I, TI, C, PL>> {
         hydration?: HydrationHostConfig<T, P, I, TI, HI, C, CX, PL>,
-        // mutation?: MutableUpdatesHostConfig<T, P, I, TI, C, PL>,
         persistence?: PersistentUpdatesHostConfig<T, P, I, TI, C, CC, PL>,
         isPrimaryRenderer: boolean;
         supportsMutation: boolean;

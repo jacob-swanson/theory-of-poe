@@ -2,6 +2,7 @@ import {GroupState} from "./GroupState";
 import {Point} from "../../webgl/ReactPIXIInternals";
 import {action, computed, observable} from "mobx";
 import {ConsoleLogger} from "../../../utils/logger/ConsoleLogger";
+import {Dictionary} from "../../../utils/Dictionary";
 
 const log = new ConsoleLogger("NodeState");
 
@@ -10,6 +11,7 @@ export enum NodeType {
     Notable = "Notable",
     Keystone = "Keystone",
     Normal = "Normal",
+    AscendancyStart = "AscendancyStart",
     AscendancySmall = "AscendancySmall",
     AscendancyLarge = "AscendancyLarge",
     ClassStart = "ClassStart",
@@ -23,23 +25,90 @@ export enum NodeAllocationState {
 }
 
 export enum CharacterClass {
-    Witch = 3,
-    Shadow = 6,
-    Ranger = 2,
-    Duelist = 4,
-    Marauder = 1,
-    Templar = 5,
-    Scion = 0
+    Witch = "Witch",
+    Shadow = "Shadow",
+    Ranger = "Ranger",
+    Duelist = "Duelist",
+    Marauder = "Marauder",
+    Templar = "Templar",
+    Scion = "Scion"
 }
+
+export const CharacterClassesBySpc: CharacterClass[] = [
+    CharacterClass.Witch,
+    CharacterClass.Shadow,
+    CharacterClass.Ranger,
+    CharacterClass.Duelist,
+    CharacterClass.Marauder,
+    CharacterClass.Templar,
+    CharacterClass.Scion
+];
+
+export enum Ascendancy {
+    Slayer = "Slayer",
+    Gladiator = "Gladiator",
+    Champion = "Champion",
+    Assassin = "Assassin",
+    Saboteur = "Saboteur",
+    Trickster = "Trickster",
+    Juggernaut = "Juggernaut",
+    Berserker = "Berserker",
+    Chieftain = "Chieftain",
+    Necromancer = "Necromancer",
+    Elementalist = "Elementalist",
+    Occultist = "Occultist",
+    Deadeye = "Deadeye",
+    Raider = "Raider",
+    Pathfinder = "Pathfinder",
+    Inquisitor = "Inquisitor",
+    Hierophant = "Hierophant",
+    Guardian = "Guardian",
+    Ascendant = "Ascendant"
+}
+
+export const AscendanciesByClass: Dictionary<Ascendancy[]> = {
+    [CharacterClass.Duelist]: [
+        Ascendancy.Slayer,
+        Ascendancy.Gladiator,
+        Ascendancy.Champion
+    ],
+    [CharacterClass.Shadow]: [
+        Ascendancy.Assassin,
+        Ascendancy.Saboteur,
+        Ascendancy.Trickster
+    ],
+    [CharacterClass.Marauder]: [
+        Ascendancy.Juggernaut,
+        Ascendancy.Berserker,
+        Ascendancy.Chieftain
+    ],
+    [CharacterClass.Witch]: [
+        Ascendancy.Necromancer,
+        Ascendancy.Elementalist,
+        Ascendancy.Occultist
+    ],
+    [CharacterClass.Ranger]: [
+        Ascendancy.Deadeye,
+        Ascendancy.Raider,
+        Ascendancy.Pathfinder
+    ],
+    [CharacterClass.Templar]: [
+        Ascendancy.Inquisitor,
+        Ascendancy.Hierophant,
+        Ascendancy.Guardian
+    ],
+    [CharacterClass.Scion]: [
+        Ascendancy.Ascendant
+    ]
+};
 
 export class NodeState {
     public readonly connections = new Set<NodeState>();
+
     public group: GroupState;
 
-    @observable public isAllocated: boolean = false;
-
     @action public toggleAllocated = () => {
-        this.isAllocated = !this.isAllocated;
+        this._isAllocated = !this._isAllocated;
     };
 
     constructor(public readonly id: string,
@@ -48,12 +117,17 @@ export class NodeState {
                 public readonly orbitIndex: number,
                 public readonly icon: string,
                 public readonly type: NodeType,
-                public readonly isAscendancyStart: boolean,
                 public readonly ascendancyName: string | null,
-                public readonly characterClassName: CharacterClass | null) {
+                public readonly className: CharacterClass | null) {
     }
 
-    get position(): Point {
+    @observable private _isAllocated: boolean = false;
+
+    @computed get isAllocated(): boolean {
+        return this._isAllocated || this.className === this.group.passiveTree.character.className;
+    }
+
+    @computed get position(): Point {
         const r = this.group.passiveTree.orbitRadii[this.orbit];
         const theta = 2 * Math.PI * this.orbitIndex / this.group.passiveTree.skillsPerOrbit[this.orbit] - Math.PI / 2;
 
@@ -63,8 +137,30 @@ export class NodeState {
         return {x, y};
     }
 
-    get isAllocatable(): boolean {
-        return this.type !== NodeType.Mastery && this.type !== NodeType.ClassStart && !this.isAscendancyStart;
+    @computed get isAllocatable(): boolean {
+        const isMastery = this.type === NodeType.Mastery;
+        if (isMastery) {
+            return false;
+        }
+
+        const isClassStart = this.type === NodeType.ClassStart;
+        if (isClassStart) {
+            return false;
+        }
+
+        const isAscendancyStart = this.type === NodeType.AscendancyStart;
+        if (isAscendancyStart) {
+            return false;
+        }
+
+        if (this.ascendancyName) {
+            const isCurrentAscendancy =  this.ascendancyName === this.group.passiveTree.character.ascendancy;
+            if (!isCurrentAscendancy) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @computed get canAllocate(): boolean {
@@ -87,6 +183,6 @@ export class NodeState {
     }
 
     @computed get isClassStart(): boolean {
-        return this.characterClassName !== null;
+        return this.className !== null;
     }
 }

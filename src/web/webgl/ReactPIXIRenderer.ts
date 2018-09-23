@@ -21,7 +21,9 @@ interface HostContext {
 }
 
 function appendChild(parentInstance: PIXI.DisplayObject, child: PIXI.DisplayObject | Text): void {
-    log.trace("ReactPIXIRenderer.appendChild", {parentInstance, child});
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.appendChild", {parentInstance, child});
+    }
 
     if (child instanceof Text) {
         throw new Error("Text not supported");
@@ -34,7 +36,9 @@ function appendChild(parentInstance: PIXI.DisplayObject, child: PIXI.DisplayObje
 }
 
 function createInstanceFromType(type: Types, props: Props): PIXI.DisplayObject & ReactPIXIComponent {
-    log.trace("ReactPIXIRenderer.createInstanceFromType", {type});
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.createInstanceFromType", {type});
+    }
 
     switch (type) {
         case Types.Sprite:
@@ -55,13 +59,15 @@ function createInstanceFromType(type: Types, props: Props): PIXI.DisplayObject &
 }
 
 function createInstance(type: Types, props: Props, rootContainerInstance: PIXI.Container, hostContext: HostContext, internalInstanceHandle: {}): PIXI.DisplayObject {
-    log.trace("ReactPIXIRenderer.createInstance", {
-        type,
-        props,
-        rootContainerInstance,
-        hostContext,
-        internalInstanceHandle
-    });
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.createInstance", {
+            type,
+            props,
+            rootContainerInstance,
+            hostContext,
+            internalInstanceHandle
+        });
+    }
 
     const instance = createInstanceFromType(type, props);
     instance.update({}, props);
@@ -69,26 +75,30 @@ function createInstance(type: Types, props: Props, rootContainerInstance: PIXI.C
 }
 
 function finalizeInitialChildren(parentInstance: PIXI.DisplayObject, type: Types, props: Props, rootContainerInstance: PIXI.Container, hostContext: HostContext): boolean {
-    log.trace("ReactPIXIRenderer.finalizeInitialChildren", {
-        parentInstance,
-        type,
-        props,
-        rootContainerInstance,
-        hostContext
-    });
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.finalizeInitialChildren", {
+            parentInstance,
+            type,
+            props,
+            rootContainerInstance,
+            hostContext
+        });
+    }
 
     return false;
 }
 
 function getChildHostContext(parentHostContext: HostContext, type: Types, instance: PIXI.Container): HostContext {
-    log.trace("ReactPIXIRenderer.getChildHostContext", {parentHostContext, type, instance});
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.getChildHostContext", {parentHostContext, type, instance});
+    }
     return emptyObject;
 }
 
 function getPublicInstance(instance: PIXI.DisplayObject | Text): PIXI.DisplayObject {
-    log.trace("ReactPIXIRenderer.getPublicInstance", {instance});
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.getPublicInstance", {instance});
+    }
     if (instance instanceof Text) {
         throw new Error("Text not supported");
     }
@@ -97,14 +107,16 @@ function getPublicInstance(instance: PIXI.DisplayObject | Text): PIXI.DisplayObj
 }
 
 function getRootHostContext(rootContainerInstance: PIXI.Container): HostContext {
-    log.trace("ReactPIXIRenderer.getRootHostContext", {rootContainerInstance});
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.getRootHostContext", {rootContainerInstance});
+    }
     return emptyObject;
 }
 
 function diffProps(pixiElement: PIXI.DisplayObject, type: Types, lastRawProps: Props, nextRawProps: Props, rootContainerElement: PIXI.Container): Array<[string, any]> | null {
-    log.trace("ReactPIXIRenderer.diffProps", {pixiElement, type, lastRawProps, nextRawProps, rootContainerElement});
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.diffProps", {pixiElement, type, lastRawProps, nextRawProps, rootContainerElement});
+    }
     let updatePayload: any[] | null = null;
 
     const lastProps = lastRawProps;
@@ -140,47 +152,55 @@ function diffProps(pixiElement: PIXI.DisplayObject, type: Types, lastRawProps: P
 }
 
 function prepareUpdate(instance: PIXI.DisplayObject, type: Types, oldProps: Props, newProps: Props, rootContainerInstance: PIXI.Container, hostContext: HostContext): Array<[string, any]> | null {
-    log.trace("ReactPIXIRenderer.prepareUpdate", {
-        instance,
-        type,
-        oldProps,
-        newProps,
-        rootContainerInstance,
-        hostContext
-    });
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.prepareUpdate", {
+            instance,
+            type,
+            oldProps,
+            newProps,
+            rootContainerInstance,
+            hostContext
+        });
+    }
+    return [];
 
-    const propsDiff = diffProps(instance, type, oldProps, newProps, rootContainerInstance) || null;
+    // const propsDiff = diffProps(instance, type, oldProps, newProps, rootContainerInstance) || null;
 
-    log.trace("ReactPIXIRenderer.prepareUpdate", {propsDiff});
-    return propsDiff;
+    // log.trace("ReactPIXIRenderer.prepareUpdate", {propsDiff});
+    // return propsDiff;
 }
 
 function noop(...args: any[]): any {
-    log.trace("ReactPIXIRenderer.noop", [...args]);
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.noop", [...args]);
+    }
 }
 
 function shouldDeprioritizeSubtree(type: Types, props: Props): boolean {
-    log.trace("ReactPIXIRenderer.shouldDeprioritizeSubtree", {type, props});
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.shouldDeprioritizeSubtree", {type, props});
+    }
     return false;
 }
 
 function textNotSupported(...args: any[]): any {
-    log.trace("ReactPIXIRenderer.textNotSupported", [...args]);
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.textNotSupported", [...args]);
+    }
     throw new Error("Text not supported");
 }
 
 function shouldSetTextContent(type: Types, props: Props): boolean {
-    log.trace("ReactPIXIRenderer.shouldSetTextContent", {type, props});
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.shouldSetTextContent", {type, props});
+    }
     return false;
 }
 
 function removeChild(parentInstance: PIXI.DisplayObject, child: PIXI.DisplayObject | Text): void {
-    log.trace("ReactPIXIRenderer.removeChild", {parentInstance, child});
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.removeChild", {parentInstance, child});
+    }
     if (child instanceof Text) {
         throw new Error("Text not supported");
     }
@@ -193,8 +213,9 @@ function removeChild(parentInstance: PIXI.DisplayObject, child: PIXI.DisplayObje
 }
 
 function isComponentUpdatable(instance: any): instance is ReactPIXIComponent {
-    log.trace("ReactPIXIRenderer.isComponentUpdatable", {instance});
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.isComponentUpdatable", {instance});
+    }
     return typeof instance.update === "function";
 }
 
@@ -206,15 +227,16 @@ function commitUpdate(
     newProps: Props,
     internalInstanceHandle: {}
 ): void {
-    log.trace("ReactPIXIRenderer.commitUpdate", {
-        instance,
-        updatePayload,
-        type,
-        oldProps,
-        newProps,
-        internalInstanceHandle
-    });
-
+    if (log.isTraceEnabled()) {
+        log.trace("ReactPIXIRenderer.commitUpdate", {
+            instance,
+            updatePayload,
+            type,
+            oldProps,
+            newProps,
+            internalInstanceHandle
+        });
+    }
     if (!isComponentUpdatable(instance)) {
         log.warn("Component was not updateable", {instance});
         return;

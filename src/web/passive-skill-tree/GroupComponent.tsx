@@ -1,6 +1,10 @@
 import * as React from "react";
-import {StatelessComponent} from "react";
+import {Component} from "react";
 import {GroupState, GroupStateBackground} from "../stores/passive-skill-tree/GroupState";
+import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
+import {observer} from "mobx-react";
+
+const log = new ConsoleLogger("Group", "debug");
 
 const ascendancyBackgroundsByAscendancyName = {
     Ascendant: "gamedata/3.3.1/assets/ClassesAscendant-0.3835.png",
@@ -28,53 +32,59 @@ export interface GroupProps {
     group: GroupState
 }
 
-export const GroupComponent: StatelessComponent<GroupProps> = ({group}) => {
-    if (group.ascendancyName) {
-        const url = ascendancyBackgroundsByAscendancyName[group.ascendancyName];
-        if (!group.isAscendancyStart) {
-            return null;
-        }
-        return (
-            <pixi-sprite
-                position={group.position}
-                anchor={{x: 0.5, y: 0.5}}
-                url={url}
-            />
-        );
-    }
+@observer
+export class GroupComponent extends Component<GroupProps> {
+    public render() {
+        const {group} = this.props;
+        log.trace(`Rendering group ${group.id}`);
 
-    switch (group.background) {
-        case GroupStateBackground.Large:
-            return (
-                <pixi-container position={group.position}>
-                    <pixi-sprite
-                        anchor={{x: 0.5, y: 1}}
-                        url="gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"
-                    />
-                    <pixi-sprite
-                        scale={{x: 1, y: -1}}
-                        anchor={{x: 0.5, y: 1}}
-                        url="gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"
-                    />
-                </pixi-container>
-            );
-        case GroupStateBackground.Medium:
+        if (group.ascendancyName) {
+            const url = ascendancyBackgroundsByAscendancyName[group.ascendancyName];
+            if (!group.isAscendancyStart) {
+                return null;
+            }
             return (
                 <pixi-sprite
                     position={group.position}
                     anchor={{x: 0.5, y: 0.5}}
-                    url="gamedata/3.3.1/assets/PSGroupBackground2-0.3835.gif"
+                    url={url}
                 />
             );
-        case GroupStateBackground.None:
-            return null;
-        case GroupStateBackground.Small:
-            return (
-                <pixi-sprite
-                    position={group.position}
-                    anchor={{x: 0.5, y: 0.5}}
-                    url="gamedata/3.3.1/assets/PSGroupBackground1-0.3835.gif"
-                />
-            );
+        }
+
+        switch (group.background) {
+            case GroupStateBackground.Large:
+                return (
+                    <pixi-container position={group.position}>
+                        <pixi-sprite
+                            anchor={{x: 0.5, y: 1}}
+                            url="gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"
+                        />
+                        <pixi-sprite
+                            scale={{x: 1, y: -1}}
+                            anchor={{x: 0.5, y: 1}}
+                            url="gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"
+                        />
+                    </pixi-container>
+                );
+            case GroupStateBackground.Medium:
+                return (
+                    <pixi-sprite
+                        position={group.position}
+                        anchor={{x: 0.5, y: 0.5}}
+                        url="gamedata/3.3.1/assets/PSGroupBackground2-0.3835.gif"
+                    />
+                );
+            case GroupStateBackground.None:
+                return null;
+            case GroupStateBackground.Small:
+                return (
+                    <pixi-sprite
+                        position={group.position}
+                        anchor={{x: 0.5, y: 0.5}}
+                        url="gamedata/3.3.1/assets/PSGroupBackground1-0.3835.gif"
+                    />
+                );
+        }
     }
-};
+}
