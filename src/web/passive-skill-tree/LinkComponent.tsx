@@ -1,8 +1,9 @@
-import {NodeAllocationState, NodeState} from "../stores/passive-skill-tree/NodeState";
 import * as React from "react";
 import {Component} from "react";
 import {observer} from "mobx-react";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
+import {Node, NodeAllocationState} from "../../gamedata/Node";
+import {PassiveTree} from "../../gamedata/PassiveTree";
 
 const log = new ConsoleLogger("Link", "debug");
 
@@ -34,8 +35,8 @@ const arcUrlByOrbitByType = {
 };
 
 export interface LinkComponentProps {
-    from: NodeState;
-    to: NodeState;
+    from: Node;
+    to: Node;
 }
 
 @observer
@@ -65,9 +66,9 @@ export class LinkComponent extends Component<LinkComponentProps> {
         const {from, to} = this.props;
 
         const center = from.group.position;
-        const radius = from.group.passiveTree.orbitRadii[from.orbit];
-        const fromTheta = 2 * Math.PI * from.orbitIndex / from.group.passiveTree.skillsPerOrbit[from.orbit] - Math.PI / 2;
-        const toTheta = 2 * Math.PI * to.orbitIndex / to.group.passiveTree.skillsPerOrbit[to.orbit] - Math.PI / 2;
+        const radius = PassiveTree.orbitRadii[from.orbit];
+        const fromTheta = 2 * Math.PI * from.orbitIndex / PassiveTree.skillsPerOrbit[from.orbit] - Math.PI / 2;
+        const toTheta = 2 * Math.PI * to.orbitIndex / PassiveTree.skillsPerOrbit[to.orbit] - Math.PI / 2;
 
         let arcTheta = fromTheta - toTheta;
         if (arcTheta < 0) {

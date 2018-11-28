@@ -1,45 +1,70 @@
 {
   "name": "theory-of-poe",
-  "version": "0.1.0",
+  "version": "0.0.1-snapshot",
   "private": true,
+  "license": "GPL",
+  "author": "Jacob Swanson <jacob.swanson.n@gmail.com> (http://www.jacob-swanson.com)",
+  "files": [
+    "lib/*"
+  ],
+  "bin": {
+    "theory-of-poe": "./lib/bin/scrape.js",
+    "theory-of-poe-server": "./lib/bin/server.js"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.4",
     "@fortawesome/free-brands-svg-icons": "^5.3.1",
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
     "@fortawesome/react-fontawesome": "^0.1.3",
+    "@types/express": "^4.16.0",
+    "@types/http-proxy-middleware": "^0.17.5",
+    "@types/jest": "^23.3.2",
     "@types/lodash": "^4.14.116",
+    "@types/node": "^10.9.4",
     "@types/pixi.js": "^4.8.0",
     "@types/prop-types": "^15.5.5",
+    "@types/react": "^16.4.14",
+    "@types/react-dom": "^16.0.7",
     "@types/react-router-dom": "^4.3.1",
     "bulma": "^0.7.1",
+    "express": "^4.16.3",
+    "express-http-proxy": "^1.4.0",
+    "http-proxy-middleware": "^0.19.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.11",
+    "memoize-one": "^4.0.3",
     "mobx": "^5.1.1",
     "mobx-react": "^5.2.8",
     "mobx-react-devtools": "^6.0.3",
     "pixi.js": "^4.8.2",
     "react": "^16.5.1",
+    "react-devtools": "^3.4.0",
     "react-dom": "^16.5.1",
-    "react-reconciler": "^0.14.0",
+    "react-reconciler": "^0.17.2",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.17.0",
-    "reflect-metadata": "^0.1.12"
-  },
-  "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
-    "theory-of-poe": "ts-node --project tsconfig.test.json ./src/bin/scrape.ts"
+    "reflect-metadata": "^0.1.12",
+    "serializr": "^1.3.0",
+    "typeorm": "^0.2.7",
+    "vesper": "^0.1.9"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.2",
-    "@types/node": "^10.9.4",
-    "@types/react": "^16.4.14",
-    "@types/react-dom": "^16.0.7",
-    "react-devtools": "^3.4.0",
+    "concurrently": "^4.0.1",
+    "cross-env": "^5.2.0",
+    "react-scripts-ts": "2.17.0",
+    "rimraf": "^2.6.2",
     "serve": "^10.0.1",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
-  }
+  },
+  "scripts": {
+    "deploy": "gcloud app deploy",
+    "dev": "concurrently -n web,server \"react-scripts-ts start\" \"ts-node ./src/bin/server.ts\"",
+    "start": "node ./lib/bin/server.js",
+    "build": "rimraf ./lib && rimraf ./build &&  concurrently -n web,lib \"react-scripts-ts build\" \"tsc -p tsconfig.lib.json\"",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "scrape": "ts-node ./src/bin/scrape.ts",
+    "vesper": "ts-node ./src/bin/vesper.ts"
+  },
+  "proxy": "http://localhost:9000"
 }

@@ -12,7 +12,7 @@ export class LRUCache<T> extends AbstractCache<T> {
             return undefined;
         }
 
-        const value = this.values.get(key)!!;
+        const value = this.values.get(key)!;
         this.values.delete(key);
         this.values.set(key, value);
 

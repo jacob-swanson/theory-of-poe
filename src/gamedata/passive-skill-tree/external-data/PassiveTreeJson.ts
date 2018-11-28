@@ -27,7 +27,7 @@ export interface PassiveTreeConstantsJson {
 }
 
 export interface PassiveTreeJson {
-    characterData: CharacterDataJson;
+    characterData: Dictionary<CharacterDataJson>;
     groups: Dictionary<GroupJson>;
     root: RootJson;
     nodes: Dictionary<NodeJson>;

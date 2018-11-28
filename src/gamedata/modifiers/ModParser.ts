@@ -1,4 +1,5 @@
 import Constructable = jest.Constructable;
+import {UnsupportedModifier} from "./UnsupportedModifier";
 
 const registeredMods: ModMetadata[] = [];
 
@@ -30,6 +31,7 @@ export class ModParser {
             const clazz = registeredMod.constructor;
             return new clazz(...args);
         }
+        return new UnsupportedModifier(modText);
         throw new Error(`Mod ${modText} not recognised`);
     }
 

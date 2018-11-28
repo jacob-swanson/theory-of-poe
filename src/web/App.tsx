@@ -12,25 +12,25 @@ import {Sidebar} from "./components/Sidebar";
 import {Navbar} from "./components/Navbar";
 import {UiState} from "./stores/UiState";
 import {observable} from "mobx";
-import {PassiveSkillTreeStateFactory} from "./stores/passive-skill-tree/PassiveSkillTreeStateFactory";
 import {FetchHttpClient} from "../utils/http-client/fetch/FetchHttpClient";
 import {PassiveSkillTreeService} from "../gamedata/passive-skill-tree/PassiveSkillTreeService";
-import {CharacterState} from "./stores/passive-skill-tree/CharacterState";
 import DevTools from "mobx-react-devtools";
+import {Character} from "../gamedata/Character";
+import {PassiveTreeFactory} from "../gamedata/PassiveTreeFactory";
 
 const httpClient = new FetchHttpClient();
-const passiveSkillTreeService = new PassiveSkillTreeService("http://localhost:3000/gamedata/", httpClient);
+const passiveSkillTreeService = new PassiveSkillTreeService("/gamedata", httpClient);
 
 @observer
 export class App extends Component {
     private uiState = new UiState();
 
-    @observable private character: CharacterState | null = null;
+    @observable private character: Character | null = null;
 
     public async componentDidMount() {
         const versions = await passiveSkillTreeService.getVersions();
         const json = await passiveSkillTreeService.getDataForVersion(versions[0]);
-        this.character = new CharacterState(PassiveSkillTreeStateFactory.create(json));
+        this.character = new Character(PassiveTreeFactory.create(json));
     }
 
     public render() {

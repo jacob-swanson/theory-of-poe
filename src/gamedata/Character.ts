@@ -1,27 +1,113 @@
-import {AllocatableNode} from "./passive-skill-tree/nodes/AllocatableNode";
-import {computed, observable} from "mobx";
+import {PassiveTree} from "./PassiveTree";
+import {action, observable} from "mobx";
 import {Mod} from "./modifiers/Mod";
-import {MaximumLife} from "./stats/life/MaximumLife";
+import {AddedDexterity} from "./modifiers/attributes/AddedDexterity";
+import {AddedStrength} from "./modifiers/attributes/AddedStrength";
+import {AddedIntelligence} from "./modifiers/attributes/AddedIntelligence";
 import {StatConstructor} from "./stats/Stat";
 import {ValueStat} from "./stats/ValueStat";
+import {Dictionary} from "../utils/Dictionary";
+
+export enum CharacterClass {
+    Witch = "Witch",
+    Shadow = "Shadow",
+    Ranger = "Ranger",
+    Duelist = "Duelist",
+    Marauder = "Marauder",
+    Templar = "Templar",
+    Scion = "Scion"
+}
+
+export enum Ascendancy {
+    Slayer = "Slayer",
+    Gladiator = "Gladiator",
+    Champion = "Champion",
+    Assassin = "Assassin",
+    Saboteur = "Saboteur",
+    Trickster = "Trickster",
+    Juggernaut = "Juggernaut",
+    Berserker = "Berserker",
+    Chieftain = "Chieftain",
+    Necromancer = "Necromancer",
+    Elementalist = "Elementalist",
+    Occultist = "Occultist",
+    Deadeye = "Deadeye",
+    Raider = "Raider",
+    Pathfinder = "Pathfinder",
+    Inquisitor = "Inquisitor",
+    Hierophant = "Hierophant",
+    Guardian = "Guardian",
+    Ascendant = "Ascendant"
+}
+
+export const CharacterClassesBySpc: CharacterClass[] = [
+    CharacterClass.Witch,
+    CharacterClass.Shadow,
+    CharacterClass.Ranger,
+    CharacterClass.Duelist,
+    CharacterClass.Marauder,
+    CharacterClass.Templar,
+    CharacterClass.Scion
+];
+
+export const AscendanciesByClass: Dictionary<Ascendancy[]> = {
+    [CharacterClass.Duelist]: [
+        Ascendancy.Slayer,
+        Ascendancy.Gladiator,
+        Ascendancy.Champion
+    ],
+    [CharacterClass.Shadow]: [
+        Ascendancy.Assassin,
+        Ascendancy.Saboteur,
+        Ascendancy.Trickster
+    ],
+    [CharacterClass.Marauder]: [
+        Ascendancy.Juggernaut,
+        Ascendancy.Berserker,
+        Ascendancy.Chieftain
+    ],
+    [CharacterClass.Witch]: [
+        Ascendancy.Necromancer,
+        Ascendancy.Elementalist,
+        Ascendancy.Occultist
+    ],
+    [CharacterClass.Ranger]: [
+        Ascendancy.Deadeye,
+        Ascendancy.Raider,
+        Ascendancy.Pathfinder
+    ],
+    [CharacterClass.Templar]: [
+        Ascendancy.Inquisitor,
+        Ascendancy.Hierophant,
+        Ascendancy.Guardian
+    ],
+    [CharacterClass.Scion]: [
+        Ascendancy.Ascendant
+    ]
+};
 
 export class Character {
-    @observable protected modifiers: Mod[] = [];
+    @observable
+    public className: CharacterClass = CharacterClass.Scion;
 
-    protected calculatedStats = [
-        new MaximumLife(this)
+    @observable
+    public ascendancyName: Ascendancy = Ascendancy.Ascendant;
+
+    public characterMods: Mod[] = [
+        new AddedStrength(10),
+        new AddedDexterity(10),
+        new AddedIntelligence(10)
     ];
 
-    constructor(protected readonly nodes: AllocatableNode[] = []) {
+    constructor(public readonly passiveTree: PassiveTree) {
+        passiveTree.character = this;
     }
 
-    public addModifiers(...mods: Mod[]) {
-        this.modifiers.push(...mods);
-    }
-
-    @computed
-    public get allocatedNodes(): AllocatableNode[] {
-        return this.nodes.filter(node => node.allocated);
+    public get mods(): Mod[] {
+        const mods = [];
+        mods.push(...this.characterMods);
+        this.passiveTree.allocatedNodes.map(node => node.mods).forEach(mods => mods.push(...mods));
+        return mods;
     }
 
     public hasStat(statType: StatConstructor<boolean>): boolean {
@@ -34,7 +120,7 @@ export class Character {
     }
 
     public* stats(): IterableIterator<ValueStat<any>> {
-        for (const modifier of this.modifiers) {
+        for (const modifier of this.mods) {
             for (const stat of modifier.stats) {
                 yield stat;
             }
@@ -53,7 +139,7 @@ export class Character {
         return sum;
     }
 
-    public multiplyStatByType(statTypes: Array<StatConstructor<number>>): number {
+    public multiplyStatByType(...statTypes: Array<StatConstructor<number>>): number {
         let product = null;
         for (const stat of this.stats()) {
             for (const statType of statTypes) {
@@ -78,8 +164,36 @@ export class Character {
 
         const baseValue = this.sumStatByType(...base);
         const increasePercent = this.sumStatByType(...increase);
-        const morePercent = this.multiplyStatByType(more);
+        const morePercent = this.multiplyStatByType(...more);
 
         return baseValue * (1 + increasePercent / 100) * (1 + morePercent / 100);
+    }
+
+    /**
+     * Set the character's class.
+     *
+     * @param className
+     */
+    @action
+    public setClass(className: CharacterClass) {
+        if (this.className !== className) {
+            this.className = className;
+            this.setAscendancy(AscendanciesByClass[className][0]);
+        }
+    }
+
+    /**
+     * Set the character's ascendancy.
+     *
+     * @param ascendancyName
+     */
+    @action
+    public setAscendancy(ascendancyName: Ascendancy): void {
+        if (this.ascendancyName !== ascendancyName) {
+            this.ascendancyName = ascendancyName;
+            for (const node of this.passiveTree.allocatedAscendancyNodes) {
+                node.toggleAllocation();
+            }
+        }
     }
 }

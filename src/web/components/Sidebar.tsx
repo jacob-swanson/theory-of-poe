@@ -4,27 +4,17 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft} from "@fortawesome/free-solid-svg-icons/faChevronLeft";
 import "./Sidebar.css";
-import {AscendanciesByClass, CharacterClassesBySpc} from "../stores/passive-skill-tree/NodeState";
 import {observer} from "mobx-react";
-import {CharacterState} from "../stores/passive-skill-tree/CharacterState";
+import {AscendanciesByClass, Character, CharacterClassesBySpc} from "../../gamedata/Character";
 
 export interface SidebarProps {
     isSidebarVisible: boolean;
     toggleSidebar: () => void;
-    character: CharacterState;
+    character: Character;
 }
 
 @observer
 export class Sidebar extends Component<SidebarProps> {
-    private onCharacterClassChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const {character} = this.props;
-        character.setClass(e.target.value as any);
-    };
-    private onAscendancyChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const {character} = this.props;
-        character.setAscendancy(e.target.value as any);
-    };
-
     public render() {
         const {isSidebarVisible, toggleSidebar, character} = this.props;
 
@@ -63,7 +53,7 @@ export class Sidebar extends Component<SidebarProps> {
                     </p>
                     <p className="control">
                         <span className="select">
-                            <select onChange={this.onAscendancyChange} value={character.ascendancy}>
+                            <select onChange={this.onAscendancyChange} value={character.ascendancyName}>
                                 {this.renderAscendancyOptions()}
                             </select>
                         </span>
@@ -72,6 +62,16 @@ export class Sidebar extends Component<SidebarProps> {
             </aside>
         );
     }
+
+    private onCharacterClassChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const {character} = this.props;
+        character.setClass(e.target.value as any);
+    };
+
+    private onAscendancyChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const {character} = this.props;
+        character.setAscendancy(e.target.value as any);
+    };
 
     private renderCharacterClassOptions() {
         const {character} = this.props;

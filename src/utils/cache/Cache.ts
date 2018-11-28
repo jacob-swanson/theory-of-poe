@@ -14,7 +14,7 @@ export abstract class AbstractCache<T> implements Cache<T> {
     public getOrDefault(key: string, value: T): T {
         const hasKey = this.has(key);
         if (hasKey) {
-            return this.get(key)!!;
+            return this.get(key)!;
         } else {
             this.set(key, value);
             return value;
@@ -24,7 +24,7 @@ export abstract class AbstractCache<T> implements Cache<T> {
     public getOrProvide(key: string, provider: () => T): T {
         const hasKey = this.has(key);
         if (hasKey) {
-            return this.get(key)!!;
+            return this.get(key)!;
         } else {
             const value = provider();
             this.set(key, value);

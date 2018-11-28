@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Component} from "react";
-import {GroupState, GroupStateBackground} from "../stores/passive-skill-tree/GroupState";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 import {observer} from "mobx-react";
+import {Group, GroupBackgroundType} from "../../gamedata/Group";
 
 const log = new ConsoleLogger("Group", "debug");
 
@@ -29,7 +29,7 @@ const ascendancyBackgroundsByAscendancyName = {
 };
 
 export interface GroupProps {
-    group: GroupState
+    group: Group
 }
 
 @observer
@@ -38,22 +38,20 @@ export class GroupComponent extends Component<GroupProps> {
         const {group} = this.props;
         log.trace(`Rendering group ${group.id}`);
 
-        if (group.ascendancyName) {
-            const url = ascendancyBackgroundsByAscendancyName[group.ascendancyName];
-            if (!group.isAscendancyStart) {
-                return null;
-            }
-            return (
-                <pixi-sprite
-                    position={group.position}
-                    anchor={{x: 0.5, y: 0.5}}
-                    url={url}
-                />
-            );
-        }
-
-        switch (group.background) {
-            case GroupStateBackground.Large:
+        switch (group.getBackgroundType()) {
+            case GroupBackgroundType.Ascendancy:
+                const url = ascendancyBackgroundsByAscendancyName[group.ascendancyName!];
+                if (!group.containsAscendancyStart) {
+                    return null;
+                }
+                return (
+                    <pixi-sprite
+                        position={group.position}
+                        anchor={{x: 0.5, y: 0.5}}
+                        url={url}
+                    />
+                );
+            case GroupBackgroundType.Large:
                 return (
                     <pixi-container position={group.position}>
                         <pixi-sprite
@@ -67,7 +65,7 @@ export class GroupComponent extends Component<GroupProps> {
                         />
                     </pixi-container>
                 );
-            case GroupStateBackground.Medium:
+            case GroupBackgroundType.Medium:
                 return (
                     <pixi-sprite
                         position={group.position}
@@ -75,9 +73,9 @@ export class GroupComponent extends Component<GroupProps> {
                         url="gamedata/3.3.1/assets/PSGroupBackground2-0.3835.gif"
                     />
                 );
-            case GroupStateBackground.None:
+            case GroupBackgroundType.Hidden:
                 return null;
-            case GroupStateBackground.Small:
+            case GroupBackgroundType.Small:
                 return (
                     <pixi-sprite
                         position={group.position}

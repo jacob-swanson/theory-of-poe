@@ -2,15 +2,14 @@ import * as React from "react";
 import {Component} from "react";
 import {inject, observer} from "mobx-react";
 import "./PassiveSkillTree.css";
-import {InteractiveStage} from "../webgl/InteractiveStage";
-import {PassiveTreeState} from "../stores/passive-skill-tree/PassiveTreeState";
+import {InteractiveStage} from "../react-pixi/InteractiveStage";
 import {GroupComponent} from "./GroupComponent";
 import {NodeComponent} from "./NodeComponent";
 import {LinkComponent} from "./LinkComponent";
-import {CharacterState} from "../stores/passive-skill-tree/CharacterState";
 import {List} from "../components/List";
-import {GroupState} from "../stores/passive-skill-tree/GroupState";
-import {NodeState} from "../stores/passive-skill-tree/NodeState";
+import {Group} from "../../gamedata/Group";
+import {Node} from "../../gamedata/Node";
+import {Character} from "../../gamedata/Character";
 
 function renderBackground() {
     return (
@@ -22,18 +21,18 @@ function renderBackground() {
     );
 }
 
-function renderGroup(group: GroupState) {
+function renderGroup(group: Group) {
     return <GroupComponent key={group.id} group={group}/>;
 }
 
 
-function renderNode(node: NodeState) {
+function renderNode(node: Node) {
     return <NodeComponent key={node.id} node={node}/>;
 }
 
-function renderLink(node: NodeState) {
+function renderLink(node: Node) {
     const links = [];
-    for (const neighborNode of node.connections) {
+    for (const neighborNode of node.neighbors) {
         const isGreater = node.id > neighborNode.id;
         const isAscendancy = node.ascendancyName !== neighborNode.ascendancyName;
         const isClassStart = node.isClassStart || neighborNode.isClassStart;
@@ -47,15 +46,17 @@ function renderLink(node: NodeState) {
 
 
 export interface PassiveSkillTreeProps {
-    character?: CharacterState
+    character?: Character
 }
 
 @inject("character")
 @observer
 export class PassiveSkillTree extends Component<PassiveSkillTreeProps> {
-
     public render() {
         const {character} = this.props;
+        if (!character) {
+            return null;
+        }
         return (
             <InteractiveStage
                 className="PassiveSkillTree"
@@ -63,9 +64,9 @@ export class PassiveSkillTree extends Component<PassiveSkillTreeProps> {
                 maxScale={5}
             >
                 {renderBackground()}
-                <List values={character!!.passiveTree.groupsList} map={renderGroup}/>
-                <List values={character!!.passiveTree.nodes} map={renderLink}/>
-                <List values={character!!.passiveTree.nodes} map={renderNode}/>
+                <List values={character.passiveTree.groups.values()} map={renderGroup}/>
+                <List values={character.passiveTree.nodes} map={renderLink}/>
+                <List values={character.passiveTree.nodes} map={renderNode}/>
             </InteractiveStage>
         );
     }

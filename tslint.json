@@ -1,5 +1,9 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
@@ -18,6 +22,7 @@
     "no-shadowed-variable": false,
     "no-console": false,
     "variable-name": false,
-    "no-debugger": false
+    "no-debugger": false,
+    "max-classes-per-file": false
   }
 }

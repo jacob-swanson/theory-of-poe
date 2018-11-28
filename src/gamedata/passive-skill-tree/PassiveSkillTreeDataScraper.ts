@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as Url from "url";
 import * as _ from "lodash";
-import {PassiveSkillTreeOptionsJson} from "./external-data/PassiveSkillTreeOptionsJson";
+import {PassiveSkillTreeRootJson} from "./external-data/PassiveSkillTreeRootJson";
 import {LoggerFactory} from "../../utils/logger/LoggerFactory";
 import {NodeHttpClient} from "../../utils/http-client/node/NodeHttpClient";
 import {FilesystemUtils} from "../../utils/FilesystemUtils";
@@ -16,9 +16,9 @@ export class PassiveSkillTreeDataScraper {
     /**
      * Scrape JSON data from pathofexile.com.
      *
-     * @returns {Promise<PassiveSkillTreeOptionsJson>}
+     * @returns {Promise<PassiveSkillTreeRootJson>}
      */
-    public async scrapePassiveTreeData(): Promise<PassiveSkillTreeOptionsJson> {
+    public async scrapePassiveTreeData(): Promise<PassiveSkillTreeRootJson> {
         log.info(`Scraping "${this.passiveTreeUrl}" for passive skill tree data`);
         const response = await fetch(this.passiveTreeUrl);
         const body = await response.text();
@@ -51,14 +51,14 @@ export class PassiveSkillTreeDataScraper {
     /**
      * Download image assets and modify the URLs.
      *
-     * @param {PassiveSkillTreeOptionsJson} json
+     * @param {PassiveSkillTreeRootJson} json
      * @param {string} outDir
-     * @returns {Promise<PassiveSkillTreeOptionsJson>}
+     * @returns {Promise<PassiveSkillTreeRootJson>}
      */
     public async downloadImages(
-        json: PassiveSkillTreeOptionsJson,
+        json: PassiveSkillTreeRootJson,
         outDir: string
-    ): Promise<PassiveSkillTreeOptionsJson> {
+    ): Promise<PassiveSkillTreeRootJson> {
         FilesystemUtils.mkdir(outDir);
 
         FilesystemUtils.mkdir(`${outDir}/assets`);

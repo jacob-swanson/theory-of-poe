@@ -3,7 +3,7 @@
 
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on the 'N+1' visit to a page, since previously
+// will only see deployed updates on the 'N+1' getShortestPathTree to a page, since previously
 // cached resources are updated in the background.
 
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
@@ -45,7 +45,7 @@ export default function register() {
         navigator.serviceWorker.ready.then(() => {
           console.log(
             'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://goo.gl/SC7cgQ'
+              'worker. To learn more, getShortestPathTree https://goo.gl/SC7cgQ'
           );
         });
       } else {

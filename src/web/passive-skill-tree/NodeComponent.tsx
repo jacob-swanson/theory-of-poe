@@ -1,9 +1,13 @@
 import * as React from "react";
 import {Component} from "react";
-import {CharacterClass, NodeAllocationState, NodeState, NodeType} from "../stores/passive-skill-tree/NodeState";
 import {SkillSpriteGroups} from "../../gamedata/passive-skill-tree/external-data/SkillSpritesJson";
 import {observer} from "mobx-react";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
+import {Node, NodeAllocationState, NodeType} from "../../gamedata/Node";
+import {CharacterClass} from "../../gamedata/Character";
+import * as PIXI from "pixi.js";
+import {autorun} from "mobx";
+import {Rectangle} from "../react-pixi/ReactPIXIInternals";
 
 const log = new ConsoleLogger("debug");
 
@@ -52,8 +56,8 @@ const classStartIconByCharacterClass = {
  *
  * @param node
  */
-function getFrameUrl(node: NodeState): string | null {
-    if (node.isClassStart && node.className !== null) {
+function getFrameUrl(node: Node): string | null {
+    if (node.className) {
         return node.isAllocated ? classStartIconByCharacterClass[node.className] : "gamedata/3.3.1/assets/PSStartNodeBackgroundInactive-0.3835.gif";
     }
 
@@ -66,7 +70,7 @@ function getFrameUrl(node: NodeState): string | null {
  *
  * @param node
  */
-function renderFrame(node: NodeState) {
+function renderFrame(node: Node) {
     const url = getFrameUrl(node);
     if (url === null) {
         return null;
@@ -104,7 +108,7 @@ const iconByTypeByState = {
  *
  * @param node
  */
-function getIconGroup(node: NodeState): SkillSpriteGroups {
+function getIconGroup(node: Node): SkillSpriteGroups {
     const state = node.isAllocated ? NodeAllocationState.Allocated : NodeAllocationState.Unallocated;
     return iconByTypeByState[state][node.type];
 }
@@ -114,12 +118,14 @@ function getIconGroup(node: NodeState): SkillSpriteGroups {
  *
  * @param node
  */
-function findIcon(node: NodeState) {
+function findIcon(node: Node) {
     if (node.type === NodeType.AscendancyStart || node.type === NodeType.ClassStart) {
         return {};
     }
 
-    const path = node.icon;
+    if (!node.iconPath) {
+        return {};
+    }
     const iconGroup = getIconGroup(node);
     if (!iconGroup) {
         return {};
@@ -129,8 +135,8 @@ function findIcon(node: NodeState) {
         throw new Error(`Sprite sheet ${iconGroup} not found`);
     }
     const spriteSheet = spriteSheets[spriteSheets.length - 1];
-    if (spriteSheet.coords[path]) {
-        const frame = spriteSheet.coords[path];
+    if (spriteSheet.coords[node.iconPath]) {
+        const frame = spriteSheet.coords[node.iconPath];
         const url = "gamedata/3.3.1/" + spriteSheet.filename;
 
         return {
@@ -147,7 +153,7 @@ function findIcon(node: NodeState) {
  *
  * @param node
  */
-function renderIcon(node: NodeState) {
+function renderIcon(node: Node) {
     const icon = findIcon(node);
     return (
         <pixi-sprite
@@ -159,7 +165,89 @@ function renderIcon(node: NodeState) {
 }
 
 export interface NodeComponentProps {
-    node: NodeState
+    node: Node
+}
+
+export class MobxPixiNodeView extends PIXI.Container {
+    private node: Node;
+
+    constructor(node: Node) {
+        super();
+        this.node = node;
+
+        this.on("pointerdown", this.onClick);
+
+        autorun(() => {
+            this.x = node.position.x;
+            this.y = node.position.y;
+
+            this.interactive = node.isAllocatable;
+            this.buttonMode = node.isAllocatable;
+
+            this.removeChildren(0, 100);
+
+            const icon = findIcon(node);
+            if (icon.url) {
+                const iconSprite = new PIXI.Sprite(PIXI.Texture.fromImage(icon.url));
+                iconSprite.anchor = new PIXI.ObservablePoint(
+                    () => {
+                    },
+                    {},
+                    0.5,
+                    0.5
+                );
+                if (icon.frame) {
+                    iconSprite.texture = iconSprite.texture.clone();
+                    this.setTextureFrame(iconSprite, icon.frame as any);
+                }
+                this.addChild(iconSprite);
+            }
+
+            const frameUrl = getFrameUrl(node);
+            if (frameUrl) {
+                const frameSprite = new PIXI.Sprite(PIXI.Texture.fromImage(frameUrl));
+                frameSprite.anchor = new PIXI.ObservablePoint(
+                    () => {
+                    },
+                    {},
+                    0.5,
+                    0.5
+                );
+
+                this.addChild(frameSprite);
+            }
+        });
+    }
+
+    private setTextureFrame = (sprite: PIXI.Sprite, frame: Rectangle) => {
+        if (!sprite.texture) {
+            return;
+        }
+
+        if (sprite.texture.width > 1 && sprite.texture.height > 1) {
+            sprite.texture.frame = new PIXI.Rectangle(
+                frame.x,
+                frame.y,
+                frame.width,
+                frame.height
+            );
+        } else {
+            sprite.texture.on("update", texture => {
+                texture.frame = new PIXI.Rectangle(
+                    frame.x,
+                    frame.y,
+                    frame.width,
+                    frame.height
+                );
+            });
+        }
+    };
+
+    private onClick = () => {
+        if (this.node.isAllocatable) {
+            this.node.toggleAllocation();
+        }
+    };
 }
 
 @observer
@@ -169,12 +257,18 @@ export class NodeComponent extends Component<NodeComponentProps> {
 
         log.trace(`Rendering node ${node.id}`);
 
-        const onClick = node.isAllocatable ? node.toggleAllocated : undefined;
         return (
-            <pixi-container position={node.position} onClick={onClick}>
+            <pixi-container position={node.position} onClick={this.onClick} isInteractive={node.isAllocatable}>
                 {renderIcon(node)}
                 {renderFrame(node)}
             </pixi-container>
         );
     }
+
+    private onClick = () => {
+        const {node} = this.props;
+        if (node.isAllocatable) {
+            node.toggleAllocation();
+        }
+    };
 }
