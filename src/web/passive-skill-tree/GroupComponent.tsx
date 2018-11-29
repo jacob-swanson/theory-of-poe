@@ -3,6 +3,8 @@ import {Component} from "react";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 import {observer} from "mobx-react";
 import {Group, GroupBackgroundType} from "../../gamedata/Group";
+import * as PIXI from "pixi.js";
+import {icon} from "@fortawesome/fontawesome-svg-core";
 
 const log = new ConsoleLogger("Group", "debug");
 
@@ -30,6 +32,79 @@ const ascendancyBackgroundsByAscendancyName = {
 
 export interface GroupProps {
     group: Group
+}
+
+export class MobxPixiGroupView extends PIXI.Container {
+    private group: Group;
+
+    constructor(group: Group) {
+        super();
+        this.group = group;
+
+        this.x = group.position.x;
+        this.y = group.position.y;
+
+        switch (group.getBackgroundType()) {
+            case GroupBackgroundType.Ascendancy:
+                const url = ascendancyBackgroundsByAscendancyName[group.ascendancyName!];
+                const ascendancySprite = new PIXI.Sprite(PIXI.Texture.fromImage(url));
+                ascendancySprite.anchor = new PIXI.ObservablePoint(
+                    () => {
+                    },
+                    {},
+                    0.5,
+                    0.5
+                );
+                this.addChild(ascendancySprite);
+                return;
+            case GroupBackgroundType.Large:
+                const largeSprite = new PIXI.Sprite(PIXI.Texture.fromImage("gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"));
+                largeSprite.anchor = new PIXI.ObservablePoint(
+                    () => {
+                    },
+                    {},
+                    0.5,
+                    1
+                );
+                this.addChild(largeSprite);
+
+                const sprite2 = new PIXI.Sprite(PIXI.Texture.fromImage("gamedata/3.3.1/assets/PSGroupBackground3-0.3835.gif"));
+                sprite2.scale.y = -1;
+                sprite2.anchor = new PIXI.ObservablePoint(
+                    () => {
+                    },
+                    {},
+                    0.5,
+                    1
+                );
+                this.addChild(sprite2);
+                return;
+            case GroupBackgroundType.Medium:
+                const mediumSprite = new PIXI.Sprite(PIXI.Texture.fromImage("gamedata/3.3.1/assets/PSGroupBackground2-0.3835.gif"));
+                mediumSprite.anchor = new PIXI.ObservablePoint(
+                    () => {
+                    },
+                    {},
+                    0.5,
+                    0.5
+                );
+                this.addChild(mediumSprite);
+                return;
+            case GroupBackgroundType.Hidden:
+                return;
+            case GroupBackgroundType.Small:
+                const smallSprite = new PIXI.Sprite(PIXI.Texture.fromImage("gamedata/3.3.1/assets/PSGroupBackground1-0.3835.gif"));
+                smallSprite.anchor = new PIXI.ObservablePoint(
+                    () => {
+                    },
+                    {},
+                    0.5,
+                    0.5
+                );
+                this.addChild(smallSprite);
+                return;
+        }
+    }
 }
 
 @observer

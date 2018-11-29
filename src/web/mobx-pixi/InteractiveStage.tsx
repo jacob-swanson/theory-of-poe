@@ -10,7 +10,7 @@ export interface InteractiveStageProps extends StageProps {
     minScale?: number;
 }
 
-export class InteractiveStage<P extends InteractiveStageProps> extends Stage<P> {
+export class InteractiveStage extends Stage<InteractiveStageProps> {
     private isDragging = false;
     private prevX = 0;
     private prevY = 0;
@@ -53,25 +53,21 @@ export class InteractiveStage<P extends InteractiveStageProps> extends Stage<P> 
         const scale = this.app.stage.scale;
         const delta = e.deltaY || e.wheelDelta;
         const direction = delta > 0 ? -1 : 1;
-
-        // typing is fucked on props.
-        const zoomPercent = this.props.zoomPercent as number | undefined || 0.2;
+        const zoomPercent = this.props.zoomPercent || 0.2;
         let newScale = {
             x: scale.x + direction * zoomPercent * scale.x,
             y: scale.y + direction * zoomPercent * scale.y
         };
-        const minScale: number | undefined = this.props.minScale;
-        if (minScale) {
+        if (this.props.minScale) {
             newScale = {
-                x: Math.max(newScale.x, minScale),
-                y: Math.max(newScale.y, minScale)
+                x: Math.max(newScale.x, this.props.minScale),
+                y: Math.max(newScale.y, this.props.minScale)
             };
         }
-        const maxScale: number | undefined = this.props.minScale;
-        if (maxScale) {
+        if (this.props.maxScale) {
             newScale = {
-                x: Math.min(newScale.x, maxScale),
-                y: Math.min(newScale.y, maxScale)
+                x: Math.min(newScale.x, this.props.maxScale),
+                y: Math.min(newScale.y, this.props.maxScale)
             };
         }
 

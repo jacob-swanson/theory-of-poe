@@ -244,6 +244,7 @@ export class MobxPixiNodeView extends PIXI.Container {
     };
 
     private onClick = () => {
+        log.debug("Node clicked", this);
         if (this.node.isAllocatable) {
             this.node.toggleAllocation();
         }

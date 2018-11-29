@@ -53,8 +53,12 @@ export class Group {
     }
 
     public getBackgroundType(): GroupBackgroundType {
-        if (this.ascendancyName && this.containsAscendancyStart) {
-            return GroupBackgroundType.Ascendancy;
+        if (this.ascendancyName) {
+            if (this.containsAscendancyStart) {
+                return GroupBackgroundType.Ascendancy;
+            } else {
+                return GroupBackgroundType.Hidden;
+            }
         }
 
         const occupiedOrbits = this.occupiedOrbits;

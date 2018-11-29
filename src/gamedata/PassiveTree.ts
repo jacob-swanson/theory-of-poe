@@ -42,6 +42,14 @@ export class PassiveTree {
         groups.forEach(group => group.passiveTree = this);
     }
 
+    public get groupsList(): Group[] {
+        const groups = [];
+        for (const group of this.groups.values()) {
+            groups.push(group);
+        }
+        return groups;
+    }
+
     public get nodes(): Node[] {
         const nodes = [];
         for (const group of this.groups.values()) {
