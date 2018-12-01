@@ -32,7 +32,6 @@ export interface NodeProps {
     orbitIndex: number;
     iconPath?: string;
     type: NodeType;
-    isAscendancyStart: boolean;
     ascendancyName?: Ascendancy;
     className?: CharacterClass;
     description: string[];
@@ -54,7 +53,6 @@ export class Node implements NodeProps {
                 public readonly orbitIndex: number = 0,
                 public readonly iconPath?: string,
                 public readonly type: NodeType = NodeType.Normal,
-                public readonly isAscendancyStart: boolean = false,
                 public readonly ascendancyName?: Ascendancy,
                 public readonly className?: CharacterClass,
                 public readonly mods: Mod[] = []) {

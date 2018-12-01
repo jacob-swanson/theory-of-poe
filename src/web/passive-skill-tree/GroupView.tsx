@@ -1,10 +1,7 @@
 import * as React from "react";
-import {Component} from "react";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
-import {observer} from "mobx-react";
 import {Group, GroupBackgroundType} from "../../gamedata/Group";
 import * as PIXI from "pixi.js";
-import {icon} from "@fortawesome/fontawesome-svg-core";
 
 const log = new ConsoleLogger("Group", "debug");
 
@@ -30,11 +27,7 @@ const ascendancyBackgroundsByAscendancyName = {
     Trickster: "gamedata/3.3.1/assets/ClassesTrickster-0.3835.png"
 };
 
-export interface GroupProps {
-    group: Group
-}
-
-export class MobxPixiGroupView extends PIXI.Container {
+export class GroupView extends PIXI.Container {
     private group: Group;
 
     constructor(group: Group) {

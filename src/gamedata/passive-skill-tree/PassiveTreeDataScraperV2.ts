@@ -17,6 +17,7 @@ import * as fs from "fs";
 import * as Url from "url";
 import {SkillSpriteJson} from "./external-data/SkillSpritesJson";
 import {TexturePackerFrame, TexturePackerJson} from "../../utils/texture-packer/TexturePackerJson";
+import {Ascendancy, CharacterClass} from "../Character";
 
 const log = LoggerFactory.getLogger("PassiveSkillTreeDataScraper");
 
@@ -125,7 +126,7 @@ export class PassiveTreeDataScraperV2 {
         const outFile = path.join(outDir, filename);
         fs.writeFileSync(outFile, buffer);
 
-        return `/assets/${digest[0]}${digest[1]}/${filename}`;
+        return `/gamedata/assets/${digest[0]}${digest[1]}/${filename}`;
     }
 
     private createGroups(passiveTreeJson: PassiveTreeJson): GroupResponse[] {
@@ -133,8 +134,8 @@ export class PassiveTreeDataScraperV2 {
         for (const [groupId, groupJson] of Object.entries(passiveTreeJson.groups)) {
             groups.push({
                 id: groupId,
-                x: groupJson.x,
-                y: groupJson.y,
+                x: groupJson.x * 0.3835,
+                y: groupJson.y * 0.3835,
                 nodes: this.createNodesInGroup(passiveTreeJson, groupJson)
             });
         }
@@ -159,7 +160,7 @@ export class PassiveTreeDataScraperV2 {
         }
     }
 
-    private createNodesInGroup(passiveTreeJson: PassiveTreeJson, groupJson: GroupJson) {
+    private createNodesInGroup(passiveTreeJson: PassiveTreeJson, groupJson: GroupJson): NodeResponse[] {
         const nodes: NodeResponse[] = [];
         for (const nodeId of groupJson.n) {
             const nodeJson = passiveTreeJson.nodes[nodeId];
@@ -168,6 +169,8 @@ export class PassiveTreeDataScraperV2 {
                 name: nodeJson.dn,
                 icon: nodeJson.icon,
                 type: this.getNodeType(nodeJson),
+                className: this.spcToClass(nodeJson.spc),
+                ascendancyName: Ascendancy[nodeJson.ascendancyName],
                 description: nodeJson.sd,
                 orbit: nodeJson.o,
                 orbitIndex: nodeJson.oidx,
@@ -175,6 +178,24 @@ export class PassiveTreeDataScraperV2 {
             });
         }
         return nodes;
+    }
+
+    private spcToClass(spc: number[]): CharacterClass | undefined {
+        if (spc.length !== 1) {
+            return undefined;
+        }
+
+        const spcToClass = [
+            CharacterClass.Scion,
+            CharacterClass.Marauder,
+            CharacterClass.Ranger,
+            CharacterClass.Witch,
+            CharacterClass.Duelist,
+            CharacterClass.Templar,
+            CharacterClass.Shadow
+        ];
+
+        return spcToClass[spc[0]];
     }
 
     private async parseAssets(passiveSkillTreeData: PassiveTreeJson): Promise<Dictionary<string>> {

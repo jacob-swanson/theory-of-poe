@@ -1,22 +1,17 @@
 import {Character} from "./Character";
 import {Group} from "./Group";
 import {Node} from "./Node";
-import {SkillSpritesJson} from "./passive-skill-tree/external-data/SkillSpritesJson";
+import {Dictionary} from "../utils/Dictionary";
+import {ClassArtResponse} from "./passive-skill-tree/internal-data/ClassArtResponse";
 
 
 export class PassiveTree {
     public static readonly Null = new PassiveTree(
         new Map(),
-        {
-            keystoneActive: [],
-            keystoneInactive: [],
-            mastery: [],
-            normalActive: [],
-            normalInactive: [],
-            notableActive: [],
-            notableInactive: []
-
-        }
+        {},
+        {},
+        [],
+        ""
     );
 
     public static readonly skillsPerOrbit: number[] = [
@@ -35,10 +30,16 @@ export class PassiveTree {
         493 * 0.3835
     ];
 
+
     public character: Character;
 
-    constructor(public readonly groups: Map<string, Group>,
-                public readonly skillSprites: SkillSpritesJson) {
+    constructor(
+        public readonly groups: Map<string, Group>,
+        public readonly assets: Dictionary<string>,
+        public readonly skillSprites: Dictionary<string>,
+        public readonly classArt: ClassArtResponse[],
+        public readonly version: string
+    ) {
         groups.forEach(group => group.passiveTree = this);
     }
 

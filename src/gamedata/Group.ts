@@ -1,5 +1,5 @@
 import {PassiveTree} from "./PassiveTree";
-import {Node} from "./Node";
+import {Node, NodeType} from "./Node";
 import {Dictionary} from "../utils/Dictionary";
 import {Ascendancy} from "./Character";
 import {Position} from "./Position";
@@ -38,7 +38,7 @@ export class Group {
 
     public get containsAscendancyStart(): boolean {
         for (const node of this.nodes) {
-            if (node.isAscendancyStart) {
+            if (node.type === NodeType.AscendancyStart) {
                 return true;
             }
         }

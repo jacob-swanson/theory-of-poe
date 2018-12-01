@@ -58,10 +58,8 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             return;
         }
 
-        if (prevProps.children !== this.props.children) {
-            this.removeChildren();
-            this.addChildren();
-        }
+        this.removeChildren();
+        this.addChildren();
     }
 
     public render() {
