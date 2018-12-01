@@ -1,3 +1,5 @@
+import {Dictionary} from "../../../utils/Dictionary";
+
 export interface SkillSpriteFrameJson {
     x: number;
     y: number;
@@ -7,9 +9,7 @@ export interface SkillSpriteFrameJson {
 
 export interface SkillSpriteJson {
     filename: string;
-    coords: {
-        [key: string]: SkillSpriteFrameJson
-    };
+    coords: Dictionary<SkillSpriteFrameJson>
 }
 
 export enum SkillSpriteGroups {

@@ -1,0 +1,207 @@
+{
+    "meta": {
+        "image": "/assets/6b/6be61e2a4ffdff4ea5a1730d82ac21b7ff1a7a3edb3c98777175cf1bbf6c9db1.jpg"
+    },
+    "frames": {
+        "Art/2DArt/SkillIcons/passives/KeystoneNecromanticAegis.png": {
+            "frame": {
+                "x": 0,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystonePointBlankArcher.png": {
+            "frame": {
+                "x": 53,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/totemmax.png": {
+            "frame": {
+                "x": 106,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/heroicspirit.png": {
+            "frame": {
+                "x": 159,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneIronGrip.png": {
+            "frame": {
+                "x": 212,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/liferegentoenergyshield.png": {
+            "frame": {
+                "x": 265,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystonePainAttunement.png": {
+            "frame": {
+                "x": 318,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneElementalOverload.png": {
+            "frame": {
+                "x": 371,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneEldritchBattery.png": {
+            "frame": {
+                "x": 424,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/CrimsonDance.png": {
+            "frame": {
+                "x": 477,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/CritAilments.png": {
+            "frame": {
+                "x": 530,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneMinionInstability.png": {
+            "frame": {
+                "x": 583,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ghostreaver.png": {
+            "frame": {
+                "x": 636,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneResoluteTechnique.png": {
+            "frame": {
+                "x": 689,
+                "y": 965,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneAvatarOfFire.png": {
+            "frame": {
+                "x": 0,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneChaosInoculation.png": {
+            "frame": {
+                "x": 53,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneArrowDodging.png": {
+            "frame": {
+                "x": 106,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystonePhaseAcrobatics.png": {
+            "frame": {
+                "x": 159,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneUnwaveringStance.png": {
+            "frame": {
+                "x": 212,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneConduit.png": {
+            "frame": {
+                "x": 265,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneAcrobatics.png": {
+            "frame": {
+                "x": 318,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneIronReflexes.png": {
+            "frame": {
+                "x": 371,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneBloodMagic.png": {
+            "frame": {
+                "x": 424,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/KeystoneElementalEquilibrium.png": {
+            "frame": {
+                "x": 477,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/vaalpact.png": {
+            "frame": {
+                "x": 530,
+                "y": 1019,
+                "w": 53,
+                "h": 54
+            }
+        }
+    }
+}

@@ -1,0 +1,351 @@
+{
+    "meta": {
+        "image": "/assets/ce/ce716dc27baf1fe78f0b4a0cc9c2384b1f0668e4d8f393f55316351c23fc45c4.png"
+    },
+    "frames": {
+        "Art/2DArt/SkillIcons/passives/MasteryGroupStaff.png": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupStun.png": {
+            "frame": {
+                "x": 99,
+                "y": 0,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MinionMastery.png": {
+            "frame": {
+                "x": 198,
+                "y": 0,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupLife.png": {
+            "frame": {
+                "x": 297,
+                "y": 0,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupCold.png": {
+            "frame": {
+                "x": 396,
+                "y": 0,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryTotem.png": {
+            "frame": {
+                "x": 495,
+                "y": 0,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupTwoHands.png": {
+            "frame": {
+                "x": 594,
+                "y": 0,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryChaos.png": {
+            "frame": {
+                "x": 0,
+                "y": 99,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupLifeMana.png": {
+            "frame": {
+                "x": 99,
+                "y": 99,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupSwordAndAxe.png": {
+            "frame": {
+                "x": 198,
+                "y": 99,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupShield.png": {
+            "frame": {
+                "x": 297,
+                "y": 99,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupLightning.png": {
+            "frame": {
+                "x": 396,
+                "y": 99,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupMana.png": {
+            "frame": {
+                "x": 495,
+                "y": 99,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupScepter.png": {
+            "frame": {
+                "x": 594,
+                "y": 99,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupSword.png": {
+            "frame": {
+                "x": 0,
+                "y": 198,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryClawDaggerSword.png": {
+            "frame": {
+                "x": 99,
+                "y": 198,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupMinions.png": {
+            "frame": {
+                "x": 198,
+                "y": 198,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupColdFire.png": {
+            "frame": {
+                "x": 297,
+                "y": 198,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupEnergyShield.png": {
+            "frame": {
+                "x": 396,
+                "y": 198,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupAxe.png": {
+            "frame": {
+                "x": 495,
+                "y": 198,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupEvasion.png": {
+            "frame": {
+                "x": 594,
+                "y": 198,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupDualWield.png": {
+            "frame": {
+                "x": 0,
+                "y": 297,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupMace.png": {
+            "frame": {
+                "x": 99,
+                "y": 297,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryTraps.png": {
+            "frame": {
+                "x": 198,
+                "y": 297,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupBow.png": {
+            "frame": {
+                "x": 297,
+                "y": 297,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ElementalMastery2.png": {
+            "frame": {
+                "x": 396,
+                "y": 297,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupOneHand.png": {
+            "frame": {
+                "x": 495,
+                "y": 297,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupArmour.png": {
+            "frame": {
+                "x": 594,
+                "y": 297,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryPhysicalAndChaos.png": {
+            "frame": {
+                "x": 0,
+                "y": 396,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/WarcryMastery.png": {
+            "frame": {
+                "x": 99,
+                "y": 396,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/BloodMastery.png": {
+            "frame": {
+                "x": 198,
+                "y": 396,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupWand.png": {
+            "frame": {
+                "x": 297,
+                "y": 396,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryAuras.png": {
+            "frame": {
+                "x": 396,
+                "y": 396,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupFire.png": {
+            "frame": {
+                "x": 495,
+                "y": 396,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupDagger.png": {
+            "frame": {
+                "x": 594,
+                "y": 396,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryCurse.png": {
+            "frame": {
+                "x": 0,
+                "y": 495,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ColdLightningMastery.png": {
+            "frame": {
+                "x": 99,
+                "y": 495,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupCrit.png": {
+            "frame": {
+                "x": 198,
+                "y": 495,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupClaw.png": {
+            "frame": {
+                "x": 297,
+                "y": 495,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryFlasks.png": {
+            "frame": {
+                "x": 396,
+                "y": 495,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryElementalDamage.png": {
+            "frame": {
+                "x": 495,
+                "y": 495,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryLifeAndEnergyShield.png": {
+            "frame": {
+                "x": 594,
+                "y": 495,
+                "w": 99,
+                "h": 99
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryGroupMaceAndStaff.png": {
+            "frame": {
+                "x": 0,
+                "y": 594,
+                "w": 99,
+                "h": 99
+            }
+        }
+    }
+}

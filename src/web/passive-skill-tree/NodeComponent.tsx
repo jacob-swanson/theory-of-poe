@@ -250,26 +250,3 @@ export class MobxPixiNodeView extends PIXI.Container {
         }
     };
 }
-
-@observer
-export class NodeComponent extends Component<NodeComponentProps> {
-    public render() {
-        const {node} = this.props;
-
-        log.trace(`Rendering node ${node.id}`);
-
-        return (
-            <pixi-container position={node.position} onClick={this.onClick} isInteractive={node.isAllocatable}>
-                {renderIcon(node)}
-                {renderFrame(node)}
-            </pixi-container>
-        );
-    }
-
-    private onClick = () => {
-        const {node} = this.props;
-        if (node.isAllocatable) {
-            node.toggleAllocation();
-        }
-    };
-}

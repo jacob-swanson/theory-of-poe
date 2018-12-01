@@ -1,0 +1,1911 @@
+{
+    "meta": {
+        "image": "/assets/a4/a4ac2cee8b4bfd07608c20346de78adaeaa4c8e0c2c19c4a0b612bfc717701c3.jpg"
+    },
+    "frames": {
+        "Art/2DArt/SkillIcons/passives/plusstrength.png": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/critstrchnc.png": {
+            "frame": {
+                "x": 27,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/accuracystaff.png": {
+            "frame": {
+                "x": 54,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/staffspeed.png": {
+            "frame": {
+                "x": 81,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/stunstr.png": {
+            "frame": {
+                "x": 108,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/lightningint.png": {
+            "frame": {
+                "x": 135,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/firedamage.png": {
+            "frame": {
+                "x": 162,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/colddamage.png": {
+            "frame": {
+                "x": 189,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/elementaldamage.png": {
+            "frame": {
+                "x": 216,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/plusintelligence.png": {
+            "frame": {
+                "x": 243,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MinionAccuracyDamage.png": {
+            "frame": {
+                "x": 270,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/miniondamageBlue.png": {
+            "frame": {
+                "x": 297,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/minionattackspeed.png": {
+            "frame": {
+                "x": 324,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/plusdexterity.png": {
+            "frame": {
+                "x": 351,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/2handeddamage.png": {
+            "frame": {
+                "x": 378,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damagemelee.png": {
+            "frame": {
+                "x": 405,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/onehanddamage.png": {
+            "frame": {
+                "x": 432,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeed.png": {
+            "frame": {
+                "x": 459,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/lifegainpertarget.png": {
+            "frame": {
+                "x": 486,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damagestaff.png": {
+            "frame": {
+                "x": 513,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/blockstaff.png": {
+            "frame": {
+                "x": 540,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/totemdamage.png": {
+            "frame": {
+                "x": 567,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/totemlife.png": {
+            "frame": {
+                "x": 594,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/totemplacementspeed.png": {
+            "frame": {
+                "x": 621,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/totemattackspeed.png": {
+            "frame": {
+                "x": 648,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/trapdamage.png": {
+            "frame": {
+                "x": 675,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/criticalclaw.png": {
+            "frame": {
+                "x": 702,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damagespells.png": {
+            "frame": {
+                "x": 729,
+                "y": 0,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/criticalstrikemultiplier.png": {
+            "frame": {
+                "x": 0,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MasteryBlank.png": {
+            "frame": {
+                "x": 27,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/miniondamage.png": {
+            "frame": {
+                "x": 54,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/accuracy2h.png": {
+            "frame": {
+                "x": 81,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeeddual.png": {
+            "frame": {
+                "x": 108,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ShieldAttackDamage.png": {
+            "frame": {
+                "x": 135,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/DamageOverTime.png": {
+            "frame": {
+                "x": 162,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/lifepercentage.png": {
+            "frame": {
+                "x": 189,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/blastradius.png": {
+            "frame": {
+                "x": 216,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/blockstr.png": {
+            "frame": {
+                "x": 243,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/lightningstr.png": {
+            "frame": {
+                "x": 270,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/dmgreduction.png": {
+            "frame": {
+                "x": 297,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/fireresist.png": {
+            "frame": {
+                "x": 324,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/coldresist.png": {
+            "frame": {
+                "x": 351,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/SkillPoint.png": {
+            "frame": {
+                "x": 378,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/plusstrengthdexterity.png": {
+            "frame": {
+                "x": 405,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Chieftain/LifeRegenFireDamage.png": {
+            "frame": {
+                "x": 432,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Chieftain/LifeRegenStrength.png": {
+            "frame": {
+                "x": 459,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damage.png": {
+            "frame": {
+                "x": 486,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Chieftain/LifeRegenTotemPlacementSpeed.png": {
+            "frame": {
+                "x": 513,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ManaLeechThemedNode.png": {
+            "frame": {
+                "x": 540,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/lifemana.png": {
+            "frame": {
+                "x": 567,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeedsworddex.png": {
+            "frame": {
+                "x": 594,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/masterysword.png": {
+            "frame": {
+                "x": 621,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/accuracysword.png": {
+            "frame": {
+                "x": 648,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/castspeed.png": {
+            "frame": {
+                "x": 675,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ElementalResistance2.png": {
+            "frame": {
+                "x": 702,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/shieldblock.png": {
+            "frame": {
+                "x": 729,
+                "y": 27,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/life1.png": {
+            "frame": {
+                "x": 0,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Blood2.png": {
+            "frame": {
+                "x": 27,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Trickster/DamageOverTime.png": {
+            "frame": {
+                "x": 54,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Trickster/IncreasedFrenzyChargeDuration.png": {
+            "frame": {
+                "x": 81,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Trickster/IncreasedEvasionEnergyShield.png": {
+            "frame": {
+                "x": 108,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Trickster/IncreasedMana.png": {
+            "frame": {
+                "x": 135,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/mana.png": {
+            "frame": {
+                "x": 162,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/firedamagestr.png": {
+            "frame": {
+                "x": 189,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Saboteur/ElementalDamageMines.png": {
+            "frame": {
+                "x": 216,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Saboteur/ElementalDamageMovementSpeed.png": {
+            "frame": {
+                "x": 243,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Saboteur/ElementalDamageElementalResistance.png": {
+            "frame": {
+                "x": 270,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Corruption.png": {
+            "frame": {
+                "x": 297,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/manastr.png": {
+            "frame": {
+                "x": 324,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/trapsspeed.png": {
+            "frame": {
+                "x": 351,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/accuracydex.png": {
+            "frame": {
+                "x": 378,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MaceElemental.png": {
+            "frame": {
+                "x": 405,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/macecritdmgspeed.png": {
+            "frame": {
+                "x": 432,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/macedmg.png": {
+            "frame": {
+                "x": 459,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damagesword.png": {
+            "frame": {
+                "x": 486,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/2handedspeed.png": {
+            "frame": {
+                "x": 513,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ClawDaggerSwordAttackDamage2.png": {
+            "frame": {
+                "x": 540,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/minionlife.png": {
+            "frame": {
+                "x": 567,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ColdAndFireHybridNode.png": {
+            "frame": {
+                "x": 594,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/energyshield.png": {
+            "frame": {
+                "x": 621,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/chargestr.png": {
+            "frame": {
+                "x": 648,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeedaxe.png": {
+            "frame": {
+                "x": 675,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damageaxe.png": {
+            "frame": {
+                "x": 702,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damagedualwieldgreen.png": {
+            "frame": {
+                "x": 729,
+                "y": 54,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/dualwieldaccuracy.png": {
+            "frame": {
+                "x": 0,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/PhysicalDamageChaosNode.png": {
+            "frame": {
+                "x": 27,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/criticalstrikechance.png": {
+            "frame": {
+                "x": 54,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/evadepercentage.png": {
+            "frame": {
+                "x": 81,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/evade.png": {
+            "frame": {
+                "x": 108,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/projectilespeed.png": {
+            "frame": {
+                "x": 135,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/manaregeneration.png": {
+            "frame": {
+                "x": 162,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/tempdex.png": {
+            "frame": {
+                "x": 189,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/dualwieldblock.png": {
+            "frame": {
+                "x": 216,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damagedualwield.png": {
+            "frame": {
+                "x": 243,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/DeadEye/ProjectileDamageAccuracy.png": {
+            "frame": {
+                "x": 270,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/DeadEye/ProjectileDamageCrit.png": {
+            "frame": {
+                "x": 297,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/DeadEye/ProjectileDamageAttackSpeed.png": {
+            "frame": {
+                "x": 324,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeedmace.png": {
+            "frame": {
+                "x": 351,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/stunmace.png": {
+            "frame": {
+                "x": 378,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/trapsradius.png": {
+            "frame": {
+                "x": 405,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/blankInt.png": {
+            "frame": {
+                "x": 432,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/WarCryCooldown.png": {
+            "frame": {
+                "x": 459,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/WarCryDuration.png": {
+            "frame": {
+                "x": 486,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/tempint.png": {
+            "frame": {
+                "x": 513,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeedbow.png": {
+            "frame": {
+                "x": 540,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/PhysicalDamageNode.png": {
+            "frame": {
+                "x": 567,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/onehandspeed.png": {
+            "frame": {
+                "x": 594,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/onehandaccuracy.png": {
+            "frame": {
+                "x": 621,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeed1h.png": {
+            "frame": {
+                "x": 648,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Gladiator/GLADOneHand.png": {
+            "frame": {
+                "x": 675,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Gladiator/GLADBlockChance.png": {
+            "frame": {
+                "x": 702,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/masterywand.png": {
+            "frame": {
+                "x": 729,
+                "y": 81,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ChaosDamage.png": {
+            "frame": {
+                "x": 0,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/PhysicalChaosRedPurple.png": {
+            "frame": {
+                "x": 27,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Berserker/DmgAttackSpeed.png": {
+            "frame": {
+                "x": 54,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Berserker/DmgWarcry.png": {
+            "frame": {
+                "x": 81,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Berserker/DmgLeech.png": {
+            "frame": {
+                "x": 108,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/increasedarmorandlife.png": {
+            "frame": {
+                "x": 135,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/totemrange.png": {
+            "frame": {
+                "x": 162,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/knockback.png": {
+            "frame": {
+                "x": 189,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Necromancer.png": {
+            "frame": {
+                "x": 216,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/WarCryEffect.png": {
+            "frame": {
+                "x": 243,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Deadeye.png": {
+            "frame": {
+                "x": 270,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/areaofeffect.png": {
+            "frame": {
+                "x": 297,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/plusstrengthintelligence.png": {
+            "frame": {
+                "x": 324,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/auraeffect.png": {
+            "frame": {
+                "x": 351,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/manareservationreduction.png": {
+            "frame": {
+                "x": 378,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/auraareaofeffect.png": {
+            "frame": {
+                "x": 405,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/dualwieldspeedint.png": {
+            "frame": {
+                "x": 432,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Assassin/SmallNode.png": {
+            "frame": {
+                "x": 459,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/chargedex.png": {
+            "frame": {
+                "x": 486,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Hierophant/ManaRegen.png": {
+            "frame": {
+                "x": 513,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/increasedrunspeeddex.png": {
+            "frame": {
+                "x": 540,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Pierce.png": {
+            "frame": {
+                "x": 567,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/trapsduration.png": {
+            "frame": {
+                "x": 594,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/trapsmax.png": {
+            "frame": {
+                "x": 621,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/criticaldaggerint.png": {
+            "frame": {
+                "x": 648,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/criticaldaggerdex.png": {
+            "frame": {
+                "x": 675,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeeddagger.png": {
+            "frame": {
+                "x": 702,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/AttackDamangeAndEvasionNotableNode.png": {
+            "frame": {
+                "x": 729,
+                "y": 108,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/firedamageint.png": {
+            "frame": {
+                "x": 0,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/shieldrecovery.png": {
+            "frame": {
+                "x": 27,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/shieldblockchance.png": {
+            "frame": {
+                "x": 54,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/shieldenergyshield.png": {
+            "frame": {
+                "x": 81,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Poison.png": {
+            "frame": {
+                "x": 108,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Inquistitor/IncreasedElementalDamageAttackCasteSpeed.png": {
+            "frame": {
+                "x": 135,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Inquistitor/IncreasedElementalDamageCasteSpeed.png": {
+            "frame": {
+                "x": 162,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Inquistitor/IncreasedElementalDamageElementalPenetration.png": {
+            "frame": {
+                "x": 189,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Inquistitor/IncreasedElementalDamageAvoidElementalStatusEffects.png": {
+            "frame": {
+                "x": 216,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Slayer/2HdmgSpeed.png": {
+            "frame": {
+                "x": 243,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Slayer/2HdmgLeech.png": {
+            "frame": {
+                "x": 270,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Slayer/2HdmgEvasionArmour.png": {
+            "frame": {
+                "x": 297,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Slayer/2HdmgAOE.png": {
+            "frame": {
+                "x": 324,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/FortifyNode.png": {
+            "frame": {
+                "x": 351,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Slayer.png": {
+            "frame": {
+                "x": 378,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/weaponelementaldamagepercentage.png": {
+            "frame": {
+                "x": 405,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Berserker.png": {
+            "frame": {
+                "x": 432,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Juggernaut/IncreasedArmourLifeRegeneration.png": {
+            "frame": {
+                "x": 459,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Juggernaut/IncreasedArmourAttackDamage.png": {
+            "frame": {
+                "x": 486,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Juggernaut/IncreasedArmourAttackSpeed.png": {
+            "frame": {
+                "x": 513,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Juggernaut/IncreasedArmourMovementSpeed.png": {
+            "frame": {
+                "x": 540,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Juggernaut/IncreasedArmourStunDuration.png": {
+            "frame": {
+                "x": 567,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/MovementSpeedandEvasionPassive.png": {
+            "frame": {
+                "x": 594,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Elementalist.png": {
+            "frame": {
+                "x": 621,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/criticaldagger.png": {
+            "frame": {
+                "x": 648,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/blankStr.png": {
+            "frame": {
+                "x": 675,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Guardian/Minion Damage Armour and Energy Shield.png": {
+            "frame": {
+                "x": 702,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Guardian/ArmourEnergyShieldManaPool.png": {
+            "frame": {
+                "x": 729,
+                "y": 135,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Guardian/ArmourEnergyShieldStaves.png": {
+            "frame": {
+                "x": 0,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Guardian/ArmourEnergyShieldDefenseFromShields.png": {
+            "frame": {
+                "x": 27,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Guardian/ArmourEnergyMeleeDamage.png": {
+            "frame": {
+                "x": 54,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeedclaw.png": {
+            "frame": {
+                "x": 81,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/HalfColdHalfLightning.png": {
+            "frame": {
+                "x": 108,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Champion/AnEFortify.png": {
+            "frame": {
+                "x": 135,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Champion/AnETaunt.png": {
+            "frame": {
+                "x": 162,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Champion/AnEAttDamage.png": {
+            "frame": {
+                "x": 189,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Champion/AnEAura.png": {
+            "frame": {
+                "x": 216,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/spellcritical.png": {
+            "frame": {
+                "x": 243,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/SpellMultiplyer2.png": {
+            "frame": {
+                "x": 270,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/skillduration.png": {
+            "frame": {
+                "x": 297,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/WandCritical.png": {
+            "frame": {
+                "x": 324,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/chargeint.png": {
+            "frame": {
+                "x": 351,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/LifeArmourAndEvasion.png": {
+            "frame": {
+                "x": 378,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/increased armor.png": {
+            "frame": {
+                "x": 405,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/PathFinder/FlaskEffectElementalResistance.png": {
+            "frame": {
+                "x": 432,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/PathFinder/FlaskEffectDamageOverTime.png": {
+            "frame": {
+                "x": 459,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/PathFinder/FlaskEffectFlaskDuration.png": {
+            "frame": {
+                "x": 486,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/PathFinder/FlaskEffectAttackDamage.png": {
+            "frame": {
+                "x": 513,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/criticalbow.png": {
+            "frame": {
+                "x": 540,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Necromancer/IncreasedMinionDamageIncreasedSkillDuration.png": {
+            "frame": {
+                "x": 567,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Necromancer/IncreasedMinionDamageIncreasedMinionLife.png": {
+            "frame": {
+                "x": 594,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Necromancer/IncreasedMinionDamageIncreasedCastSpeed.png": {
+            "frame": {
+                "x": 621,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/masterydaggerdex.png": {
+            "frame": {
+                "x": 648,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Occultist/IncreasedEnergyShieldAttackAndCastSpeed.png": {
+            "frame": {
+                "x": 675,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Occultist/IncreasedEnergyShieldManaReservation.png": {
+            "frame": {
+                "x": 702,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Occultist/IncreasedEnergyShieldCriticalStrikeChance.png": {
+            "frame": {
+                "x": 729,
+                "y": 162,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Occultist/IncreasedEnergyShieldMaximumMana.png": {
+            "frame": {
+                "x": 0,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/damage_blue.png": {
+            "frame": {
+                "x": 27,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/plusintelligencedexterity.png": {
+            "frame": {
+                "x": 54,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/clawmasterydex.png": {
+            "frame": {
+                "x": 81,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ClawCritStrikeChanceNode.png": {
+            "frame": {
+                "x": 108,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/chaosresist.png": {
+            "frame": {
+                "x": 135,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/ChaosDamageandResist.png": {
+            "frame": {
+                "x": 162,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/lightningdex.png": {
+            "frame": {
+                "x": 189,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/avoidburning.png": {
+            "frame": {
+                "x": 216,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/avoidchilling.png": {
+            "frame": {
+                "x": 243,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/crystalskin.png": {
+            "frame": {
+                "x": 270,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/flaskint.png": {
+            "frame": {
+                "x": 297,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/LifeAndReducedManaCost.png": {
+            "frame": {
+                "x": 324,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/stundex.png": {
+            "frame": {
+                "x": 351,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/blankDex.png": {
+            "frame": {
+                "x": 378,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/flaskstr.png": {
+            "frame": {
+                "x": 405,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Raider/IncreasedFrenzyChargeDuration.png": {
+            "frame": {
+                "x": 432,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Raider/IncreasedAttackSpeed.png": {
+            "frame": {
+                "x": 459,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Raider/IncreasedMovementSpeed.png": {
+            "frame": {
+                "x": 486,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Elementalist/ElementalDamageElementalResistances.png": {
+            "frame": {
+                "x": 513,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Elementalist/ElementalDamageAttackCasteSpeed.png": {
+            "frame": {
+                "x": 540,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Elementalist/ElementalDamageFreezeShockIgnite.png": {
+            "frame": {
+                "x": 567,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Juggernaut.png": {
+            "frame": {
+                "x": 594,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/LifeAndEnergyShield.png": {
+            "frame": {
+                "x": 621,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/castavoidinterruption.png": {
+            "frame": {
+                "x": 648,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/axedmgspeed.png": {
+            "frame": {
+                "x": 675,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Hierophant.png": {
+            "frame": {
+                "x": 702,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/attackspeedstaff.png": {
+            "frame": {
+                "x": 729,
+                "y": 189,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Pathfinder.png": {
+            "frame": {
+                "x": 0,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/evasion.png": {
+            "frame": {
+                "x": 27,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/innerforce.png": {
+            "frame": {
+                "x": 54,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Occultist.png": {
+            "frame": {
+                "x": 81,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Chieftain.png": {
+            "frame": {
+                "x": 108,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/minionblockchance.png": {
+            "frame": {
+                "x": 135,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Trickster.png": {
+            "frame": {
+                "x": 162,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Assassin.png": {
+            "frame": {
+                "x": 189,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Saboteur.png": {
+            "frame": {
+                "x": 216,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Raider.png": {
+            "frame": {
+                "x": 243,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Gladiator.png": {
+            "frame": {
+                "x": 270,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Champion.png": {
+            "frame": {
+                "x": 297,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Inquisitor.png": {
+            "frame": {
+                "x": 324,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        },
+        "Art/2DArt/SkillIcons/passives/Ascendants/Guardian.png": {
+            "frame": {
+                "x": 351,
+                "y": 216,
+                "w": 27,
+                "h": 27
+            }
+        }
+    }
+}

@@ -4,7 +4,7 @@ import {RouteComponentProps} from "react-router";
 import {observer} from "mobx-react";
 import {Content} from "../components/Content";
 import "./PassiveSkillTreePage.css";
-import {PassiveTreeView} from "../mobx-pixi/PassiveTreeView";
+import {PassiveTreeView} from "../passive-skill-tree/PassiveTreeView";
 
 @observer
 export class PassiveSkillTreePage extends Component<RouteComponentProps<any>> {
