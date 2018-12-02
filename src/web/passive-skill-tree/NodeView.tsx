@@ -84,6 +84,10 @@ export class NodeView extends PIXI.Container {
         this.node = node;
 
         this.on("pointerup", this.onClick);
+        if (node.name) {
+            this.on("pointerover", this.displayTooltip);
+            this.on("pointerout", this.hideTooltip);
+        }
 
         this.x = node.position.x;
         this.y = node.position.y;
@@ -152,7 +156,22 @@ export class NodeView extends PIXI.Container {
     public destroy(options?: PIXI.DestroyOptions | boolean): void {
         super.destroy(options);
         this.dispose();
-        this.off("pointerdown", this.onClick);
+    }
+
+    @bind
+    private displayTooltip(e: InteractionEvent) {
+        this.node.group.passiveTree.tooltip.node = this.node;
+        const worldPosition =  this.getGlobalPosition(undefined, true);
+        const bounds = this.getBounds(true);
+        this.node.group.passiveTree.tooltip.worldPosition.x = worldPosition.x + bounds.width / 2;
+        this.node.group.passiveTree.tooltip.worldPosition.y = worldPosition.y - bounds.height / 2;
+    }
+
+    @bind
+    private hideTooltip() {
+        if (this.node.group.passiveTree.tooltip.node === this.node) {
+            this.node.group.passiveTree.tooltip.node = undefined;
+        }
     }
 
     @bind

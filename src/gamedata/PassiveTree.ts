@@ -3,7 +3,29 @@ import {Group} from "./Group";
 import {Node} from "./Node";
 import {Dictionary} from "../utils/Dictionary";
 import {ClassArtResponse} from "./passive-skill-tree/internal-data/ClassArtResponse";
+import {Point} from "../web/react-pixi/ReactPIXIInternals";
+import {computed, observable} from "mobx";
 
+export class PassiveTreeTooltip {
+    @observable
+    public node?: Node = undefined;
+    @observable
+    public offsetPosition: Point = {
+        x: 0,
+        y: 0
+    };
+    @observable
+    public worldPosition: Point = {
+        x: 0,
+        y: 0
+    };
+    @computed get position(): Point {
+        return {
+            x: this.offsetPosition.x + this.worldPosition.x,
+            y: this.offsetPosition.y + this.worldPosition.y,
+        }
+    }
+}
 
 export class PassiveTree {
     public static readonly Null = new PassiveTree(
@@ -32,8 +54,8 @@ export class PassiveTree {
 
 
     public character: Character;
-
     public isDragging: boolean;
+    public readonly tooltip = new PassiveTreeTooltip();
 
     constructor(
         public readonly groups: Map<string, Group>,

@@ -25,6 +25,7 @@ export interface InteractiveStageProps extends StageProps {
      * Callback for when a drag ends.
      */
     onDragEnd?: () => void;
+    onDragMove?: () => void;
     /**
      * Number of pixels to ignore before triggering onDragStart. Defaults to 10.
      */
@@ -40,11 +41,11 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
      */
     private isDragging = false;
     /**
-     * Last x position that the cursor was at.
+     * Last x offsetPosition that the cursor was at.
      */
     private prevX = 0;
     /**
-     * Last y position that the cursor was at.
+     * Last y offsetPosition that the cursor was at.
      */
     private prevY = 0;
     /**
@@ -111,6 +112,10 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.prevX = e.data.global.x;
         this.prevY = e.data.global.y;
 
+        const {onDragMove} = this.props;
+        if (onDragMove) {
+            onDragMove();
+        }
 
         const {onDragStart, dragDeadZone} = this.props;
         if (this.distanceMoved > (dragDeadZone || this.defaultDragDeadZone) && onDragStart) {

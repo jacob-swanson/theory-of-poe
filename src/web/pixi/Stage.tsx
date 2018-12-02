@@ -2,6 +2,13 @@ import * as React from "react";
 import {Component} from "react";
 import {emptyObject} from "../../utils/emptyObject";
 import ResizeObserver from "resize-observer-polyfill";
+import {bind} from "../../utils/bind";
+import {Rectangle} from "../../utils/Rectangle";
+
+export interface StageRect {
+    readonly offsetLeft: number;
+    readonly offsetTop: number;
+}
 
 export interface StageProps {
     /**
@@ -24,6 +31,7 @@ export interface StageProps {
      * Children to add to the stage.
      */
     children?: PIXI.DisplayObject[];
+    onResize?: (rect: StageRect) => void;
 }
 
 /**
@@ -38,7 +46,7 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             return;
         }
         const canvas = entries[0];
-        this.resize(canvas.contentRect.width, canvas.contentRect.height);
+        this.onResize(canvas.contentRect);
     });
 
     /**
@@ -115,11 +123,20 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         return emptyObject;
     }
 
-    private resize(width: number, height: number) {
+    @bind
+    private onResize(rect: Rectangle) {
         if (!this.app) {
             return;
         }
-        this.app.renderer.resize(width, height);
+        this.app.renderer.resize(rect.width, rect.height);
+
+        const {onResize} = this.props;
+        if (onResize && this.canvas) {
+            onResize({
+                offsetLeft: this.canvas.offsetLeft,
+                offsetTop: this.canvas.offsetTop
+            });
+        }
     }
 
     /**

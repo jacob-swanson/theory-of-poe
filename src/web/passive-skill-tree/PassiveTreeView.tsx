@@ -12,6 +12,9 @@ import {AscendancyGroupView} from "./AscendancyGroupView";
 import {LargeGroupView} from "./LargeGroupView";
 import {LinkView} from "./LinkView";
 import "./PassiveTreeView.css";
+import {NodeTooltip} from "./NodeTooltip";
+import {Rectangle} from "../../utils/Rectangle";
+import {StageRect} from "../pixi/Stage";
 
 export interface PassiveSkillTreeProps {
     character?: Character
@@ -51,25 +54,29 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
 
     public render(): any {
         if (this.children.length > 0) {
-            return (
+            return [
+                <NodeTooltip key="1"/>,
                 <InteractiveStage
+                    key="2"
                     className="PassiveTreeView"
                     autoStart={true}
                     minScale={0.1}
                     maxScale={2}
-                    onDragStart={this.onDragStart}
-                    onDragEnd={this.onDragEnd}
+                    onDragStart={this.onCanvasDragStart}
+                    onDragMove={this.onCanvasDragMove}
+                    onDragEnd={this.onCanvasDragEnd}
+                    onResize={this.onCanvasResize}
                 >
                     {this.children}
                 </InteractiveStage>
-            );
+            ];
         } else {
             return "Loading...";
         }
     }
 
     @bind
-    private onDragStart() {
+    private onCanvasDragStart() {
         const {character} = this.props;
         if (!character) {
             throw new Error("character was undefined");
@@ -78,12 +85,31 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
     }
 
     @bind
-    private onDragEnd() {
+    private onCanvasDragMove() {
+        const {character} = this.props;
+        if (!character) {
+            throw new Error("character was undefined");
+        }
+    }
+
+    @bind
+    private onCanvasDragEnd() {
         const {character} = this.props;
         if (!character) {
             throw new Error("character was undefined");
         }
         character.passiveTree.isDragging = false;
+    }
+
+    @bind
+    private onCanvasResize(rect: StageRect) {
+        const {character} = this.props;
+        if (!character) {
+            throw new Error("character was undefined");
+        }
+
+        character.passiveTree.tooltip.offsetPosition.x = rect.offsetLeft;
+        character.passiveTree.tooltip.offsetPosition.y = rect.offsetTop;
     }
 
     private createGroups(): PIXI.DisplayObject[] {
