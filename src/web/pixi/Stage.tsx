@@ -1,29 +1,47 @@
 import * as React from "react";
 import {Component} from "react";
-import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 import {emptyObject} from "../../utils/emptyObject";
-
-const log = new ConsoleLogger("Stage");
+import {bind} from "../../utils/bind";
 
 export interface StageProps {
+    /**
+     * Color that the background should be.
+     */
     backgroundColor?: number;
+    /**
+     * True to make the background, false otherwise.
+     */
     transparent?: boolean;
+    /**
+     * Provide CSS classes for the underlying canvas.
+     */
     className?: string;
+    /**
+     * True to automatically render, false otherwise. Defaults to true.
+     */
     autoStart?: boolean;
+    /**
+     * Children to add to the stage.
+     */
     children?: PIXI.DisplayObject[];
 }
 
+/**
+ * Manages the Pixi app.
+ */
 export abstract class Stage<P extends StageProps> extends Component<P> {
     protected canvas: HTMLCanvasElement | null = null;
     protected app: PIXI.Application | null = null;
 
+    /**
+     * Setup the Pixi application.
+     */
     public componentDidMount(): void {
-        const {backgroundColor, transparent, autoStart, children} = this.props;
-
         if (!this.canvas) {
-            throw new Error("canvas missing");
+            throw new Error("Canvas is required");
         }
 
+        const autoStart = this.props.autoStart === undefined ? true : this.props.autoStart;
         if (!autoStart) {
             const ticker = PIXI.ticker.shared;
             ticker.autoStart = false;
@@ -34,18 +52,19 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         const pixiOptions = {
             width: size.width,
             height: size.height,
-            backgroundColor,
-            transparent,
+            backgroundColor: this.props.backgroundColor,
+            transparent: this.props.transparent,
             view: this.canvas,
             autoStart
         };
         this.app = new PIXI.Application(pixiOptions);
-
-        this.addChildren();
-
+        this.addChildren(this.props.children);
         window.addEventListener("resize", this.onResize);
     }
 
+    /**
+     * Destroy the Pixi app.
+     */
     public componentWillUnmount() {
         if (this.app) {
             this.app.destroy();
@@ -53,13 +72,17 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         window.removeEventListener("resize", this.onResize);
     }
 
+    /**
+     * Update the Pixi app's children.
+     * @param prevProps
+     */
     public componentDidUpdate(prevProps: Readonly<StageProps>): void {
         if (!this.app) {
             return;
         }
 
         this.removeChildren();
-        this.addChildren();
+        this.addChildren(this.props.children);
     }
 
     public render() {
@@ -70,15 +93,21 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             <canvas
                 ref={ref => this.canvas = ref}
                 className={className}
-                {...this.getAdditionalProps()}
+                {...this.getAdditionalCanvasProps()}
             />
         );
     }
 
-    protected getAdditionalProps() {
+    /**
+     * Override this method to provide additional properties on the canvas.
+     */
+    protected getAdditionalCanvasProps() {
         return emptyObject;
     }
 
+    /**
+     * Remove all of the children.
+     */
     private removeChildren(): void {
         if (!this.app) {
             return;
@@ -89,13 +118,12 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         }
     }
 
-    private addChildren(): void {
+    /**
+     * Add children using the children provided via props.
+     * @param children
+     */
+    private addChildren(children: any): void {
         if (!this.app) {
-            return;
-        }
-
-        const {children} = this.props;
-        if (!Array.isArray(children)) {
             return;
         }
 
@@ -106,7 +134,11 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         }
     }
 
-    private onResize = () => {
+    /**
+     * Event handler to resize the app.
+     */
+    @bind
+    private onResize() {
         if (!this.app) {
             return;
         }
@@ -115,6 +147,9 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         this.app.renderer.resize(size.width, size.height);
     };
 
+    /**
+     * Get the size of the canvas, so the Pixi app can be sized the same.
+     */
     private getSize() {
         if (!this.canvas || !this.canvas.parentElement) {
             return {width: 0, height: 0};

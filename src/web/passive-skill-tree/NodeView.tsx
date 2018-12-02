@@ -1,23 +1,19 @@
 import * as React from "react";
 import {SkillSpriteGroups} from "../../gamedata/passive-skill-tree/external-data/SkillSpritesJson";
-import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
 import {Node, NodeAllocationState, NodeType} from "../../gamedata/Node";
 import {CharacterClass} from "../../gamedata/Character";
 import * as PIXI from "pixi.js";
-import {CenterAnchor} from "../mobx-pixi/CenterAnchor";
 import {autorun, IReactionDisposer} from "mobx";
 import {bind} from "../../utils/bind";
 
-const log = new ConsoleLogger("debug");
-
-const AssetNameByTypeByState = {
+const FrameAssetNameByTypeByState = {
     [NodeAllocationState.Allocated]: {
         [NodeType.Normal]: "PSSkillFrameActive",
         [NodeType.Keystone]: "KeystoneFrameAllocated",
         [NodeType.Notable]: "NotableFrameAllocated",
         [NodeType.AscendancySmall]: "PassiveSkillScreenAscendancyFrameSmallAllocated",
         [NodeType.AscendancyLarge]: "PassiveSkillScreenAscendancyFrameLargeAllocated",
-        [NodeType.JewelSocket]: "JewelFrameAllocatedg",
+        [NodeType.JewelSocket]: "JewelFrameAllocated",
         [NodeType.AscendancyStart]: "PassiveSkillScreenAscendancyMiddle",
         [NodeType.ClassStart]: "PSStartNodeBackgroundInactive"
     },
@@ -43,7 +39,7 @@ const AssetNameByTypeByState = {
     }
 };
 
-const AssetNameByCharacterClass = {
+const ClassStartFrameAssetNameByCharacterClass = {
     [CharacterClass.Witch]: "centerwitch",
     [CharacterClass.Shadow]: "centershadow",
     [CharacterClass.Ranger]: "centerranger",
@@ -53,7 +49,7 @@ const AssetNameByCharacterClass = {
     [CharacterClass.Scion]: "centerscion"
 };
 
-const AssetNameByState = {
+const SpriteSheetNameByState = {
     [NodeAllocationState.Allocated]: {
         [NodeType.Normal]: SkillSpriteGroups.normalActive,
         [NodeType.Keystone]: SkillSpriteGroups.keystoneActive,
@@ -72,8 +68,7 @@ const AssetNameByState = {
     }
 };
 
-
-export class PassiveTreeNodeView extends PIXI.Container {
+export class NodeView extends PIXI.Container {
     private readonly allocatedFrame?: PIXI.Sprite;
     private readonly unallocatedFrame?: PIXI.Sprite;
     private readonly allocatedIcon?: PIXI.Sprite;
@@ -89,20 +84,20 @@ export class PassiveTreeNodeView extends PIXI.Container {
         this.x = node.position.x;
         this.y = node.position.y;
 
-        this.allocatedIcon = PassiveTreeNodeView.loadIcon(node, NodeAllocationState.Allocated);
+        this.allocatedIcon = NodeView.loadIcon(node, NodeAllocationState.Allocated);
         if (this.allocatedIcon) {
             this.addChild(this.allocatedIcon);
         }
-        this.unallocatedIcon = PassiveTreeNodeView.loadIcon(node, NodeAllocationState.Unallocated);
+        this.unallocatedIcon = NodeView.loadIcon(node, NodeAllocationState.Unallocated);
         if (this.unallocatedIcon) {
             this.addChild(this.unallocatedIcon);
         }
 
-        this.allocatedFrame = PassiveTreeNodeView.loadFrame(node, NodeAllocationState.Allocated);
+        this.allocatedFrame = NodeView.loadFrame(node, NodeAllocationState.Allocated);
         if (this.allocatedFrame) {
             this.addChild(this.allocatedFrame);
         }
-        this.unallocatedFrame = PassiveTreeNodeView.loadFrame(node, NodeAllocationState.Unallocated);
+        this.unallocatedFrame = NodeView.loadFrame(node, NodeAllocationState.Unallocated);
         if (this.unallocatedFrame) {
             this.addChild(this.unallocatedFrame);
         }
@@ -112,14 +107,15 @@ export class PassiveTreeNodeView extends PIXI.Container {
 
     private static loadFrame(node: Node, state: NodeAllocationState): PIXI.Sprite | undefined {
         const resourceName = node.className && state === NodeAllocationState.Allocated ?
-            AssetNameByCharacterClass[node.className] :
-            AssetNameByTypeByState[state][node.type];
+            ClassStartFrameAssetNameByCharacterClass[node.className] :
+            FrameAssetNameByTypeByState[state][node.type];
         const resource = PIXI.loader.resources[resourceName];
         if (!resource) {
             return;
         }
         const sprite = new PIXI.Sprite(resource.texture);
-        sprite.anchor = CenterAnchor;
+        sprite.anchor.x = 0.5;
+        sprite.anchor.y = 0.5;
         return sprite;
     }
 
@@ -128,7 +124,7 @@ export class PassiveTreeNodeView extends PIXI.Container {
             return;
         }
 
-        const resourceName = AssetNameByState[state][node.type];
+        const resourceName = SpriteSheetNameByState[state][node.type];
         const resource = PIXI.loader.resources[resourceName];
         if (!resource) {
             return;
@@ -144,13 +140,15 @@ export class PassiveTreeNodeView extends PIXI.Container {
             return;
         }
         const sprite = new PIXI.Sprite(texture);
-        sprite.anchor = CenterAnchor;
+        sprite.anchor.x = 0.5;
+        sprite.anchor.y = 0.5;
         return sprite;
     }
 
     public destroy(options?: PIXI.DestroyOptions | boolean): void {
         super.destroy(options);
         this.dispose();
+        this.off("pointerdown", this.onClick);
     }
 
     @bind

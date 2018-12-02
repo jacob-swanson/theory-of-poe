@@ -52,7 +52,7 @@ export class Group {
         return occupiedOrbits;
     }
 
-    public getBackgroundType(): GroupBackgroundType {
+    public get backgroundType(): GroupBackgroundType {
         if (this.ascendancyName) {
             if (this.containsAscendancyStart) {
                 return GroupBackgroundType.Ascendancy;

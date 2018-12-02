@@ -1,14 +1,16 @@
 import {inject, observer} from "mobx-react";
 import {Character} from "../../gamedata/Character";
-import {PassiveTreeNodeView} from "./PassiveTreeNodeView";
-import {InteractiveStage} from "./InteractiveStage";
+import {NodeView} from "./NodeView";
+import {InteractiveStage} from "../pixi/InteractiveStage";
 import * as React from "react";
 import {Component} from "react";
 import {GroupView} from "./GroupView";
-import {Node} from "../../gamedata/Node";
-import {PassiveTree} from "../../gamedata/PassiveTree";
-import {autorun, observable} from "mobx";
+import {observable} from "mobx";
 import {bind} from "../../utils/bind";
+import {GroupBackgroundType} from "../../gamedata/Group";
+import {AscendancyGroupView} from "./AscendancyGroupView";
+import {LargeGroupView} from "./LargeGroupView";
+import {LinkView} from "./LinkView";
 
 export interface PassiveSkillTreeProps {
     character?: Character
@@ -26,6 +28,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
             throw new Error("character was undefined");
         }
 
+        // Preload all of the assets needed
         const loader = PIXI.loader;
         for (const [name, url] of Object.entries(character.passiveTree.assets)) {
             loader.add(name, url);
@@ -55,58 +58,29 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         }
     }
 
-    private createLinks(from: Node): PIXI.DisplayObject[] {
-        const links = [];
-        for (const to of from.neighbors) {
-            const isGreater = from.id > to.id;
-            const isAscendancy = from.ascendancyName !== to.ascendancyName;
-            const isClassStart = from.isClassStart || to.isClassStart;
-            const shouldDisplay = isGreater && !isAscendancy && !isClassStart;
-            if (shouldDisplay) {
-                const isArc = from.group === to.group && from.orbit === to.orbit;
-                if (isArc) {
-                    const arc = new PIXI.Graphics();
-                    links.push(arc);
+    private createGroups(): PIXI.DisplayObject[] {
+        if (!this.props.character) {
+            throw new Error("character is required");
+        }
 
-                    autorun(() => {
-                        const isAllocated = from.isAllocated && to.isAllocated;
-                        const color = isAllocated ? 0x839574 : 0x373B33;
-                        const width = isAllocated ? 10 : 5;
-
-                        const center = from.group.position;
-                        const radius = PassiveTree.orbitRadii[from.orbit];
-                        const fromTheta = 2 * Math.PI * from.orbitIndex / PassiveTree.skillsPerOrbit[from.orbit] - Math.PI / 2;
-                        const toTheta = 2 * Math.PI * to.orbitIndex / PassiveTree.skillsPerOrbit[to.orbit] - Math.PI / 2;
-
-                        let arcTheta = fromTheta - toTheta;
-                        if (arcTheta < 0) {
-                            arcTheta += 2 * Math.PI;
-                        }
-                        const clockwise = arcTheta < Math.PI;
-
-                        arc.clear();
-                        arc.lineStyle(width, color);
-                        arc.arc(center.x, center.y, radius, fromTheta, toTheta, clockwise);
-                        arc.endFill();
-                    });
-                } else {
-                    const line = new PIXI.Graphics();
-                    links.push(line);
-
-                    autorun(() => {
-                        line.clear();
-                        const isAllocated = from.isAllocated && to.isAllocated;
-                        const color = isAllocated ? 0x839574 : 0x373B33;
-                        const width = isAllocated ? 10 : 5;
-                        line.lineStyle(width, color);
-                        line.moveTo(from.position.x, from.position.y);
-                        line.lineTo(to.position.x, to.position.y);
-                        line.endFill();
-                    });
-                }
+        const groups = [];
+        for (const group of this.props.character.passiveTree.groups.values()) {
+            switch (group.backgroundType) {
+                case GroupBackgroundType.Small:
+                    groups.push(new GroupView(group));
+                    break;
+                case GroupBackgroundType.Medium:
+                    groups.push(new GroupView(group));
+                    break;
+                case GroupBackgroundType.Large:
+                    groups.push(new LargeGroupView(group));
+                    break;
+                case GroupBackgroundType.Ascendancy:
+                    groups.push(new AscendancyGroupView(group));
+                    break;
             }
         }
-        return links;
+        return groups;
     }
 
 
@@ -126,13 +100,13 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         background.y = -500000;
 
         const groupsLayer = new PIXI.Container();
-        groupsLayer.addChild(...character.passiveTree.groupsList.map(group => new GroupView(group)));
+        groupsLayer.addChild(...this.createGroups());
 
         const linksLayer = new PIXI.Container();
-        linksLayer.addChild(...character.passiveTree.nodes.flatMap(node => this.createLinks(node)));
+        linksLayer.addChild(...character.passiveTree.nodes.flatMap(node => LinkView.create(node)));
 
         const nodesLayer = new PIXI.Container();
-        nodesLayer.addChild(...character.passiveTree.nodes.map(node => new PassiveTreeNodeView(node)));
+        nodesLayer.addChild(...character.passiveTree.nodes.map(node => new NodeView(node)));
 
         this.children = [background, groupsLayer, linksLayer, nodesLayer];
     }

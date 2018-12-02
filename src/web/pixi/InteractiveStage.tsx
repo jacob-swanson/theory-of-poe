@@ -5,17 +5,81 @@ import InteractionEvent = PIXI.interaction.InteractionEvent;
 const log = new ConsoleLogger("InteractiveStage", "debug");
 
 export interface InteractiveStageProps extends StageProps {
+    /**
+     * Decimal amount to zoom by. Defaults to 0.2.
+     */
     zoomPercent?: number;
+    /**
+     * Limits the amount that can be zoomed in.
+     */
     maxScale?: number;
+    /**
+     * Limits the amount that can be zoomed out.
+     */
     minScale?: number;
 }
 
+/**
+ * Pixi stage that provides pan and zoom.
+ */
 export class InteractiveStage extends Stage<InteractiveStageProps> {
+    /**
+     * True while a drag is occurring, false otherwise.
+     */
     private isDragging = false;
+    /**
+     * Last x position that the cursor was at.
+     */
     private prevX = 0;
+    /**
+     * Last y position that the cursor was at.
+     */
     private prevY = 0;
+    /**
+     * Cumulative distance that the mouse has moved during a drag.
+     */
     private distanceMoved = 0;
 
+    /**
+     * Connect events needed for dragging.
+     */
+    public componentDidMount() {
+        super.componentDidMount();
+        if (!this.app) {
+            throw new Error("app not set");
+        }
+
+        this.app.renderer.plugins.interaction.on("pointerdown", this.onDragStart);
+        this.app.renderer.plugins.interaction.on("pointermove", this.onDragMove);
+        this.app.renderer.plugins.interaction.on("pointerup", this.onDragEnd);
+        this.app.renderer.plugins.interaction.on("pointerupoutside", this.onDragEnd);
+    }
+
+    /**
+     * Disconnect events.
+     */
+    public componentWillUnmount() {
+        if (!this.app) {
+            throw new Error("app not set");
+        }
+
+        this.app.renderer.plugins.interaction.off("pointerdown", this.onDragStart);
+        this.app.renderer.plugins.interaction.off("pointermove", this.onDragMove);
+        this.app.renderer.plugins.interaction.off("pointerup", this.onDragEnd);
+        this.app.renderer.plugins.interaction.off("pointerupoutside", this.onDragEnd);
+    }
+
+    protected getAdditionalCanvasProps(): {} {
+        return {
+            onWheel: this.onWheel,
+            onMouseDown: this.onCanvasMouseDown
+        };
+    }
+
+    /**
+     * Mark the start of a drag operation.
+     * @param e
+     */
     private onDragStart = (e: InteractionEvent) => {
         log.trace("InteractiveStage.onDragStart", {e});
 
@@ -25,6 +89,10 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.distanceMoved = 0;
     };
 
+    /**
+     * Update the current drag if there's one in progress.
+     * @param e
+     */
     private onDragMove = (e: InteractionEvent) => {
         if (!this.isDragging || this.app == null) {
             return;
@@ -45,6 +113,10 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.prevY = e.data.global.y;
     };
 
+    /**
+     * Zoom in or out.
+     * @param e
+     */
     private onWheel = (e: WheelEvent) => {
         if (!this.app) {
             throw new Error("app not set");
@@ -89,11 +161,16 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
             y: newMouseScreenPosition.y - mouseScreenPosition.y
         };
 
-        this.app.stage.scale = new PIXI.Point(newScale.x, newScale.y);
+        this.app.stage.scale.x = newScale.x;
+        this.app.stage.scale.y = newScale.y;
         this.app.stage.x -= positionDelta.x;
         this.app.stage.y -= positionDelta.y;
     };
 
+    /**
+     * Stop the current drag if there is one.
+     * @param e
+     */
     private onDragEnd = (e: InteractionEvent) => {
         log.trace("InteractiveStage.onDragEnd", {e});
 
@@ -102,7 +179,6 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
 
     /**
      * Prevents selection when the panning and the cursor leaves the canvas.
-     *
      * @param e
      */
     private onCanvasMouseDown = (e: MouseEvent) => {
@@ -110,26 +186,4 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
 
         e.preventDefault();
     };
-
-    public componentDidMount() {
-        super.componentDidMount();
-        if (!this.app) {
-            throw new Error("app not set");
-        }
-
-        this.app.renderer.plugins.interaction.on("pointerdown", this.onDragStart);
-        this.app.renderer.plugins.interaction.on("pointermove", this.onDragMove);
-        this.app.renderer.plugins.interaction.on("pointerup", this.onDragEnd);
-        this.app.renderer.plugins.interaction.on("pointerupoutside", this.onDragEnd);
-    }
-
-    public componentWillUnmount() {
-    }
-
-    protected getAdditionalProps(): {} {
-        return {
-            onWheel: this.onWheel,
-            onMouseDown: this.onCanvasMouseDown
-        };
-    }
 }
