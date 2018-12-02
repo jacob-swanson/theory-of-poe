@@ -16,3 +16,4 @@ interface Window {
     ) => RequestIdleCallbackHandle);
     cancelIdleCallback: ((handle: RequestIdleCallbackHandle) => void);
 }
+

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {emptyObject} from "../../utils/emptyObject";
-import {bind} from "../../utils/bind";
+import ResizeObserver from "resize-observer-polyfill";
 
 export interface StageProps {
     /**
@@ -33,6 +33,14 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
     protected canvas: HTMLCanvasElement | null = null;
     protected app: PIXI.Application | null = null;
 
+    private resizeObserver: ResizeObserver = new ResizeObserver(entries => {
+        if (!this.app) {
+            return;
+        }
+        const canvas = entries[0];
+        this.resize(canvas.contentRect.width, canvas.contentRect.height);
+    });
+
     /**
      * Setup the Pixi application.
      */
@@ -59,7 +67,7 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         };
         this.app = new PIXI.Application(pixiOptions);
         this.addChildren(this.props.children);
-        window.addEventListener("resize", this.onResize);
+        this.resizeObserver.observe(this.canvas);
     }
 
     /**
@@ -70,7 +78,8 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             this.app.destroy(false, {children: true});
             this.app = null;
         }
-        window.removeEventListener("resize", this.onResize);
+
+        this.resizeObserver.disconnect();
     }
 
     /**
@@ -106,6 +115,13 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         return emptyObject;
     }
 
+    private resize(width: number, height: number) {
+        if (!this.app) {
+            return;
+        }
+        this.app.renderer.resize(width, height);
+    }
+
     /**
      * Remove all of the children.
      */
@@ -134,19 +150,6 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             }
         }
     }
-
-    /**
-     * Event handler to resize the app.
-     */
-    @bind
-    private onResize() {
-        if (!this.app) {
-            return;
-        }
-
-        const size = this.getSize();
-        this.app.renderer.resize(size.width, size.height);
-    };
 
     /**
      * Get the size of the canvas, so the Pixi app can be sized the same.

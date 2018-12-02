@@ -11,14 +11,10 @@ import {GroupBackgroundType} from "../../gamedata/Group";
 import {AscendancyGroupView} from "./AscendancyGroupView";
 import {LargeGroupView} from "./LargeGroupView";
 import {LinkView} from "./LinkView";
+import "./PassiveTreeView.css";
 
 export interface PassiveSkillTreeProps {
     character?: Character
-}
-
-let isLoaded = false;
-
-function loadAssets() {
 }
 
 @inject("character")
@@ -34,7 +30,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
             throw new Error("character was undefined");
         }
 
-        if (!isLoaded) {
+        if (!PassiveTreeView.isLoaded) {
             // Preload all of the assets needed
             const loader = PIXI.loader;
             for (const [name, url] of Object.entries(character.passiveTree.assets)) {
@@ -47,7 +43,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
                 loader.add(classArt.url);
             }
             loader.load(this.createChildren);
-            isLoaded = true;
+            PassiveTreeView.isLoaded = true;
         } else {
             this.createChildren();
         }
@@ -57,6 +53,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         if (this.children.length > 0) {
             return (
                 <InteractiveStage
+                    className="PassiveTreeView"
                     autoStart={true}
                     minScale={0.1}
                     maxScale={2}

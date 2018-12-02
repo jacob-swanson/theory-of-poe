@@ -52,16 +52,16 @@ export class Navbar extends Component<NavbarProps> {
                         </NavLink>
                     </div>
 
-                    <div className="navbar-end">
-                        <div className="navbar-item">
-                            <div className="field is-grouped">
-                                <p className="control">
-                                    <Link className="button is-danger"
-                                          to="/characters/new/passive-skill-tree">Reset</Link>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    {/*<div className="navbar-end">*/}
+                        {/*<div className="navbar-item">*/}
+                            {/*<div className="field is-grouped">*/}
+                                {/*<p className="control">*/}
+                                    {/*<Link className="button is-danger"*/}
+                                          {/*to="/characters/new/passive-skill-tree">Reset</Link>*/}
+                                {/*</p>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
                 </div>
             </nav>
         );

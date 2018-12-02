@@ -4,12 +4,12 @@
     <list default="true" id="df575c0f-859e-4dfa-8a5e-fd522991b32c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamedata/Node.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamedata/Node.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamedata/PassiveTree.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamedata/PassiveTree.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/passive-skill-tree/NodeView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/passive-skill-tree/NodeView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/@types/experimental.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/@types/experimental.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/components/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/components/Sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/components/Sidebar.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/pixi/InteractiveStage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/pixi/InteractiveStage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/pixi/Stage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/pixi/Stage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="25" column="41" lean-forward="true" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+            <state relative-caret-position="561">
+              <caret line="54" column="33" lean-forward="true" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -47,54 +47,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gamedata/PassiveTreeFactory.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="35" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#91#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/src/web/components/Layout.css">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/web/App.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="63" column="97" selection-start-line="63" selection-start-column="88" selection-end-line="63" selection-end-column="108" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/src/web/pages/PassiveSkillTreePage.css">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/web/pages/PassiveSkillTreePage.tsx">
+        <entry file="file://$PROJECT_DIR$/src/web/components/Sidebar.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="9" column="79" lean-forward="true" selection-start-line="9" selection-start-column="79" selection-end-line="9" selection-end-column="79" />
+              <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/web/pixi/InteractiveStage.tsx">
+        <entry file="file://$PROJECT_DIR$/src/web/components/Navbar.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
+            <state relative-caret-position="680">
+              <caret line="64" selection-start-line="54" selection-end-line="64" />
               <folding>
-                <element signature="e#0#42#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gamedata/PassiveTree.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
+                <element signature="e#0#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -103,8 +80,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/web/pixi/Stage.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
-              <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
+            <state relative-caret-position="544">
+              <caret line="40" column="73" selection-start-line="40" selection-start-column="73" selection-end-line="40" selection-end-column="73" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -115,22 +92,33 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/@types/pixi.js/index.d.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="241" column="31" selection-start-line="241" selection-start-column="31" selection-end-line="241" selection-end-column="31" />
+            <state relative-caret-position="286">
+              <caret line="1097" column="8" selection-start-line="1097" selection-start-column="8" selection-end-line="1097" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/web/passive-skill-tree/NodeView.tsx">
+        <entry file="file://$PROJECT_DIR$/node_modules/resize-observer-polyfill/src/index.d.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="154" selection-start-line="154" selection-end-line="154" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="510">
+              <caret line="30" column="4" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/web/App.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="1" lean-forward="true" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.html">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -144,7 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>config/paths</find>
       <find>jest</find>
       <find>!!</find>
       <find>State</find>
@@ -174,6 +161,7 @@
       <find>-0.3835.png</find>
       <find>isascendancystart</find>
       <find>deb</find>
+      <find>margin</find>
     </findStrings>
     <replaceStrings>
       <replace>this.group!!</replace>
@@ -186,12 +174,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/web/components/Sidebar.tsx" />
-        <option value="$PROJECT_DIR$/src/gamedata/Character.ts" />
-        <option value="$PROJECT_DIR$/src/web/mobx-pixi/InteractiveStage.tsx" />
-        <option value="$PROJECT_DIR$/src/web/passive-skill-tree/LinkComponent.tsx" />
-        <option value="$PROJECT_DIR$/tsconfig.json" />
-        <option value="$PROJECT_DIR$/src/web/mobx-pixi/PassiveTreeView.tsx" />
         <option value="$PROJECT_DIR$/src/gamedata/passive-skill-tree/internal-data/PassiveTree.ts" />
         <option value="$PROJECT_DIR$/src/gamedata/passive-skill-tree/internal-data/GroupData.ts" />
         <option value="$PROJECT_DIR$/src/gamedata/passive-skill-tree/internal-data/PassiveTreeData.ts" />
@@ -232,10 +214,16 @@
         <option value="$PROJECT_DIR$/src/gamedata/Node.ts" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/gamedata/PassiveTree.ts" />
-        <option value="$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.tsx" />
         <option value="$PROJECT_DIR$/src/web/pages/PassiveSkillTreePage.tsx" />
         <option value="$PROJECT_DIR$/src/web/passive-skill-tree/NodeView.tsx" />
         <option value="$PROJECT_DIR$/src/web/pixi/InteractiveStage.tsx" />
+        <option value="$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.css" />
+        <option value="$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.tsx" />
+        <option value="$PROJECT_DIR$/src/@types/experimental.d.ts" />
+        <option value="$PROJECT_DIR$/src/@types/ResizeObserver.d.ts" />
+        <option value="$PROJECT_DIR$/src/ResizeObserver.d.ts" />
+        <option value="$PROJECT_DIR$/src/web/components/Sidebar.css" />
+        <option value="$PROJECT_DIR$/src/web/components/Navbar.tsx" />
         <option value="$PROJECT_DIR$/src/web/pixi/Stage.tsx" />
       </list>
     </option>
@@ -265,6 +253,30 @@
             <path>
               <item name="theory-of-poe" type="b2602c69:ProjectViewProjectNode" />
               <item name="theory-of-poe" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="theory-of-poe" type="b2602c69:ProjectViewProjectNode" />
+              <item name="theory-of-poe" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="theory-of-poe" type="b2602c69:ProjectViewProjectNode" />
+              <item name="theory-of-poe" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="@types" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="theory-of-poe" type="b2602c69:ProjectViewProjectNode" />
+              <item name="theory-of-poe" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="@types" type="462c0819:PsiDirectoryNode" />
+              <item name="react-resize-detector" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="theory-of-poe" type="b2602c69:ProjectViewProjectNode" />
+              <item name="theory-of-poe" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="react-resize-detector" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="theory-of-poe" type="b2602c69:ProjectViewProjectNode" />
@@ -424,23 +436,23 @@
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src" />
+      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\web\pixi" />
+      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\utils\texture-packer" />
+      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\web\passive-skill-tree" />
+      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\gamedata" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\utils\texture-packer\TexturePackerFrameJson.ts" />
+      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\utils\texture-packer\TexturePackerMetaJson.ts" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\web\passive-skill-tree" />
       <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\web\mobx-pixi" />
       <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\utils" />
       <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\gamedata\entities" />
       <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\gamedata\stats\attributes" />
-    </key>
-    <key name="es6.move.members.recent.items">
-      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\utils\texture-packer\TexturePackerFrameJson.ts" />
-      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\utils\texture-packer\TexturePackerMetaJson.ts" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\web\pixi" />
-      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\utils\texture-packer" />
-      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\web\passive-skill-tree" />
-      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\gamedata" />
-      <recent name="C:\Users\Jacob\Projects\theory-of-poe\src\web\stores\passive-tree" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -600,7 +612,7 @@
       <workItem from="1543461446956" duration="12662000" />
       <workItem from="1543671852210" duration="21902000" />
       <workItem from="1543709574592" duration="7023000" />
-      <workItem from="1543723408779" duration="3632000" />
+      <workItem from="1543723408779" duration="6854000" />
     </task>
     <servers />
   </component>
@@ -637,13 +649,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185028000" />
+    <option name="totallyTimeSpent" value="188250000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1456" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16375199" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16375199" />
       <window_info id="Designer" order="1" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="Structure" order="3" weight="0.1709062" />
@@ -657,7 +669,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32955405" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="TypeScript" order="9" weight="0.32955405" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32955405" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32955405" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="GraphQL" order="12" weight="0.32955405" />
       <window_info anchor="bottom" id="Docker" order="13" show_stripe_button="false" />
@@ -675,49 +687,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/utils/texture-packer/TexturePackerFrameJson.ts" />
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.3.1/skillSprites/skills-0.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.3.1/skillSprites/skills-1.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.3.1/skillSprites/skills-2.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.3.1/skillSprites/skills-3.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gamedata/passive-skill-tree/external-data/PassiveTreeJson.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/normalActive-sprite-sheet.json" />
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/mastery-sprite-sheet.json" />
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/keystoneInactive-sprite-sheet.json" />
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/keystoneActive-sprite-sheet.json" />
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/skill-sprites/normalInactive.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/skill-sprites/normalActive.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/skill-sprites/mastery.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/skill-sprites/keystoneInactive.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/gamedata/3.4.5/original.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="59414" column="31" selection-start-line="59414" selection-start-column="31" selection-end-line="59414" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/bin/scrape.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -795,9 +764,6 @@
           <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/bin/server.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -946,34 +912,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/pixi.js/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="241" column="31" selection-start-line="241" selection-start-column="31" selection-end-line="241" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="25" column="41" lean-forward="true" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/web/App.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="63" column="97" selection-start-line="63" selection-start-column="88" selection-end-line="63" selection-end-column="108" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gamedata/PassiveTree.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -990,20 +932,147 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/stores/UiState.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/web/pixi/InteractiveStage.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        <state relative-caret-position="612">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
           <folding>
             <element signature="e#0#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-resize-detector/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-585" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/react-resize-detector/LICENSE">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/react-resize-detector/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ResizeObserver.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="9" selection-start-line="10" selection-end-line="10" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/@types/experimental.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/components/Sidebar.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/App.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="45" column="20" lean-forward="true" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/components/Content.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/components/Layout.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/pages/PassiveSkillTreePage.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="1" lean-forward="true" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/passive-skill-tree/PassiveTreeView.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="54" column="33" lean-forward="true" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/components/Sidebar.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web/components/Navbar.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="64" selection-start-line="54" selection-end-line="64" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/pixi.js/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="1097" column="8" selection-start-line="1097" selection-start-column="8" selection-end-line="1097" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/resize-observer-polyfill/src/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="4" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/web/pixi/Stage.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
+        <state relative-caret-position="544">
+          <caret line="40" column="73" selection-start-line="40" selection-start-column="73" selection-end-line="40" selection-end-column="73" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
