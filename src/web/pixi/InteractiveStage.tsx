@@ -17,6 +17,18 @@ export interface InteractiveStageProps extends StageProps {
      * Limits the amount that can be zoomed out.
      */
     minScale?: number;
+    /**
+     * Callback for when a drag starts.
+     */
+    onDragStart?: () => void;
+    /**
+     * Callback for when a drag ends.
+     */
+    onDragEnd?: () => void;
+    /**
+     * Number of pixels to ignore before triggering onDragStart. Defaults to 10.
+     */
+    dragDeadZone?: number;
 }
 
 /**
@@ -39,10 +51,11 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
      * Cumulative distance that the mouse has moved during a drag.
      */
     private distanceMoved = 0;
-
     /**
-     * Connect events needed for dragging.
+     * Default value for dragDeadZone.
      */
+    private readonly defaultDragDeadZone = 10;
+
     public componentDidMount() {
         super.componentDidMount();
         if (!this.app) {
@@ -53,20 +66,6 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.app.renderer.plugins.interaction.on("pointermove", this.onDragMove);
         this.app.renderer.plugins.interaction.on("pointerup", this.onDragEnd);
         this.app.renderer.plugins.interaction.on("pointerupoutside", this.onDragEnd);
-    }
-
-    /**
-     * Disconnect events.
-     */
-    public componentWillUnmount() {
-        if (!this.app) {
-            throw new Error("app not set");
-        }
-
-        this.app.renderer.plugins.interaction.off("pointerdown", this.onDragStart);
-        this.app.renderer.plugins.interaction.off("pointermove", this.onDragMove);
-        this.app.renderer.plugins.interaction.off("pointerup", this.onDragEnd);
-        this.app.renderer.plugins.interaction.off("pointerupoutside", this.onDragEnd);
     }
 
     protected getAdditionalCanvasProps(): {} {
@@ -111,6 +110,12 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
 
         this.prevX = e.data.global.x;
         this.prevY = e.data.global.y;
+
+
+        const {onDragStart, dragDeadZone} = this.props;
+        if (this.distanceMoved > (dragDeadZone || this.defaultDragDeadZone) && onDragStart) {
+            onDragStart();
+        }
     };
 
     /**
@@ -175,6 +180,10 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         log.trace("InteractiveStage.onDragEnd", {e});
 
         this.isDragging = false;
+        const {onDragEnd} = this.props;
+        if (onDragEnd) {
+            onDragEnd();
+        }
     };
 
     /**

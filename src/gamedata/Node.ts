@@ -125,12 +125,17 @@ export class Node implements NodeProps {
             }
         }
 
-        const hasAllocatedNeighbor = Array.from(this.neighbors.values()).some(node => node.isAllocated);
-        if (!hasAllocatedNeighbor) {
-            return false;
-        }
-
         return true;
+    }
+
+    public get allocatedNeighbors(): Node[] {
+        const nodes = [];
+        for (const node of this.neighbors) {
+            if (node.isAllocated) {
+                nodes.push(node);
+            }
+        }
+        return nodes;
     }
 
     @bind

@@ -67,7 +67,8 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
      */
     public componentWillUnmount() {
         if (this.app) {
-            this.app.destroy();
+            this.app.destroy(false, {children: true});
+            this.app = null;
         }
         window.removeEventListener("resize", this.onResize);
     }

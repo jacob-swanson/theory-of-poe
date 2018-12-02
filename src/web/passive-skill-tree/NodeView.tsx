@@ -5,6 +5,10 @@ import {CharacterClass} from "../../gamedata/Character";
 import * as PIXI from "pixi.js";
 import {autorun, IReactionDisposer} from "mobx";
 import {bind} from "../../utils/bind";
+import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
+import InteractionEvent = PIXI.interaction.InteractionEvent;
+
+const log = new ConsoleLogger("NodeView", "debug");
 
 const FrameAssetNameByTypeByState = {
     [NodeAllocationState.Allocated]: {
@@ -79,7 +83,7 @@ export class NodeView extends PIXI.Container {
         super();
         this.node = node;
 
-        this.on("pointerdown", this.onClick);
+        this.on("pointerup", this.onClick);
 
         this.x = node.position.x;
         this.y = node.position.y;
@@ -172,8 +176,8 @@ export class NodeView extends PIXI.Container {
     }
 
     @bind
-    private onClick() {
-        if (this.node.isAllocatable) {
+    private onClick(e: InteractionEvent) {
+        if (!this.node.group.passiveTree.isDragging && this.node.isAllocatable) {
             this.node.toggleAllocation();
         }
     };

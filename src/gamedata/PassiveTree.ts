@@ -33,6 +33,8 @@ export class PassiveTree {
 
     public character: Character;
 
+    public isDragging: boolean;
+
     constructor(
         public readonly groups: Map<string, Group>,
         public readonly assets: Dictionary<string>,

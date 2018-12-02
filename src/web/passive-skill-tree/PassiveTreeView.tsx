@@ -16,9 +16,15 @@ export interface PassiveSkillTreeProps {
     character?: Character
 }
 
+let isLoaded = false;
+
+function loadAssets() {
+}
+
 @inject("character")
 @observer
 export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
+    private static isLoaded = false;
     @observable
     private children: PIXI.DisplayObject[] = [];
 
@@ -28,18 +34,23 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
             throw new Error("character was undefined");
         }
 
-        // Preload all of the assets needed
-        const loader = PIXI.loader;
-        for (const [name, url] of Object.entries(character.passiveTree.assets)) {
-            loader.add(name, url);
+        if (!isLoaded) {
+            // Preload all of the assets needed
+            const loader = PIXI.loader;
+            for (const [name, url] of Object.entries(character.passiveTree.assets)) {
+                loader.add(name, url);
+            }
+            for (const [name, url] of Object.entries(character.passiveTree.skillSprites)) {
+                loader.add(name, url);
+            }
+            for (const [name, classArt] of Object.entries(character.passiveTree.classArt)) {
+                loader.add(classArt.url);
+            }
+            loader.load(this.createChildren);
+            isLoaded = true;
+        } else {
+            this.createChildren();
         }
-        for (const [name, url] of Object.entries(character.passiveTree.skillSprites)) {
-            loader.add(name, url);
-        }
-        for (const [name, classArt] of Object.entries(character.passiveTree.classArt)) {
-            loader.add(classArt.url);
-        }
-        loader.load(this.createChildren);
     }
 
     public render(): any {
@@ -49,6 +60,8 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
                     autoStart={true}
                     minScale={0.1}
                     maxScale={2}
+                    onDragStart={this.onDragStart}
+                    onDragEnd={this.onDragEnd}
                 >
                     {this.children}
                 </InteractiveStage>
@@ -56,6 +69,24 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         } else {
             return "Loading...";
         }
+    }
+
+    @bind
+    private onDragStart() {
+        const {character} = this.props;
+        if (!character) {
+            throw new Error("character was undefined");
+        }
+        character.passiveTree.isDragging = true;
+    }
+
+    @bind
+    private onDragEnd() {
+        const {character} = this.props;
+        if (!character) {
+            throw new Error("character was undefined");
+        }
+        character.passiveTree.isDragging = false;
     }
 
     private createGroups(): PIXI.DisplayObject[] {
@@ -82,7 +113,6 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         }
         return groups;
     }
-
 
     @bind
     private createChildren(): void {

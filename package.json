@@ -58,7 +58,7 @@
   },
   "scripts": {
     "deploy": "gcloud app deploy",
-    "dev-web": "react-scripts-ts start",
+    "web-dev": "react-scripts-ts start",
     "dev": "concurrently -n web,server \"react-scripts-ts start\" \"ts-node ./src/bin/server.ts\"",
     "start": "node ./lib/bin/server.js",
     "build": "rimraf ./lib && rimraf ./build &&  concurrently -n web,lib \"react-scripts-ts build\" \"tsc -p tsconfig.lib.json\"",
