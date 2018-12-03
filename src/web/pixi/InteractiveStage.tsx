@@ -1,5 +1,6 @@
 import {Stage, StageProps} from "./Stage";
 import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
+import {Scene} from "./Scene";
 import InteractionEvent = PIXI.interaction.InteractionEvent;
 
 const log = new ConsoleLogger("InteractiveStage", "debug");
@@ -30,6 +31,8 @@ export interface InteractiveStageProps extends StageProps {
      * Number of pixels to ignore before triggering onDragStart. Defaults to 10.
      */
     dragDeadZone?: number;
+    uiScene?: Scene;
+    worldScene?: Scene;
 }
 
 /**
@@ -76,6 +79,19 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         };
     }
 
+    protected getScenes(): Scene[] {
+        const scenes = super.getScenes();
+
+        const {worldScene, uiScene} = this.props;
+        if (worldScene && !scenes.includes(worldScene)) {
+            scenes.push(worldScene);
+        }
+        if (uiScene && !scenes.includes(uiScene)) {
+            scenes.push(uiScene);
+        }
+        return scenes;
+    }
+
     /**
      * Mark the start of a drag operation.
      * @param e
@@ -88,6 +104,18 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.prevY = e.data.global.y;
         this.distanceMoved = 0;
     };
+
+    private getWorldScene(): PIXI.DisplayObject {
+        if (!this.app) {
+            throw new Error("app not set");
+        }
+
+        const {worldScene} = this.props;
+        if (worldScene) {
+            return worldScene;
+        }
+        return this.app.stage;
+    }
 
     /**
      * Update the current drag if there's one in progress.
@@ -103,11 +131,12 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
 
         this.distanceMoved += Math.abs(dx) + Math.abs(dy);
 
-        const nextX = this.app.stage.x + dx;
-        const nextY = this.app.stage.y + dy;
+        const worldScene = this.getWorldScene();
+        const nextX = worldScene.x + dx;
+        const nextY = worldScene.y + dy;
 
-        this.app.stage.x = nextX;
-        this.app.stage.y = nextY;
+        worldScene.x = nextX;
+        worldScene.y = nextY;
 
         this.prevX = e.data.global.x;
         this.prevY = e.data.global.y;
@@ -132,7 +161,8 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
             throw new Error("app not set");
         }
 
-        const scale = this.app.stage.scale;
+        const worldScene = this.getWorldScene();
+        const scale = worldScene.scale;
         const delta = e.deltaY || e.wheelDelta;
         const direction = delta > 0 ? -1 : 1;
         const zoomPercent = this.props.zoomPercent || 0.2;
@@ -154,8 +184,8 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         }
 
         const stagePosition = {
-            x: this.app.stage.x,
-            y: this.app.stage.y
+            x: worldScene.x,
+            y: worldScene.y
         };
         const mouseScreenPosition = this.app.renderer.plugins.interaction.mouse.global;
         const mouseWorldPosition = {
@@ -171,10 +201,10 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
             y: newMouseScreenPosition.y - mouseScreenPosition.y
         };
 
-        this.app.stage.scale.x = newScale.x;
-        this.app.stage.scale.y = newScale.y;
-        this.app.stage.x -= positionDelta.x;
-        this.app.stage.y -= positionDelta.y;
+        worldScene.scale.x = newScale.x;
+        worldScene.scale.y = newScale.y;
+        worldScene.x -= positionDelta.x;
+        worldScene.y -= positionDelta.y;
     };
 
     /**

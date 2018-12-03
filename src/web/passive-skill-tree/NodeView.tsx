@@ -85,8 +85,8 @@ export class NodeView extends PIXI.Container {
 
         this.on("pointerup", this.onClick);
         if (node.name) {
-            this.on("pointerover", this.displayTooltip);
-            this.on("pointerout", this.hideTooltip);
+            this.on("pointerover", this.onHoverEnter);
+            this.on("pointerout", this.onHoverLeave);
         }
 
         this.x = node.position.x;
@@ -159,31 +159,48 @@ export class NodeView extends PIXI.Container {
     }
 
     @bind
-    private displayTooltip(e: InteractionEvent) {
+    private onHoverEnter(e: InteractionEvent) {
+        log.trace("NodeView.onHoverEnter", {event: e, node: this});
+
+        if (this.node.group.passiveTree.tooltip.node && this.node.group.passiveTree.tooltip.node !== this.node) {
+            this.node.group.passiveTree.tooltip.node.hoverExit();
+        }
+        this.showTooltip();
+        this.node.hoverEnter();
+    }
+
+    private showTooltip() {
         this.node.group.passiveTree.tooltip.node = this.node;
-        const worldPosition =  this.getGlobalPosition(undefined, true);
+        const worldPosition = this.getGlobalPosition(undefined, true);
         const bounds = this.getBounds(true);
         this.node.group.passiveTree.tooltip.worldPosition.x = worldPosition.x + bounds.width / 2;
         this.node.group.passiveTree.tooltip.worldPosition.y = worldPosition.y - bounds.height / 2;
+
     }
 
     @bind
-    private hideTooltip() {
+    private onHoverLeave(e: InteractionEvent) {
+        log.trace("NodeView.onHoverLeave", {event: e, node: this});
+
+        // Hide tooltip
         if (this.node.group.passiveTree.tooltip.node === this.node) {
             this.node.group.passiveTree.tooltip.node = undefined;
+            this.node.hoverExit();
         }
     }
+
 
     @bind
     private update() {
         this.interactive = this.node.isAllocatable;
         this.buttonMode = this.node.isAllocatable;
 
+        const showAllocatedFrame = this.node.isAllocated || this.node.isHighlighted;
         if (this.allocatedFrame) {
-            this.allocatedFrame.visible = this.node.isAllocated;
+            this.allocatedFrame.visible = showAllocatedFrame;
         }
         if (this.unallocatedFrame) {
-            this.unallocatedFrame.visible = !this.node.isAllocated;
+            this.unallocatedFrame.visible = !showAllocatedFrame;
         }
 
         if (this.allocatedIcon) {
@@ -196,6 +213,8 @@ export class NodeView extends PIXI.Container {
 
     @bind
     private onClick(e: InteractionEvent) {
+        log.trace("NodeView.onClick", {event: e, node: this});
+
         if (!this.node.group.passiveTree.isDragging && this.node.isAllocatable) {
             this.node.toggleAllocation();
         }

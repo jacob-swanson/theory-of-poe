@@ -12,9 +12,8 @@ import {AscendancyGroupView} from "./AscendancyGroupView";
 import {LargeGroupView} from "./LargeGroupView";
 import {LinkView} from "./LinkView";
 import "./PassiveTreeView.css";
-import {NodeTooltip} from "./NodeTooltip";
-import {Rectangle} from "../../utils/Rectangle";
 import {StageRect} from "../pixi/Stage";
+import {Scene} from "../pixi/Scene";
 
 export interface PassiveSkillTreeProps {
     character?: Character
@@ -23,9 +22,11 @@ export interface PassiveSkillTreeProps {
 @inject("character")
 @observer
 export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
-    private static isLoaded = false;
+    private static areAssetsLoaded = false;
     @observable
-    private children: PIXI.DisplayObject[] = [];
+    private isReady: boolean = false;
+    private worldScene: Scene = new Scene("PassiveTreeViewWorld");
+    private uiScene = new Scene("PassiveTreeViewUi");
 
     public componentDidMount(): void {
         const {character} = this.props;
@@ -33,31 +34,19 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
             throw new Error("character was undefined");
         }
 
-        if (!PassiveTreeView.isLoaded) {
-            // Preload all of the assets needed
-            const loader = PIXI.loader;
-            for (const [name, url] of Object.entries(character.passiveTree.assets)) {
-                loader.add(name, url);
-            }
-            for (const [name, url] of Object.entries(character.passiveTree.skillSprites)) {
-                loader.add(name, url);
-            }
-            for (const [name, classArt] of Object.entries(character.passiveTree.classArt)) {
-                loader.add(classArt.url);
-            }
-            loader.load(this.createChildren);
-            PassiveTreeView.isLoaded = true;
+        if (!PassiveTreeView.areAssetsLoaded) {
+            this.loadAssets();
+            PassiveTreeView.areAssetsLoaded = true;
         } else {
             this.createChildren();
+            this.isReady = true;
         }
     }
 
     public render(): any {
-        if (this.children.length > 0) {
-            return [
-                <NodeTooltip key="1"/>,
+        if (this.isReady) {
+            return (
                 <InteractiveStage
-                    key="2"
                     className="PassiveTreeView"
                     autoStart={true}
                     minScale={0.1}
@@ -66,13 +55,33 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
                     onDragMove={this.onCanvasDragMove}
                     onDragEnd={this.onCanvasDragEnd}
                     onResize={this.onCanvasResize}
-                >
-                    {this.children}
-                </InteractiveStage>
-            ];
+                    worldScene={this.worldScene}
+                    uiScene={this.uiScene}
+                />
+            );
         } else {
             return "Loading...";
         }
+    }
+
+    private loadAssets() {
+        const {character} = this.props;
+        if (!character) {
+            throw new Error("character was undefined");
+        }
+
+        const loader = PIXI.loader;
+        for (const [name, url] of Object.entries(character.passiveTree.assets)) {
+            loader.add(name, url);
+        }
+        for (const [name, url] of Object.entries(character.passiveTree.skillSprites)) {
+            loader.add(name, url);
+        }
+        for (const [name, classArt] of Object.entries(character.passiveTree.classArt)) {
+            loader.add(classArt.url);
+        }
+        loader.load(this.createChildren);
+        this.isReady = true;
     }
 
     @bind
@@ -161,6 +170,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         const nodesLayer = new PIXI.Container();
         nodesLayer.addChild(...character.passiveTree.nodes.map(node => new NodeView(node)));
 
-        this.children = [background, groupsLayer, linksLayer, nodesLayer];
+        this.worldScene.addChild(background, groupsLayer, linksLayer, nodesLayer);
+        this.uiScene.addChild(new PIXI.Text("Hello, world!"))
     }
 }

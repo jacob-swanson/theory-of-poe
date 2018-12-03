@@ -37,7 +37,8 @@ export class LinkView extends PIXI.Graphics {
     @bind
     private update() {
         const isAllocated = this.from.isAllocated && this.to.isAllocated;
-        const color = isAllocated ? 0x839574 : 0x373B33;
+        const isHighlighted = this.from.isHighlighted && this.to.isHighlighted;
+        const color = isAllocated || isHighlighted ? 0x839574 : 0x373B33;
         const width = isAllocated ? 10 : 5;
 
         if (this.isArc) {

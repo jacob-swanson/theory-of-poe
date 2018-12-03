@@ -4,6 +4,7 @@ import {emptyObject} from "../../utils/emptyObject";
 import ResizeObserver from "resize-observer-polyfill";
 import {bind} from "../../utils/bind";
 import {Rectangle} from "../../utils/Rectangle";
+import {Scene} from "./Scene";
 
 export interface StageRect {
     readonly offsetLeft: number;
@@ -31,6 +32,8 @@ export interface StageProps {
      * Children to add to the stage.
      */
     children?: PIXI.DisplayObject[];
+    currentScene?: string | Scene;
+    scenes?: Scene[];
     onResize?: (rect: StageRect) => void;
 }
 
@@ -57,6 +60,7 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             throw new Error("Canvas is required");
         }
 
+        // Handle auto-start
         const autoStart = this.props.autoStart === undefined ? true : this.props.autoStart;
         if (!autoStart) {
             const ticker = PIXI.ticker.shared;
@@ -64,6 +68,7 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             ticker.stop();
         }
 
+        // Create the app
         const size = this.getSize();
         const pixiOptions = {
             width: size.width,
@@ -74,7 +79,11 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             autoStart
         };
         this.app = new PIXI.Application(pixiOptions);
-        this.addChildren(this.props.children);
+
+        // Add children
+        this.addScenesToStage();
+
+        // Handle the canvas resizing
         this.resizeObserver.observe(this.canvas);
     }
 
@@ -90,19 +99,6 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         this.resizeObserver.disconnect();
     }
 
-    /**
-     * Update the Pixi app's children.
-     * @param prevProps
-     */
-    public componentDidUpdate(prevProps: Readonly<StageProps>): void {
-        if (!this.app) {
-            return;
-        }
-
-        this.removeChildren();
-        this.addChildren(this.props.children);
-    }
-
     public render() {
         const {
             className
@@ -114,6 +110,28 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
                 {...this.getAdditionalCanvasProps()}
             />
         );
+    }
+
+    // /**
+    //  * Update the Pixi app's children.
+    //  * @param prevProps
+    //  */
+    // public componentDidUpdate(prevProps: Readonly<StageProps>): void {
+    //     if (!this.app) {
+    //         return;
+    //     }
+    //
+    //     if (this.props.scenes !== prevProps.scenes) {
+    //         this.sceneManager.setScenes(this.props.scenes);
+    //     }
+    // }
+
+    protected getScenes(): Scene[] {
+        const {scenes} = this.props;
+        if (Array.isArray(scenes)) {
+            return scenes;
+        }
+        return [];
     }
 
     /**
@@ -142,7 +160,7 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
     /**
      * Remove all of the children.
      */
-    private removeChildren(): void {
+    private clearStage(): void {
         if (!this.app) {
             return;
         }
@@ -154,17 +172,14 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
 
     /**
      * Add children using the children provided via props.
-     * @param children
      */
-    private addChildren(children: any): void {
+    private addScenesToStage(): void {
         if (!this.app) {
             return;
         }
 
-        for (const child of children) {
-            if (child instanceof PIXI.DisplayObject) {
-                this.app.stage.addChild(child);
-            }
+        for (const scene of this.getScenes()) {
+            this.app.stage.addChild(scene);
         }
     }
 

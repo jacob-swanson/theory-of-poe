@@ -45,7 +45,6 @@ interface ShortestPath {
 export class Node implements NodeProps {
     public group: Group = Group.Null;
     public readonly neighbors = new Set<Node>();
-    @observable private _isHighlighted: boolean = false;
 
     constructor(public readonly id: string,
                 public readonly name: string = "",
@@ -56,6 +55,12 @@ export class Node implements NodeProps {
                 public readonly ascendancyName?: Ascendancy,
                 public readonly className?: CharacterClass,
                 public readonly mods: Mod[] = []) {
+    }
+
+    @observable private _isHighlighted: boolean = false;
+
+    public get isHighlighted(): boolean {
+        return this._isHighlighted;
     }
 
     public get isClassStart(): boolean {
@@ -72,7 +77,6 @@ export class Node implements NodeProps {
 
         return {x, y};
     }
-
 
     @observable private _isAllocated: boolean = false;
 
@@ -141,9 +145,18 @@ export class Node implements NodeProps {
     @bind
     @action
     public toggleAllocation() {
-        this._isAllocated = !this._isAllocated;
-    };
+        if (!this.isAllocated) {
+            this._isAllocated = true;
+            for (const neighborNode of this.neighbors) {
+                if (neighborNode.isHighlighted && !neighborNode.isAllocated) {
+                    neighborNode.toggleAllocation();
+                }
+            }
+        } else {
+            this._isAllocated = false;
+        }
 
+    };
 
     @bind
     @action
