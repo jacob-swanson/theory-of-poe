@@ -39,7 +39,6 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
             PassiveTreeView.areAssetsLoaded = true;
         } else {
             this.createChildren();
-            this.isReady = true;
         }
     }
 
@@ -81,7 +80,6 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
             loader.add(classArt.url);
         }
         loader.load(this.createChildren);
-        this.isReady = true;
     }
 
     @bind
@@ -171,6 +169,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         nodesLayer.addChild(...character.passiveTree.nodes.map(node => new NodeView(node)));
 
         this.worldScene.addChild(background, groupsLayer, linksLayer, nodesLayer);
-        this.uiScene.addChild(new PIXI.Text("Hello, world!"))
+        this.uiScene.addChild(new PIXI.Text("Hello, world!"));
+        this.isReady = true;
     }
 }
