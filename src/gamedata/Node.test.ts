@@ -22,7 +22,7 @@ describe("Node", () => {
         node5.neighbors.add(node2);
         node6.neighbors.add(node3);
 
-        const shortestPaths = node4.getShortestPathTree();
+        const shortestPaths = node4.shortestPathTree;
         expect(shortestPaths).toBeTruthy();
     });
 });

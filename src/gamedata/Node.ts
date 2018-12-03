@@ -182,8 +182,8 @@ export class Node implements NodeProps {
     /**
      * Generates/retrieves a shortest path tree with the root being this node.
      */
-    @memoize
-    public getShortestPathTree(): Map<Node, ShortestPath> {
+    @computed
+    public get shortestPathTree(): Map<Node, ShortestPath> {
         const shortestPaths = new Map<Node, ShortestPath>();
         const visited = new Set<Node>();
         const unvisited = new Set<Node>();
@@ -195,6 +195,18 @@ export class Node implements NodeProps {
             const currentNode = [...unvisited].reduce((closestNode, nextNode) => shortestPaths.get(nextNode)!.distance < shortestPaths.get(closestNode)!.distance ? nextNode : closestNode);
             unvisited.delete(currentNode);
             for (const neighborNode of currentNode.neighbors) {
+                // Connect Ascendant to other class starts only if ascendancy is allocated
+                if (currentNode.ascendancyName !== neighborNode.ascendancyName) {
+                    if (!neighborNode.ascendancyName || !neighborNode.isAllocated) {
+                        continue;
+                    }
+                }
+
+                // Don't allocate other class nodes via clicking
+                if (neighborNode.isClassStart && !neighborNode.isAllocated) {
+                    continue;
+                }
+
                 if (visited.has(neighborNode)) {
                     continue;
                 }
@@ -231,7 +243,7 @@ export class Node implements NodeProps {
     @bind
     @action
     private highlightPath() {
-        const shortestPathTree = this.getShortestPathTree();
+        const shortestPathTree = this.shortestPathTree;
         for (const [node, path] of shortestPathTree.entries()) {
             if (node.isAllocated) {
                 path.path.forEach(node => node._isHighlighted = true);
