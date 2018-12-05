@@ -5,8 +5,8 @@ import {bind} from "../utils/bind";
 import {Point} from "../web/react-pixi/ReactPIXIInternals";
 import {Ascendancy, CharacterClass} from "./Character";
 import {PassiveTree} from "./PassiveTree";
-import {Dictionary} from "../utils/Dictionary";
 import {memoize} from "../utils/memoize";
+import * as Collections from "typescript-collections";
 
 export enum NodeAllocationState {
     Unallocated,
@@ -211,6 +211,99 @@ export class Node implements NodeProps {
         );
     }
 
+    public pathTo(otherNode: Node): Node[] {
+        const nodes = new Map<Node, { distance: number, previous: Node | undefined }>();
+        nodes.set(this, {distance: 0, previous: undefined});
+
+        const queue = new Collections.PriorityQueue<Node>((a, b) => {
+            let aDistance = nodes.get(a) ? nodes.get(a)!.distance : Infinity;
+            let bDistance = nodes.get(b) ? nodes.get(b)!.distance : Infinity;
+
+            if (aDistance < bDistance) {
+                return -1;
+            }
+
+            if (aDistance > bDistance) {
+                return 1;
+            }
+
+            return 0;
+        });
+
+        queue.enqueue(this);
+
+        while (!queue.isEmpty()) {
+            const closestNode = queue.dequeue()!;
+            if (closestNode === otherNode) {
+                break;
+            }
+            for (const neighbor of closestNode.neighbors) {
+                if (!nodes.has(neighbor)) {
+                    nodes.set(neighbor, {distance: Infinity, previous: undefined});
+                }
+
+                const alt = nodes.get(closestNode)!.distance + 1;
+                if (alt < nodes.get(neighbor)!.distance) {
+                    nodes.get(neighbor)!.distance = alt;
+                    nodes.get(neighbor)!.previous = closestNode;
+                    queue.enqueue(neighbor);
+                }
+            }
+        }
+
+        const path = [];
+        if (nodes.has(otherNode) || otherNode === this) {
+            let node: Node | undefined = otherNode;
+            while (node) {
+                path.push(node);
+                node = nodes.get(node)!.previous;
+            }
+        }
+        return path;
+    }
+
+    public allPathsTo(otherNode: Node): Node[][] {
+        const nodes = new Map<Node, { distance: number, previous: Node[] }>();
+        nodes.set(this, {distance: 0, previous: []});
+
+        const queue = new Collections.PriorityQueue<Node>((a, b) => {
+            const aDistance = nodes.get(a)!.distance!;
+            const bDistance = nodes.get(b)!.distance!;
+
+            if (aDistance > bDistance) {
+                return -1;
+            }
+
+            if (aDistance < bDistance) {
+                return 1;
+            }
+
+            return 0;
+        });
+
+        queue.enqueue(this);
+
+        while (!queue.isEmpty()) {
+            const closestNode = queue.dequeue()!;
+            for (const neighbor of closestNode.neighbors) {
+                if (!nodes.has(neighbor)) {
+                    nodes.set(neighbor, {distance: Infinity, previous: []});
+                }
+
+                const alt = nodes.get(closestNode)!.distance + 1;
+                if (alt < nodes.get(neighbor)!.distance) {
+                    nodes.get(neighbor)!.distance = alt;
+                    nodes.get(neighbor)!.previous.push(closestNode);
+                    queue.enqueue(neighbor);
+                } else if (alt === nodes.get(neighbor)!.distance) {
+                    nodes.get(neighbor)!.previous.push(closestNode);
+                }
+            }
+        }
+
+        return this.dfs(otherNode, nodes);
+    }
+
     @bind
     @action
     public toggleAllocation() {
@@ -223,6 +316,11 @@ export class Node implements NodeProps {
             }
         } else {
             this._isAllocated = false;
+            for (const neighborNode of this.neighbors) {
+                if (neighborNode.isPendingRemoval && neighborNode.isAllocated) {
+                    neighborNode.toggleAllocation();
+                }
+            }
         }
 
     };
@@ -249,14 +347,36 @@ export class Node implements NodeProps {
         }
     }
 
+    private dfs(otherNode: Node, nodes: Map<Node, { distance: number, previous: Node[] }>, path: Node[] = []): Node[][] {
+        path.push(otherNode);
+
+        const neighbors = nodes.get(otherNode)!.previous;
+        if (neighbors.length > 0) {
+            let results: Node[][] = [];
+            for (const neighbor of neighbors) {
+                const result = this.dfs(neighbor, nodes, [...path]);
+                results = results.concat(result);
+            }
+            return results;
+        } else {
+            console.log(otherNode.id, path.map(node => node.id));
+            return [path];
+        }
+    }
+
     @bind
     @action
     private highlightPath() {
         const shortestPathTree = this.shortestPathTree;
+        let pathLength = Infinity;
         for (const [node, path] of shortestPathTree.entries()) {
             if (node.isAllocated) {
-                path.path.forEach(node => node._isHighlighted = true);
-                return;
+                if (path.path.length <= pathLength) {
+                    pathLength = path.path.length;
+                    path.path.forEach(node => node._isHighlighted = true);
+                } else {
+                    return;
+                }
             }
         }
 
@@ -265,39 +385,36 @@ export class Node implements NodeProps {
     @bind
     @action
     private highlightRemoval() {
-        this._isPendingRemoval = true;
-        for (const node of this.neighbors) {
-            if (!node.isAllocated) {
+        const classStartNode = this.group.passiveTree.classStartNode;
+        const connectedNodes = new Set<Node>();
+        classStartNode.traverse(
+            node => connectedNodes.add(node),
+            node => node.isAllocated && node !== this
+        );
+        this.traverse(
+            node => node._isPendingRemoval = true,
+            node => node.isAllocated && !connectedNodes.has(node)
+        );
+    }
+
+    private traverse(callback: (node: Node) => void, filter: (node: Node) => boolean = () => true) {
+        const visited = new Set<string>();
+        const stack: Node[] = [this];
+        while (stack.length > 0) {
+            const node = stack.pop()!;
+            if (visited.has(node.id)) {
+                continue;
+            }
+            if (!filter(node)) {
                 continue;
             }
 
-            let containsClassStart = false;
-            const visited = new Set<Node>();
-            const stack: Node[] = [node];
-            while (stack.length > 0) {
-                const currentNode = stack.pop()!;
-                if (currentNode.isClassStart) {
-                    containsClassStart = true;
-                }
-                if (!visited.has(currentNode)) {
-                    visited.add(currentNode);
-                    for (const neighborNode of currentNode.neighbors) {
-                        if (neighborNode.isAllocated && neighborNode !== this) {
-                            stack.push(neighborNode);
-                        }
-                    }
-                }
-            }
+            visited.add(node.id);
+            callback(node);
 
-            if (!containsClassStart) {
-                for (const visitedNode of visited) {
-                    visitedNode._isPendingRemoval = true;
-                }
+            for (const neighborNode of node.neighbors) {
+                stack.push(neighborNode);
             }
         }
-    }
-
-    private containsClassStart() {
-
     }
 }

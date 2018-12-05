@@ -9,21 +9,24 @@ import {computed, observable} from "mobx";
 export class PassiveTreeTooltip {
     @observable
     public node?: Node = undefined;
+
     @observable
     public offsetPosition: Point = {
         x: 0,
         y: 0
     };
+
     @observable
     public worldPosition: Point = {
         x: 0,
         y: 0
     };
+
     @computed get position(): Point {
         return {
             x: this.offsetPosition.x + this.worldPosition.x,
-            y: this.offsetPosition.y + this.worldPosition.y,
-        }
+            y: this.offsetPosition.y + this.worldPosition.y
+        };
     }
 }
 
@@ -75,6 +78,7 @@ export class PassiveTree {
         return groups;
     }
 
+    @computed
     public get nodes(): Node[] {
         const nodes = [];
         for (const group of this.groups.values()) {
@@ -85,6 +89,7 @@ export class PassiveTree {
         return nodes;
     }
 
+    @computed
     public get allocatedNodes(): Node[] {
         const nodes = [];
         for (const node of this.nodes) {
@@ -95,6 +100,7 @@ export class PassiveTree {
         return nodes;
     }
 
+    @computed
     public get allocatedAscendancyNodes(): Node[] {
         const nodes = [];
         for (const node of this.nodes) {
@@ -103,5 +109,15 @@ export class PassiveTree {
             }
         }
         return nodes;
+    }
+
+    @computed
+    public get classStartNode(): Node {
+        for (const node of this.allocatedNodes) {
+            if (node.isClassStart) {
+                return node;
+            }
+        }
+        throw new Error("No class node was allocated");
     }
 }
