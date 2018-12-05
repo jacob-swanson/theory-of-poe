@@ -2,10 +2,11 @@ import {Group} from "./Group";
 import {Mod} from "./modifiers/Mod";
 import {action, computed, observable} from "mobx";
 import {bind} from "../utils/bind";
-import {memoize} from "../utils/memoize";
 import {Point} from "../web/react-pixi/ReactPIXIInternals";
 import {Ascendancy, CharacterClass} from "./Character";
 import {PassiveTree} from "./PassiveTree";
+import {Dictionary} from "../utils/Dictionary";
+import {memoize} from "../utils/memoize";
 
 export enum NodeAllocationState {
     Unallocated,
@@ -63,12 +64,18 @@ export class Node implements NodeProps {
         return this._isHighlighted;
     }
 
+    @observable private _isPendingRemoval: boolean = false;
+
+    @computed get isPendingRemoval() {
+        return this._isPendingRemoval;
+    }
+
     public get isClassStart(): boolean {
         return !!this.className;
     }
 
     @memoize
-    get position(): Point {
+    public get position(): Point {
         const r = PassiveTree.orbitRadii[this.orbit];
         const theta = 2 * Math.PI * this.orbitIndex / PassiveTree.skillsPerOrbit[this.orbit] - Math.PI / 2;
 
@@ -80,7 +87,8 @@ export class Node implements NodeProps {
 
     @observable private _isAllocated: boolean = false;
 
-    @computed get isAllocated(): boolean {
+    @computed
+    public get isAllocated(): boolean {
         if (this._isAllocated) {
             return true;
         }
@@ -140,43 +148,6 @@ export class Node implements NodeProps {
             }
         }
         return nodes;
-    }
-
-    @bind
-    @action
-    public toggleAllocation() {
-        if (!this.isAllocated) {
-            this._isAllocated = true;
-            for (const neighborNode of this.neighbors) {
-                if (neighborNode.isHighlighted && !neighborNode.isAllocated) {
-                    neighborNode.toggleAllocation();
-                }
-            }
-        } else {
-            this._isAllocated = false;
-        }
-
-    };
-
-    @bind
-    @action
-    public hoverEnter() {
-        if (this.isAllocated) {
-            this.highlightRemoval();
-        } else {
-            this.highlightPath();
-        }
-    }
-
-    @bind
-    @action
-    public hoverExit() {
-        this._isHighlighted = false;
-        for (const neighbor of this.neighbors) {
-            if (neighbor._isHighlighted) {
-                neighbor.hoverExit();
-            }
-        }
     }
 
     /**
@@ -242,6 +213,44 @@ export class Node implements NodeProps {
 
     @bind
     @action
+    public toggleAllocation() {
+        if (!this.isAllocated) {
+            this._isAllocated = true;
+            for (const neighborNode of this.neighbors) {
+                if (neighborNode.isHighlighted && !neighborNode.isAllocated) {
+                    neighborNode.toggleAllocation();
+                }
+            }
+        } else {
+            this._isAllocated = false;
+        }
+
+    };
+
+    @bind
+    @action
+    public hoverEnter() {
+        if (this.isAllocated) {
+            this.highlightRemoval();
+        } else {
+            this.highlightPath();
+        }
+    }
+
+    @bind
+    @action
+    public hoverExit() {
+        this._isHighlighted = false;
+        this._isPendingRemoval = false;
+        for (const neighbor of this.neighbors) {
+            if (neighbor._isHighlighted || neighbor._isPendingRemoval) {
+                neighbor.hoverExit();
+            }
+        }
+    }
+
+    @bind
+    @action
     private highlightPath() {
         const shortestPathTree = this.shortestPathTree;
         for (const [node, path] of shortestPathTree.entries()) {
@@ -256,6 +265,39 @@ export class Node implements NodeProps {
     @bind
     @action
     private highlightRemoval() {
+        this._isPendingRemoval = true;
+        for (const node of this.neighbors) {
+            if (!node.isAllocated) {
+                continue;
+            }
+
+            let containsClassStart = false;
+            const visited = new Set<Node>();
+            const stack: Node[] = [node];
+            while (stack.length > 0) {
+                const currentNode = stack.pop()!;
+                if (currentNode.isClassStart) {
+                    containsClassStart = true;
+                }
+                if (!visited.has(currentNode)) {
+                    visited.add(currentNode);
+                    for (const neighborNode of currentNode.neighbors) {
+                        if (neighborNode.isAllocated && neighborNode !== this) {
+                            stack.push(neighborNode);
+                        }
+                    }
+                }
+            }
+
+            if (!containsClassStart) {
+                for (const visitedNode of visited) {
+                    visitedNode._isPendingRemoval = true;
+                }
+            }
+        }
+    }
+
+    private containsClassStart() {
 
     }
 }

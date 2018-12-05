@@ -195,7 +195,7 @@ export class NodeView extends PIXI.Container {
         this.interactive = this.node.isAllocatable;
         this.buttonMode = this.node.isAllocatable;
 
-        const showAllocatedFrame = this.node.isAllocated || this.node.isHighlighted;
+        const showAllocatedFrame = !this.node.isPendingRemoval && (this.node.isAllocated || this.node.isHighlighted);
         if (this.allocatedFrame) {
             this.allocatedFrame.visible = showAllocatedFrame;
         }

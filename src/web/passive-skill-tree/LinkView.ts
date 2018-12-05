@@ -38,8 +38,9 @@ export class LinkView extends PIXI.Graphics {
     private update() {
         const isAllocated = this.from.isAllocated && this.to.isAllocated;
         const isHighlighted = this.from.isHighlighted && this.to.isHighlighted;
+        const isPendingRemoval = this.from.isPendingRemoval || this.to.isPendingRemoval;
         const color = isAllocated || isHighlighted ? 0x839574 : 0x373B33;
-        const width = isAllocated ? 10 : 5;
+        const width = isAllocated && !isPendingRemoval ? 10 : 5;
 
         if (this.isArc) {
             const center = this.from.group.position;
