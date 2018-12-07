@@ -7,6 +7,7 @@ import {Ascendancy, CharacterClass} from "./Character";
 import {PassiveTree} from "./PassiveTree";
 import {memoize} from "../utils/memoize";
 import * as Collections from "typescript-collections";
+import {Dijkstras, Traversable} from "../utils/algorithms/Dijkstras";
 
 export enum NodeAllocationState {
     Unallocated,
@@ -43,9 +44,32 @@ interface ShortestPath {
     path: Node[]
 }
 
-export class Node implements NodeProps {
+export class Node implements NodeProps, Traversable {
     public group: Group = Group.Null;
-    public readonly neighbors = new Set<Node>();
+    private readonly _neighbors = new Set<this>();
+
+    @computed public get neighbors(): this[] {
+        const neighborNodes: this[] = [];
+        for (const neighborNode of this._neighbors) {
+            // Connect Ascendant to other class starts only if ascendancy is allocated
+            if (this.ascendancyName !== neighborNode.ascendancyName) {
+                if (!neighborNode.ascendancyName || !neighborNode.isAllocated) {
+                    continue;
+                }
+            }
+            // Don't allocate other class nodes via clicking
+            if (neighborNode.isClassStart && !neighborNode.isAllocated) {
+                continue;
+            }
+            neighborNodes.push(neighborNode);
+        }
+        return neighborNodes;
+
+    }
+
+    public addNeighbor(node: this) {
+        this._neighbors.add(node);
+    }
 
     constructor(public readonly id: string,
                 public readonly name: string = "",
@@ -211,109 +235,12 @@ export class Node implements NodeProps {
         );
     }
 
-    public pathTo(otherNode: Node): Node[] {
-        const nodes = new Map<Node, { distance: number, previous: Node | undefined }>();
-        nodes.set(this, {distance: 0, previous: undefined});
-
-        const queue = new Collections.PriorityQueue<Node>((a, b) => {
-            let aDistance = nodes.get(a) ? nodes.get(a)!.distance : Infinity;
-            let bDistance = nodes.get(b) ? nodes.get(b)!.distance : Infinity;
-
-            if (aDistance < bDistance) {
-                return -1;
-            }
-
-            if (aDistance > bDistance) {
-                return 1;
-            }
-
-            return 0;
-        });
-
-        queue.enqueue(this);
-
-        while (!queue.isEmpty()) {
-            const closestNode = queue.dequeue()!;
-            if (closestNode === otherNode) {
-                break;
-            }
-            for (const neighbor of closestNode.neighbors) {
-                if (!nodes.has(neighbor)) {
-                    nodes.set(neighbor, {distance: Infinity, previous: undefined});
-                }
-
-                const alt = nodes.get(closestNode)!.distance + 1;
-                if (alt < nodes.get(neighbor)!.distance) {
-                    nodes.get(neighbor)!.distance = alt;
-                    nodes.get(neighbor)!.previous = closestNode;
-                    queue.enqueue(neighbor);
-                }
-            }
-        }
-
-        const path = [];
-        if (nodes.has(otherNode) || otherNode === this) {
-            let node: Node | undefined = otherNode;
-            while (node) {
-                path.push(node);
-                node = nodes.get(node)!.previous;
-            }
-        }
-        return path;
-    }
-
-    public allPathsTo(otherNode: Node): Node[][] {
-        const nodes = new Map<Node, { distance: number, previous: Node[] }>();
-        nodes.set(this, {distance: 0, previous: []});
-
-        const queue = new Collections.PriorityQueue<Node>((a, b) => {
-            const aDistance = nodes.get(a)!.distance!;
-            const bDistance = nodes.get(b)!.distance!;
-
-            if (aDistance > bDistance) {
-                return -1;
-            }
-
-            if (aDistance < bDistance) {
-                return 1;
-            }
-
-            return 0;
-        });
-
-        queue.enqueue(this);
-
-        while (!queue.isEmpty()) {
-            const closestNode = queue.dequeue()!;
-            for (const neighbor of closestNode.neighbors) {
-                if (!nodes.has(neighbor)) {
-                    nodes.set(neighbor, {distance: Infinity, previous: []});
-                }
-
-                const alt = nodes.get(closestNode)!.distance + 1;
-                if (alt < nodes.get(neighbor)!.distance) {
-                    nodes.get(neighbor)!.distance = alt;
-                    nodes.get(neighbor)!.previous.push(closestNode);
-                    queue.enqueue(neighbor);
-                } else if (alt === nodes.get(neighbor)!.distance) {
-                    nodes.get(neighbor)!.previous.push(closestNode);
-                }
-            }
-        }
-
-        return this.dfs(otherNode, nodes);
-    }
-
     @bind
     @action
     public toggleAllocation() {
         if (!this.isAllocated) {
-            this._isAllocated = true;
-            for (const neighborNode of this.neighbors) {
-                if (neighborNode.isHighlighted && !neighborNode.isAllocated) {
-                    neighborNode.toggleAllocation();
-                }
-            }
+            const paths = Dijkstras.getPathsToByMatch<Node>(this, node => node.isAllocated);
+            paths[0].forEach(node => node._isAllocated = true);
         } else {
             this._isAllocated = false;
             for (const neighborNode of this.neighbors) {
@@ -367,19 +294,24 @@ export class Node implements NodeProps {
     @bind
     @action
     private highlightPath() {
-        const shortestPathTree = this.shortestPathTree;
-        let pathLength = Infinity;
-        for (const [node, path] of shortestPathTree.entries()) {
-            if (node.isAllocated) {
-                if (path.path.length <= pathLength) {
-                    pathLength = path.path.length;
-                    path.path.forEach(node => node._isHighlighted = true);
-                } else {
-                    return;
-                }
+        const paths = Dijkstras.getPathsToByMatch<Node>(this, node => node.isAllocated);
+        for (const path of paths) {
+            for (const node of path) {
+                node._isHighlighted = true;
             }
         }
-
+        // const shortestPathTree = this.shortestPathTree;
+        // let pathLength = Infinity;
+        // for (const [node, path] of shortestPathTree.entries()) {
+        //     if (node.isAllocated) {
+        //         if (path.path.length <= pathLength) {
+        //             pathLength = path.path.length;
+        //             path.path.forEach(node => node._isHighlighted = true);
+        //         } else {
+        //             return;
+        //         }
+        //     }
+        // }
     }
 
     @bind

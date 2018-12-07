@@ -39,7 +39,7 @@ export class PassiveSkillTreeDataScraper {
         optsJs = optsJs.replace("var opts =", "return");
 
         const javascript = `(function() {${dataJs}\n${optsJs}}())`;
-        // tslint:disable-next-line
+        // tslint:disable-children-line
         const data = eval(javascript);
 
         const version = data.version;

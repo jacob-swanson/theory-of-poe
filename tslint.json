@@ -23,6 +23,7 @@
     "no-console": false,
     "variable-name": false,
     "no-debugger": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "no-eval": false
   }
 }

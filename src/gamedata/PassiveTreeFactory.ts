@@ -55,8 +55,8 @@ export class PassiveTreeFactory {
                 const node = nodes.get(nodeData.id)!;
                 for (const id of nodeData.neighbors) {
                     const neighborNode = nodes.get(id)!;
-                    node.neighbors.add(neighborNode);
-                    neighborNode.neighbors.add(node);
+                    node.addNeighbor(neighborNode);
+                    neighborNode.addNeighbor(node);
                 }
             }
         }
