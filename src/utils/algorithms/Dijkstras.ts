@@ -31,10 +31,10 @@ export class ShortestPathTree<T extends Traversable> {
 
     /**
      * Get all shortest paths leading from the source node to a node that matches.
-     * @param isToNode Return true if the given node is the node being searched for, false otherwise.
+     * @param isMatch Return true if the given node is the node being searched for, false otherwise.
      */
-    public getPathsToByMatch(isToNode: (node: T) => boolean): T[][] {
-        return this.traverseShortestPathTree(isToNode, this.sourceNode);
+    public getPathsByMatch(isMatch: (node: T) => boolean): T[][] {
+        return this.traverseShortestPathTree(isMatch, this.sourceNode);
     }
 
     /**
@@ -86,8 +86,9 @@ export class Dijkstras {
     /**
      * Create a shortest path tree.
      * @param sourceNode
+     * @param isMatch
      */
-    public static createShortestPathTree<T extends Traversable>(sourceNode: T): ShortestPathTree<T> {
+    public static createShortestPathTree<T extends Traversable>(sourceNode: T, isMatch: (node: T) => boolean): ShortestPathTree<T> {
         const nodes = new Map<T, Traversal<T>>();
         nodes.set(sourceNode, {distance: 0, parents: [], children: []});
 
@@ -96,6 +97,9 @@ export class Dijkstras {
 
         while (!queue.isEmpty()) {
             const closestNode = queue.dequeue()!;
+            if (isMatch(closestNode)) {
+                return new ShortestPathTree<T>(sourceNode, nodes);
+            }
             for (const neighborNode of closestNode.neighbors) {
                 if (!nodes.has(neighborNode)) {
                     nodes.set(neighborNode, {distance: Infinity, parents: [], children: []});
@@ -117,9 +121,9 @@ export class Dijkstras {
         return new ShortestPathTree<T>(sourceNode, nodes);
     }
 
-    public static getPathsToByMatch<T extends Traversable>(sourceNode: T, isToNode: (node: T) => boolean): T[][] {
-        const shortestPathTree = this.createShortestPathTree(sourceNode);
-        return shortestPathTree.getPathsToByMatch(isToNode);
+    public static getPathsByMatch<T extends Traversable>(sourceNode: T, isMatch: (node: T) => boolean): T[][] {
+        const shortestPathTree = this.createShortestPathTree(sourceNode, isMatch);
+        return shortestPathTree.getPathsByMatch(isMatch);
     }
 
     /**

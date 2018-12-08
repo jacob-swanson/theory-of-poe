@@ -117,6 +117,16 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         return this.app.stage;
     }
 
+    private getUiScene(): PIXI.DisplayObject | undefined {
+        if (!this.app) {
+            throw new Error("app not set");
+        }
+
+        const {uiScene} = this.props;
+        return uiScene;
+    }
+
+
     /**
      * Update the current drag if there's one in progress.
      * @param e
@@ -132,11 +142,14 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.distanceMoved += Math.abs(dx) + Math.abs(dy);
 
         const worldScene = this.getWorldScene();
-        const nextX = worldScene.x + dx;
-        const nextY = worldScene.y + dy;
+        worldScene.x = worldScene.x + dx;
+        worldScene.y = worldScene.y + dy;
 
-        worldScene.x = nextX;
-        worldScene.y = nextY;
+        const uiScene = this.getUiScene();
+        if (uiScene) {
+            uiScene.x = uiScene.x + dx;
+            uiScene.y = uiScene.y + dy;
+        }
 
         this.prevX = e.data.global.x;
         this.prevY = e.data.global.y;

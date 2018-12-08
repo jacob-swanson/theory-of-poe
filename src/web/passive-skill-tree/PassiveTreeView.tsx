@@ -14,6 +14,7 @@ import {LinkView} from "./LinkView";
 import "./PassiveTreeView.css";
 import {StageRect} from "../pixi/Stage";
 import {Scene} from "../pixi/Scene";
+import {NodeTooltip} from "./NodeTooltip";
 
 export interface PassiveSkillTreeProps {
     character?: Character
@@ -169,7 +170,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         nodesLayer.addChild(...character.passiveTree.nodes.map(node => new NodeView(node)));
 
         this.worldScene.addChild(background, groupsLayer, linksLayer, nodesLayer);
-        this.uiScene.addChild(new PIXI.Text("Hello, world!"));
+        this.uiScene.addChild(new NodeTooltip(character));
         this.isReady = true;
     }
 }

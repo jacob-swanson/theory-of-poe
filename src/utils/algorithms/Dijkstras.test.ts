@@ -29,7 +29,7 @@ describe("Dijkstras", () => {
         node5.neighbors.push(node6);
         node6.neighbors.push(node5);
 
-        const shortestPathTree = Dijkstras.createShortestPathTree(node4);
+        const shortestPathTree = Dijkstras.createShortestPathTree(node4, () => false);
         expect(shortestPathTree.getPathsTo(node1)).toEqual([
             [node4, node2, node1],
             [node4, node3, node1]
@@ -37,7 +37,7 @@ describe("Dijkstras", () => {
         expect(shortestPathTree.getPathsTo(node6)).toEqual([
             [node4, node5, node6]
         ]);
-        expect(shortestPathTree.getPathsToByMatch(node => node === node1).map(path => path.map(node => node.id))).toEqual([
+        expect(shortestPathTree.getPathsByMatch(node => node === node1).map(path => path.map(node => node.id))).toEqual([
             ["4", "2", "1"],
             ["4", "3", "1"]
         ]);

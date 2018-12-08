@@ -1,33 +1,35 @@
 import * as React from "react";
-import {Component, ReactNode} from "react";
 import {Character} from "../../gamedata/Character";
-import {inject, observer} from "mobx-react";
-import {CSSProperties} from "react";
+import {autorun, IReactionDisposer} from "mobx";
+import * as PIXI from "pixi.js";
+import {bind} from "../../utils/bind";
 
-export interface NodeTooltipProps {
-    character?: Character;
-}
+export class NodeTooltip extends PIXI.Container {
+    private readonly text = new PIXI.Text();
+    private readonly dispose: IReactionDisposer;
 
-@inject("character")
-@observer
-export class NodeTooltip extends Component<NodeTooltipProps> {
-    public render(): ReactNode {
-        const {character} = this.props;
-        if (!character || !character.passiveTree.tooltip.node || !character.passiveTree.tooltip.node.name) {
-            return null;
+    constructor(private readonly character: Character) {
+        super();
+        this.addChild(this.text);
+        this.dispose = autorun(this.update);
+    }
+
+    public destroy(options?: PIXI.DestroyOptions | boolean): void {
+        super.destroy(options);
+        this.dispose();
+    }
+
+
+    @bind
+    private update(): void {
+        const node = this.character.passiveTree.tooltip.node;
+        if (!node) {
+            this.text.visible = false;
+        } else {
+            this.text.visible = true;
+            this.position.x = node.position.x;
+            this.position.y = node.position.y;
+            this.text.text = node.name;
         }
-
-        const styles: CSSProperties = {
-            position: "absolute",
-            zIndex: 9999,
-            top: character.passiveTree.tooltip.position.y,
-            left: character.passiveTree.tooltip.position.x,
-            pointerEvents: "none"
-        };
-        return (
-            <div style={styles}>
-                {character.passiveTree.tooltip.node.name}
-            </div>
-        );
     }
 }
