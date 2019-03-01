@@ -55,6 +55,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
                     onDragMove={this.onCanvasDragMove}
                     onDragEnd={this.onCanvasDragEnd}
                     onResize={this.onCanvasResize}
+                    onWheel={this.onCanvasWheel}
                     worldScene={this.worldScene}
                     uiScene={this.uiScene}
                 />
@@ -98,6 +99,11 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         if (!character) {
             throw new Error("character was undefined");
         }
+
+        character.passiveTree.tooltip.worldPosition.x = this.worldScene.position.x;
+        character.passiveTree.tooltip.worldPosition.y = this.worldScene.position.y;
+        character.passiveTree.tooltip.scale.x = this.worldScene.scale.x;
+        character.passiveTree.tooltip.scale.y = this.worldScene.scale.y;
     }
 
     @bind
@@ -115,9 +121,18 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         if (!character) {
             throw new Error("character was undefined");
         }
+    }
 
-        character.passiveTree.tooltip.offsetPosition.x = rect.offsetLeft;
-        character.passiveTree.tooltip.offsetPosition.y = rect.offsetTop;
+    @bind
+    private onCanvasWheel() {
+        const {character} = this.props;
+        if (!character) {
+            throw new Error("character was undefined");
+        }
+        character.passiveTree.tooltip.worldPosition.x = this.worldScene.position.x;
+        character.passiveTree.tooltip.worldPosition.y = this.worldScene.position.y;
+        character.passiveTree.tooltip.scale.x = this.worldScene.scale.x;
+        character.passiveTree.tooltip.scale.y = this.worldScene.scale.y;
     }
 
     private createGroups(): PIXI.DisplayObject[] {

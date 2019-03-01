@@ -5,15 +5,18 @@ import {Dictionary} from "../utils/Dictionary";
 import {ClassArtResponse} from "./passive-skill-tree/internal-data/ClassArtResponse";
 import {Point} from "../web/react-pixi/ReactPIXIInternals";
 import {computed, observable} from "mobx";
+import {LoggerFactory} from "../utils/logger/LoggerFactory";
+
+const log = LoggerFactory.getLogger("PassiveTree");
 
 export class PassiveTreeTooltip {
     @observable
     public node?: Node = undefined;
 
     @observable
-    public offsetPosition: Point = {
-        x: 0,
-        y: 0
+    public scale: Point = {
+        x: 1,
+        y: 1
     };
 
     @observable
@@ -23,9 +26,12 @@ export class PassiveTreeTooltip {
     };
 
     @computed get position(): Point {
+        if (!this.node) {
+            return {x: 0, y: 0};
+        }
         return {
-            x: this.offsetPosition.x + this.worldPosition.x,
-            y: this.offsetPosition.y + this.worldPosition.y
+            x: this.node.position.x * this.scale.x + this.worldPosition.x,
+            y: this.node.position.y * this.scale.y + this.worldPosition.y
         };
     }
 }

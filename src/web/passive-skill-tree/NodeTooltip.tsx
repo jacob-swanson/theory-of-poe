@@ -3,6 +3,10 @@ import {Character} from "../../gamedata/Character";
 import {autorun, IReactionDisposer} from "mobx";
 import * as PIXI from "pixi.js";
 import {bind} from "../../utils/bind";
+import {PassiveTreeTooltip} from "../../gamedata/PassiveTree";
+import {LoggerFactory} from "../../utils/logger/LoggerFactory";
+
+const log = LoggerFactory.getLogger("NodeTooltip");
 
 export class NodeTooltip extends PIXI.Container {
     private readonly text = new PIXI.Text();
@@ -22,13 +26,14 @@ export class NodeTooltip extends PIXI.Container {
 
     @bind
     private update(): void {
+        const tooltip: PassiveTreeTooltip = this.character.passiveTree.tooltip;
         const node = this.character.passiveTree.tooltip.node;
         if (!node) {
             this.text.visible = false;
         } else {
             this.text.visible = true;
-            this.position.x = node.position.x;
-            this.position.y = node.position.y;
+            this.position.x = tooltip.position.x;
+            this.position.y = tooltip.position.y;
             this.text.text = node.name;
         }
     }

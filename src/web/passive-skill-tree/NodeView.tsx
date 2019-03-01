@@ -171,11 +171,6 @@ export class NodeView extends PIXI.Container {
 
     private showTooltip() {
         this.node.group.passiveTree.tooltip.node = this.node;
-        const worldPosition = this.getGlobalPosition(undefined, true);
-        const bounds = this.getBounds(true);
-        this.node.group.passiveTree.tooltip.worldPosition.x = worldPosition.x + bounds.width / 2;
-        this.node.group.passiveTree.tooltip.worldPosition.y = worldPosition.y - bounds.height / 2;
-
     }
 
     @bind

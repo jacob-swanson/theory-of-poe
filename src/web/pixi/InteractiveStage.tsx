@@ -26,7 +26,14 @@ export interface InteractiveStageProps extends StageProps {
      * Callback for when a drag ends.
      */
     onDragEnd?: () => void;
+    /**
+     * Callback for a drag move.
+     */
     onDragMove?: () => void;
+    /**
+     * Callback for zooming in or out.
+     */
+    onWheel?: () => void;
     /**
      * Number of pixels to ignore before triggering onDragStart. Defaults to 10.
      */
@@ -117,16 +124,6 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         return this.app.stage;
     }
 
-    private getUiScene(): PIXI.DisplayObject | undefined {
-        if (!this.app) {
-            throw new Error("app not set");
-        }
-
-        const {uiScene} = this.props;
-        return uiScene;
-    }
-
-
     /**
      * Update the current drag if there's one in progress.
      * @param e
@@ -144,12 +141,6 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         const worldScene = this.getWorldScene();
         worldScene.x = worldScene.x + dx;
         worldScene.y = worldScene.y + dy;
-
-        const uiScene = this.getUiScene();
-        if (uiScene) {
-            uiScene.x = uiScene.x + dx;
-            uiScene.y = uiScene.y + dy;
-        }
 
         this.prevX = e.data.global.x;
         this.prevY = e.data.global.y;
@@ -218,6 +209,11 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         worldScene.scale.y = newScale.y;
         worldScene.x -= positionDelta.x;
         worldScene.y -= positionDelta.y;
+
+        const {onWheel} = this.props;
+        if (onWheel) {
+            onWheel();
+        }
     };
 
     /**
