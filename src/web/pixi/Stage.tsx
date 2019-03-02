@@ -4,7 +4,7 @@ import {emptyObject} from "../../utils/emptyObject";
 import ResizeObserver from "resize-observer-polyfill";
 import {bind} from "../../utils/bind";
 import {Rectangle} from "../../utils/Rectangle";
-import {Scene} from "./Scene";
+import {Assert} from "../../utils/Assert";
 
 export interface StageRect {
     readonly offsetLeft: number;
@@ -32,8 +32,10 @@ export interface StageProps {
      * Children to add to the stage.
      */
     children?: PIXI.DisplayObject[];
-    currentScene?: string | Scene;
-    scenes?: Scene[];
+    /**
+     * Callback for when the canvas resizes.
+     * @param rect
+     */
     onResize?: (rect: StageRect) => void;
 }
 
@@ -45,9 +47,6 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
     protected app: PIXI.Application | null = null;
 
     private resizeObserver: ResizeObserver = new ResizeObserver(entries => {
-        if (!this.app) {
-            return;
-        }
         const canvas = entries[0];
         this.onResize(canvas.contentRect);
     });
@@ -56,9 +55,7 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
      * Setup the Pixi application.
      */
     public componentDidMount(): void {
-        if (!this.canvas) {
-            throw new Error("Canvas is required");
-        }
+        const canvas = Assert.notNull(this.canvas, "canvas must be set");
 
         // Handle auto-start
         const autoStart = this.props.autoStart === undefined ? true : this.props.autoStart;
@@ -75,16 +72,13 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             height: size.height,
             backgroundColor: this.props.backgroundColor,
             transparent: this.props.transparent,
-            view: this.canvas,
+            view: canvas,
             autoStart
         };
         this.app = new PIXI.Application(pixiOptions);
 
-        // Add children
-        this.addScenesToStage();
-
-        // Handle the canvas resizing
-        this.resizeObserver.observe(this.canvas);
+        this.setChildren(this.props.children);
+        this.resizeObserver.observe(canvas);
     }
 
     /**
@@ -112,28 +106,6 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         );
     }
 
-    // /**
-    //  * Update the Pixi app's children.
-    //  * @param prevProps
-    //  */
-    // public componentDidUpdate(prevProps: Readonly<StageProps>): void {
-    //     if (!this.app) {
-    //         return;
-    //     }
-    //
-    //     if (this.props.scenes !== prevProps.scenes) {
-    //         this.sceneManager.setScenes(this.props.scenes);
-    //     }
-    // }
-
-    protected getScenes(): Scene[] {
-        const {scenes} = this.props;
-        if (Array.isArray(scenes)) {
-            return scenes;
-        }
-        return [];
-    }
-
     /**
      * Override this method to provide additional properties on the canvas.
      */
@@ -141,12 +113,23 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
         return emptyObject;
     }
 
+    /**
+     * Add children using the children provided via props.
+     */
+    protected setChildren(children: any): void {
+        const app = Assert.notNull(this.app, "app must be set");
+
+        for (const child of children) {
+            if (child instanceof PIXI.DisplayObject) {
+                app.stage.addChild(child);
+            }
+        }
+    }
+
     @bind
     private onResize(rect: Rectangle) {
-        if (!this.app) {
-            return;
-        }
-        this.app.renderer.resize(rect.width, rect.height);
+        const app = Assert.notNull(this.app, "app must be set");
+        app.renderer.resize(rect.width, rect.height);
 
         const {onResize} = this.props;
         if (onResize && this.canvas) {
@@ -154,32 +137,6 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
                 offsetLeft: this.canvas.offsetLeft,
                 offsetTop: this.canvas.offsetTop
             });
-        }
-    }
-
-    /**
-     * Remove all of the children.
-     */
-    private clearStage(): void {
-        if (!this.app) {
-            return;
-        }
-
-        while (this.app.stage.children[0]) {
-            this.app.stage.removeChild(this.app.stage.children[0]);
-        }
-    }
-
-    /**
-     * Add children using the children provided via props.
-     */
-    private addScenesToStage(): void {
-        if (!this.app) {
-            return;
-        }
-
-        for (const scene of this.getScenes()) {
-            this.app.stage.addChild(scene);
         }
     }
 

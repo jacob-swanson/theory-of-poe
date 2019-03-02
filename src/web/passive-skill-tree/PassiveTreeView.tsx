@@ -51,14 +51,10 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
                     autoStart={true}
                     minScale={0.1}
                     maxScale={2}
-                    onDragStart={this.onCanvasDragStart}
-                    onDragMove={this.onCanvasDragMove}
-                    onDragEnd={this.onCanvasDragEnd}
-                    onResize={this.onCanvasResize}
-                    onWheel={this.onCanvasWheel}
-                    worldScene={this.worldScene}
-                    uiScene={this.uiScene}
-                />
+                >
+                    {this.worldScene}
+                    {this.uiScene}
+                </InteractiveStage>
             );
         } else {
             return "Loading...";
