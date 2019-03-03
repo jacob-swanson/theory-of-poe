@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Component} from "react";
-import {emptyObject} from "../../utils/emptyObject";
 import ResizeObserver from "resize-observer-polyfill";
 import {bind} from "../../utils/bind";
 import {Rectangle} from "../../utils/Rectangle";
@@ -29,14 +28,15 @@ export interface StageProps {
      */
     autoStart?: boolean;
     /**
-     * Children to add to the stage.
-     */
-    children?: PIXI.DisplayObject[];
-    /**
      * Callback for when the canvas resizes.
      * @param rect
      */
     onResize?: (rect: StageRect) => void;
+    /**
+     * Called when the application is ready.
+     * @param app
+     */
+    onLoad?: (app: PIXI.Application) => void;
 }
 
 /**
@@ -76,9 +76,16 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             autoStart
         };
         this.app = new PIXI.Application(pixiOptions);
+        this.onLoad(this.app);
 
-        this.setChildren(this.props.children);
         this.resizeObserver.observe(canvas);
+    }
+
+    protected onLoad(app: PIXI.Application): void {
+        const {onLoad} = this.props;
+        if (onLoad) {
+            onLoad(app);
+        }
     }
 
     /**
@@ -101,29 +108,8 @@ export abstract class Stage<P extends StageProps> extends Component<P> {
             <canvas
                 ref={ref => this.canvas = ref}
                 className={className}
-                {...this.getAdditionalCanvasProps()}
             />
         );
-    }
-
-    /**
-     * Override this method to provide additional properties on the canvas.
-     */
-    protected getAdditionalCanvasProps() {
-        return emptyObject;
-    }
-
-    /**
-     * Add children using the children provided via props.
-     */
-    protected setChildren(children: any): void {
-        const app = Assert.notNull(this.app, "app must be set");
-
-        for (const child of children) {
-            if (child instanceof PIXI.DisplayObject) {
-                app.stage.addChild(child);
-            }
-        }
     }
 
     @bind

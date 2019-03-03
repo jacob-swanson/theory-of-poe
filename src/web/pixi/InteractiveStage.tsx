@@ -4,7 +4,7 @@ import {observable} from "mobx";
 import {Point} from "../react-pixi/ReactPIXIInternals";
 import {bind} from "../../utils/bind";
 import {Assert} from "../../utils/Assert";
-import {Scene} from "./Scene";
+import "./CanvasEvents";
 import InteractionEvent = PIXI.interaction.InteractionEvent;
 
 const log = new ConsoleLogger("InteractiveStage", "debug");
@@ -74,24 +74,16 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         app.renderer.plugins.interaction.on("pointermove", this.onPointerMove);
         app.renderer.plugins.interaction.on("pointerup", this.onPointerUp);
         app.renderer.plugins.interaction.on("pointerupoutside", this.onPointerUp);
+        app.renderer.plugins.canvasevents.on("oncanvaswheel", this.onWheel);
+        app.renderer.plugins.canvasevents.on("oncanvasmousedown", this.onCanvasMouseDown);
     }
 
-    protected getAdditionalCanvasProps(): {} {
-        return {
-            onWheel: this.onWheel,
-            onMouseDown: this.onCanvasMouseDown
-        };
-    }
-
-    protected setChildren(children: any): void {
-        for (const child of children) {
-            if (child instanceof Scene) {
-                child.onRegister(this);
-            }
-        }
-
-        super.setChildren(children);
-    }
+    // protected getAdditionalCanvasProps(): {} {
+    //     return {
+    //         onWheel: this.onWheel,
+    //         onMouseDown: this.onCanvasMouseDown
+    //     };
+    // }
 
     /**
      * Mark the start of a drag operation.
@@ -144,6 +136,7 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
      */
     @bind
     private onWheel(e: WheelEvent): void {
+        log.info("On wheel!");
         if (!this.app) {
             throw new Error("app not set");
         }
@@ -210,7 +203,7 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
      */
     @bind
     private onCanvasMouseDown(e: MouseEvent): void {
-        log.trace("InteractiveStage.onCanvasMouseDown", {e});
+        log.info("InteractiveStage.onCanvasMouseDown", {e});
 
         e.preventDefault();
     }

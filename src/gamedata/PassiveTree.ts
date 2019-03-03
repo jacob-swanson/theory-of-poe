@@ -12,28 +12,6 @@ const log = LoggerFactory.getLogger("PassiveTree");
 export class PassiveTreeTooltip {
     @observable
     public node?: Node = undefined;
-
-    @observable
-    public scale: Point = {
-        x: 1,
-        y: 1
-    };
-
-    @observable
-    public worldPosition: Point = {
-        x: 0,
-        y: 0
-    };
-
-    @computed get position(): Point {
-        if (!this.node) {
-            return {x: 0, y: 0};
-        }
-        return {
-            x: this.node.position.x * this.scale.x + this.worldPosition.x,
-            y: this.node.position.y * this.scale.y + this.worldPosition.y
-        };
-    }
 }
 
 export class PassiveTree {

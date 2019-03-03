@@ -12,9 +12,14 @@ import {AscendancyGroupView} from "./AscendancyGroupView";
 import {LargeGroupView} from "./LargeGroupView";
 import {LinkView} from "./LinkView";
 import "./PassiveTreeView.css";
-import {StageRect} from "../pixi/Stage";
+import {Stage, StageRect} from "../pixi/Stage";
 import {Scene} from "../pixi/Scene";
 import {NodeTooltip} from "./NodeTooltip";
+import {WorldScene} from "../pixi/WorldScene";
+import {Assert} from "../../utils/Assert";
+import {LoggerFactory} from "../../utils/logger/LoggerFactory";
+
+const log = LoggerFactory.getLogger("PassiveTreeView");
 
 export interface PassiveSkillTreeProps {
     character?: Character
@@ -26,46 +31,32 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
     private static areAssetsLoaded = false;
     @observable
     private isReady: boolean = false;
-    private worldScene: Scene = new Scene("PassiveTreeViewWorld");
-    private uiScene = new Scene("PassiveTreeViewUi");
-
-    public componentDidMount(): void {
-        const {character} = this.props;
-        if (!character) {
-            throw new Error("character was undefined");
-        }
-
-        if (!PassiveTreeView.areAssetsLoaded) {
-            this.loadAssets();
-            PassiveTreeView.areAssetsLoaded = true;
-        } else {
-            this.createChildren();
-        }
-    }
 
     public render(): any {
         if (this.isReady) {
             return (
-                <InteractiveStage
+                <Stage
                     className="PassiveTreeView"
                     autoStart={true}
                     minScale={0.1}
                     maxScale={2}
-                >
-                    {this.worldScene}
-                    {this.uiScene}
-                </InteractiveStage>
+                    onLoad={this.createChildren}
+                />
             );
         } else {
             return "Loading...";
         }
     }
 
-    private loadAssets() {
-        const {character} = this.props;
-        if (!character) {
-            throw new Error("character was undefined");
+    public componentDidMount(): void {
+        if (!PassiveTreeView.areAssetsLoaded) {
+            this.loadAssets();
+            PassiveTreeView.areAssetsLoaded = true;
         }
+    }
+
+    private loadAssets(): void {
+        const character = Assert.notNull(this.props.character, "character must be set");
 
         const loader = PIXI.loader;
         for (const [name, url] of Object.entries(character.passiveTree.assets)) {
@@ -77,58 +68,8 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         for (const [name, classArt] of Object.entries(character.passiveTree.classArt)) {
             loader.add(classArt.url);
         }
-        loader.load(this.createChildren);
-    }
-
-    @bind
-    private onCanvasDragStart() {
-        const {character} = this.props;
-        if (!character) {
-            throw new Error("character was undefined");
-        }
-        character.passiveTree.isDragging = true;
-    }
-
-    @bind
-    private onCanvasDragMove() {
-        const {character} = this.props;
-        if (!character) {
-            throw new Error("character was undefined");
-        }
-
-        character.passiveTree.tooltip.worldPosition.x = this.worldScene.position.x;
-        character.passiveTree.tooltip.worldPosition.y = this.worldScene.position.y;
-        character.passiveTree.tooltip.scale.x = this.worldScene.scale.x;
-        character.passiveTree.tooltip.scale.y = this.worldScene.scale.y;
-    }
-
-    @bind
-    private onCanvasDragEnd() {
-        const {character} = this.props;
-        if (!character) {
-            throw new Error("character was undefined");
-        }
-        character.passiveTree.isDragging = false;
-    }
-
-    @bind
-    private onCanvasResize(rect: StageRect) {
-        const {character} = this.props;
-        if (!character) {
-            throw new Error("character was undefined");
-        }
-    }
-
-    @bind
-    private onCanvasWheel() {
-        const {character} = this.props;
-        if (!character) {
-            throw new Error("character was undefined");
-        }
-        character.passiveTree.tooltip.worldPosition.x = this.worldScene.position.x;
-        character.passiveTree.tooltip.worldPosition.y = this.worldScene.position.y;
-        character.passiveTree.tooltip.scale.x = this.worldScene.scale.x;
-        character.passiveTree.tooltip.scale.y = this.worldScene.scale.y;
+        log.info("Loading assets");
+        loader.load(() => this.isReady = true);
     }
 
     private createGroups(): PIXI.DisplayObject[] {
@@ -157,11 +98,8 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
     }
 
     @bind
-    private createChildren(): void {
-        const {character} = this.props;
-        if (character === undefined) {
-            throw new Error("character was undefined");
-        }
+    private createChildren(app: PIXI.Application): void {
+        const character = Assert.notNull(this.props.character, "character must be set");
 
         const background = new PIXI.extras.TilingSprite(
             PIXI.Texture.fromImage("gamedata/3.3.1/assets/Background1-0.3835.png"),
@@ -180,8 +118,12 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         const nodesLayer = new PIXI.Container();
         nodesLayer.addChild(...character.passiveTree.nodes.map(node => new NodeView(node)));
 
-        this.worldScene.addChild(background, groupsLayer, linksLayer, nodesLayer);
-        this.uiScene.addChild(new NodeTooltip(character));
-        this.isReady = true;
+        const worldScene = new WorldScene("PassiveTreeView");
+        worldScene.addChild(background, groupsLayer, linksLayer, nodesLayer);
+
+        const uiScene = new Scene("PassiveTreeUi");
+        uiScene.addChild(new NodeTooltip(character));
+
+        app.stage.addChild(uiScene, worldScene);
     }
 }

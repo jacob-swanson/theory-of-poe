@@ -1,14 +1,9 @@
 import {autorun, IReactionDisposer} from "mobx";
-import {bind} from "../../utils/bind";
-import {Assert} from "../../utils/Assert";
-import {LoggerFactory} from "../../utils/logger/LoggerFactory";
 import {InteractiveStage} from "./InteractiveStage";
 
-const log = LoggerFactory.getLogger("Scene");
-
 export class Scene extends PIXI.Container {
+    protected stage: InteractiveStage | null = null;
     private dispose: IReactionDisposer;
-    private stage: InteractiveStage | null = null;
 
     constructor(public readonly id: string) {
         super();
@@ -24,12 +19,7 @@ export class Scene extends PIXI.Container {
         this.dispose();
     }
 
-    @bind
-    private update() {
-        const stage = Assert.notNull(this.stage, "stage must be set");
-        this.x = stage.worldPosition.x;
-        this.y = stage.worldPosition.y;
-        this.scale.x = stage.worldScale.x;
-        this.scale.y = stage.worldScale.y;
+    protected update() {
+        // do nothing
     }
 }

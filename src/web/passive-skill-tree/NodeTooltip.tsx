@@ -5,11 +5,13 @@ import * as PIXI from "pixi.js";
 import {bind} from "../../utils/bind";
 import {PassiveTreeTooltip} from "../../gamedata/PassiveTree";
 import {LoggerFactory} from "../../utils/logger/LoggerFactory";
+import {InteractiveStage} from "../pixi/InteractiveStage";
 
 const log = LoggerFactory.getLogger("NodeTooltip");
 
 export class NodeTooltip extends PIXI.Container {
     private readonly text = new PIXI.Text();
+    private readonly interactiveStage: InteractiveStage;
     private readonly dispose: IReactionDisposer;
 
     constructor(private readonly character: Character) {
@@ -32,8 +34,8 @@ export class NodeTooltip extends PIXI.Container {
             this.text.visible = false;
         } else {
             this.text.visible = true;
-            this.position.x = tooltip.position.x;
-            this.position.y = tooltip.position.y;
+            this.position.x = node.position.x * this.interactiveStage.worldScale.x + this.interactiveStage.worldPosition.x;
+            this.position.y = node.position.y * this.interactiveStage.worldScale.y + this.interactiveStage.worldPosition.y;
             this.text.text = node.name;
         }
     }
