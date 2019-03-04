@@ -15,8 +15,8 @@ export function pixiObserver<TBase extends Constructor<Destroyable>>(Base: TBase
 
         constructor(...args: any[]) {
             super(args);
-            // setTimeout avoids weird issues with construction
-            setTimeout(() => this.dispose = autorun(() => this.react()));
+            // setTimeout avoids issue with calling react() on on the parent when it's not finished constructing.
+            autorun(() => this.dispose = autorun(() => this.react(), {scheduler: run => setTimeout(run, 0)}));
         }
 
         public destroy(...args: any[]) {
