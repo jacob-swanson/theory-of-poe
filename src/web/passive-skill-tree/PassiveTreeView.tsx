@@ -1,7 +1,6 @@
 import {inject, observer} from "mobx-react";
 import {Character} from "../../gamedata/Character";
 import {NodeView} from "./NodeView";
-import {InteractiveStage} from "../pixi/InteractiveStage";
 import * as React from "react";
 import {Component} from "react";
 import {GroupView} from "./GroupView";
@@ -12,12 +11,12 @@ import {AscendancyGroupView} from "./AscendancyGroupView";
 import {LargeGroupView} from "./LargeGroupView";
 import {LinkView} from "./LinkView";
 import "./PassiveTreeView.css";
-import {Stage, StageRect} from "../pixi/Stage";
-import {Scene} from "../pixi/Scene";
+import {Stage} from "../pixi/Stage";
 import {NodeTooltip} from "./NodeTooltip";
-import {WorldScene} from "../pixi/WorldScene";
 import {Assert} from "../../utils/Assert";
 import {LoggerFactory} from "../../utils/logger/LoggerFactory";
+import {InteractiveScene} from "../pixi/InteractiveScene";
+import {InteractiveSceneState} from "../stores/InteractiveStageState";
 
 const log = LoggerFactory.getLogger("PassiveTreeView");
 
@@ -118,12 +117,15 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         const nodesLayer = new PIXI.Container();
         nodesLayer.addChild(...character.passiveTree.nodes.map(node => new NodeView(node)));
 
-        const worldScene = new WorldScene("PassiveTreeView");
+        const interactiveSceneState = new InteractiveSceneState({app});
+        const worldScene = new InteractiveScene(interactiveSceneState);
         worldScene.addChild(background, groupsLayer, linksLayer, nodesLayer);
 
-        const uiScene = new Scene("PassiveTreeUi");
-        uiScene.addChild(new NodeTooltip(character));
+        const uiScene = new PIXI.Container();
+        uiScene.addChild(new NodeTooltip(character, interactiveSceneState));
 
-        app.stage.addChild(uiScene, worldScene);
+
+        app.stage.addChild(worldScene);
+        app.stage.addChild(uiScene);
     }
 }

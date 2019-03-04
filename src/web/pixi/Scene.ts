@@ -1,25 +1,36 @@
 import {autorun, IReactionDisposer} from "mobx";
-import {InteractiveStage} from "./InteractiveStage";
+import {bind} from "../../utils/bind";
 
-export class Scene extends PIXI.Container {
-    protected stage: InteractiveStage | null = null;
+export abstract class Scene extends PIXI.Container {
     private dispose: IReactionDisposer;
 
-    constructor(public readonly id: string) {
+    constructor() {
         super();
     }
 
-    public onRegister(stage: InteractiveStage): void {
-        this.stage = stage;
-        this.dispose = autorun(this.update);
+    public start() {
+        this.dispose = autorun(this.boundUpdate);
+    }
+
+    public stop() {
+        if (this.dispose) {
+            this.dispose();
+        }
     }
 
     public destroy(options?: PIXI.DestroyOptions | boolean): void {
+        this.stop();
         super.destroy(options);
-        this.dispose();
     }
 
-    protected update() {
-        // do nothing
+    protected abstract update(): void;
+
+    /**
+     * Bind here, so we don't have to deal with bind weirdness elsewhere.
+     */
+    @bind
+    private boundUpdate() {
+        this.update();
     }
 }
+

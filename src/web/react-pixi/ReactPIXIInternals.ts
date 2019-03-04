@@ -37,6 +37,11 @@ export interface Point {
     y: number;
 }
 
+export interface ReadonlyPoint {
+    readonly x: number;
+    readonly y: number;
+}
+
 export interface Rectangle extends Point {
     width: number;
     height: number;

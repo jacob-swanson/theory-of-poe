@@ -1,15 +1,17 @@
-import {Stage, StageProps} from "./Stage";
-import {ConsoleLogger} from "../../utils/logger/ConsoleLogger";
-import {observable} from "mobx";
-import {Point} from "../react-pixi/ReactPIXIInternals";
+import {LoggerFactory} from "../../utils/logger/LoggerFactory";
 import {bind} from "../../utils/bind";
-import {Assert} from "../../utils/Assert";
-import "./CanvasEvents";
+import {action, observable} from "mobx";
+import {Point, ReadonlyPoint} from "../react-pixi/ReactPIXIInternals";
+import "./../pixi/CanvasEvents";
 import InteractionEvent = PIXI.interaction.InteractionEvent;
 
-const log = new ConsoleLogger("InteractiveStage", "debug");
+const log = LoggerFactory.getLogger("InteractiveSceneState");
 
-export interface InteractiveStageProps extends StageProps {
+export interface InteractiveSceneProps {
+    /**
+     * The PIXI application for event handling.
+     */
+    app: PIXI.Application;
     /**
      * Decimal amount to zoom by. Defaults to 0.2.
      */
@@ -28,34 +30,16 @@ export interface InteractiveStageProps extends StageProps {
     dragDeadZone?: number;
 }
 
-/**
- * Pixi stage that provides pan and zoom.
- */
-export class InteractiveStage extends Stage<InteractiveStageProps> {
+export class InteractiveSceneState {
     /**
      * Default value for dragDeadZone.
      */
     private static readonly DEFAULT_DRAG_DEADZONE = 10;
     /**
-     * World position offset.
-     */
-    @observable
-    private _worldPosition: Point = {x: 0, y: 0};
-    /**
-     * World scale.
-     */
-    @observable
-    private _worldScale: Point = {x: 1, y: 1};
-    /**
      * True while the pointer is down.
      */
     @observable
     private isPointerDown: boolean = false;
-    /**
-     * True while a drag is occurring, false otherwise.
-     */
-    @observable
-    private isDragging: boolean = false;
     /**
      * Previous location of the pointer last time it was moved.
      */
@@ -63,12 +47,10 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
     /**
      * Cumulative distance that the mouse has moved during a drag.
      */
-    private distanceMoved = 0;
+    private distanceMoved: number = 0;
 
-    public componentDidMount() {
-        super.componentDidMount();
-        const app = Assert.notNull(this.app, "app must be set");
-
+    constructor(private readonly props: InteractiveSceneProps) {
+        const {app} = props;
         app.renderer.plugins.interaction.on("pointerdown", this.onPointerDown);
         app.renderer.plugins.interaction.on("pointermove", this.onPointerMove);
         app.renderer.plugins.interaction.on("pointerup", this.onPointerUp);
@@ -77,36 +59,63 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         app.renderer.plugins.canvasevents.on("oncanvasmousedown", this.onCanvasMouseDown);
     }
 
-    // protected getAdditionalCanvasProps(): {} {
-    //     return {
-    //         onWheel: this.onWheel,
-    //         onMouseDown: this.onCanvasMouseDown
-    //     };
-    // }
+    /**
+     * World scale.
+     */
+    @observable
+    private readonly _worldScale: Point = {x: 1, y: 1};
+
+    public get worldScale(): ReadonlyPoint {
+        return this._worldScale;
+    }
+
+    /**
+     * World position offset.
+     */
+    @observable
+    private readonly _worldPosition: Point = {x: 0, y: 0};
+
+    public get worldPosition(): ReadonlyPoint {
+        return this._worldPosition;
+    }
+
+    /**
+     * True while a drag is occurring, false otherwise.
+     */
+    @observable
+    private _isDragging: boolean = false;
+
+    public get isDragging(): boolean {
+        return this._isDragging;
+    }
+
+    public destroy() {
+        const {app} = this.props;
+        app.renderer.plugins.interaction.off("pointerdown", this.onPointerDown);
+        app.renderer.plugins.interaction.off("pointermove", this.onPointerMove);
+        app.renderer.plugins.interaction.off("pointerup", this.onPointerUp);
+        app.renderer.plugins.interaction.off("pointerupoutside", this.onPointerUp);
+        app.renderer.plugins.canvasevents.off("oncanvaswheel", this.onWheel);
+        app.renderer.plugins.canvasevents.off("oncanvasmousedown", this.onCanvasMouseDown);
+    }
 
     /**
      * Mark the start of a drag operation.
      * @param e
      */
-    @bind
+    @action.bound
     private onPointerDown(e: InteractionEvent): void {
-        log.trace("InteractiveStage.onDragStart", {e});
-
         this.isPointerDown = true;
         this.previousPointerPosition.x = e.data.global.x;
         this.previousPointerPosition.y = e.data.global.y;
         this.distanceMoved = 0;
     }
 
-    private onDragStart(e: InteractionEvent): void {
-        this.isDragging = true;
-    }
-
     /**
      * Update the current drag if there's one in progress.
      * @param e
      */
-    @bind
+    @action.bound
     private onPointerMove(e: InteractionEvent): void {
         if (!this.isPointerDown) {
             return;
@@ -121,25 +130,29 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
         this.previousPointerPosition.y = e.data.global.y;
 
         const {dragDeadZone} = this.props;
-        if (this.distanceMoved > (dragDeadZone || InteractiveStage.DEFAULT_DRAG_DEADZONE)) {
-            this.onDragStart(e);
-
+        if (this.distanceMoved > (dragDeadZone || InteractiveSceneState.DEFAULT_DRAG_DEADZONE)) {
+            this._isDragging = true;
             this._worldPosition.x += dx;
             this._worldPosition.y += dy;
         }
     }
 
     /**
+     * Stop the current drag if there is one.
+     * @param e
+     */
+    @action.bound
+    private onPointerUp(e: InteractionEvent): void {
+        this._isDragging = false;
+        this.isPointerDown = false;
+    }
+
+    /**
      * Zoom in or out.
      * @param e
      */
-    @bind
+    @action.bound
     private onWheel(e: WheelEvent): void {
-        log.info("On wheel!");
-        if (!this.app) {
-            throw new Error("app not set");
-        }
-
         const delta = e.deltaY || e.wheelDelta;
         const direction = delta > 0 ? -1 : 1;
         const zoomPercent = this.props.zoomPercent || 0.2;
@@ -164,7 +177,8 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
             x: this._worldPosition.x,
             y: this._worldPosition.y
         };
-        const mouseScreenPosition = this.app.renderer.plugins.interaction.mouse.global;
+        const {app} = this.props;
+        const mouseScreenPosition = app.renderer.plugins.interaction.mouse.global;
         const mouseWorldPosition = {
             x: (mouseScreenPosition.x - stagePosition.x) / this._worldScale.x,
             y: (mouseScreenPosition.y - stagePosition.y) / this._worldScale.y
@@ -185,25 +199,11 @@ export class InteractiveStage extends Stage<InteractiveStageProps> {
     }
 
     /**
-     * Stop the current drag if there is one.
-     * @param e
-     */
-    @bind
-    private onPointerUp(e: InteractionEvent): void {
-        log.trace("InteractiveStage.onDragEnd", {e});
-
-        this.isDragging = false;
-        this.isPointerDown = false;
-    }
-
-    /**
      * Prevents selection when the panning and the cursor leaves the canvas.
      * @param e
      */
     @bind
     private onCanvasMouseDown(e: MouseEvent): void {
-        log.info("InteractiveStage.onCanvasMouseDown", {e});
-
         e.preventDefault();
     }
 }

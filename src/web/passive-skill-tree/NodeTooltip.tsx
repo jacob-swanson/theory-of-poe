@@ -5,16 +5,15 @@ import * as PIXI from "pixi.js";
 import {bind} from "../../utils/bind";
 import {PassiveTreeTooltip} from "../../gamedata/PassiveTree";
 import {LoggerFactory} from "../../utils/logger/LoggerFactory";
-import {InteractiveStage} from "../pixi/InteractiveStage";
+import {InteractiveSceneState} from "../stores/InteractiveStageState";
 
 const log = LoggerFactory.getLogger("NodeTooltip");
 
 export class NodeTooltip extends PIXI.Container {
     private readonly text = new PIXI.Text();
-    private readonly interactiveStage: InteractiveStage;
     private readonly dispose: IReactionDisposer;
 
-    constructor(private readonly character: Character) {
+    constructor(private readonly character: Character, private readonly interactiveSceneState: InteractiveSceneState) {
         super();
         this.addChild(this.text);
         this.dispose = autorun(this.update);
@@ -34,8 +33,8 @@ export class NodeTooltip extends PIXI.Container {
             this.text.visible = false;
         } else {
             this.text.visible = true;
-            this.position.x = node.position.x * this.interactiveStage.worldScale.x + this.interactiveStage.worldPosition.x;
-            this.position.y = node.position.y * this.interactiveStage.worldScale.y + this.interactiveStage.worldPosition.y;
+            this.position.x = node.position.x * this.interactiveSceneState.worldScale.x + this.interactiveSceneState.worldPosition.x;
+            this.position.y = node.position.y * this.interactiveSceneState.worldScale.y + this.interactiveSceneState.worldPosition.y;
             this.text.text = node.name;
         }
     }
