@@ -37,8 +37,6 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
                 <Stage
                     className="PassiveTreeView"
                     autoStart={true}
-                    minScale={0.1}
-                    maxScale={2}
                     onLoad={this.createChildren}
                 />
             );
@@ -117,13 +115,12 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         const nodesLayer = new PIXI.Container();
         nodesLayer.addChild(...character.passiveTree.nodes.map(node => new NodeView(node)));
 
-        const interactiveSceneState = new InteractiveSceneState({app});
+        const interactiveSceneState = new InteractiveSceneState({app, minScale: 0.1, maxScale: 2});
         const worldScene = new InteractiveScene(interactiveSceneState);
         worldScene.addChild(background, groupsLayer, linksLayer, nodesLayer);
 
         const uiScene = new PIXI.Container();
         uiScene.addChild(new NodeTooltip(character, interactiveSceneState));
-
 
         app.stage.addChild(worldScene);
         app.stage.addChild(uiScene);

@@ -11,17 +11,17 @@ export interface Destroyable {
 
 export function pixiObserver<TBase extends Constructor<Destroyable>>(Base: TBase) {
     return class extends Base {
-        public dispose: IReactionDisposer;
+        public _dispose: IReactionDisposer;
 
         constructor(...args: any[]) {
             super(args);
             // setTimeout avoids issue with calling react() on on the parent when it's not finished constructing.
-            autorun(() => this.dispose = autorun(() => this.react(), {scheduler: run => setTimeout(run, 0)}));
+            setTimeout(() => this._dispose = autorun(() => this.react()));
         }
 
         public destroy(...args: any[]) {
             log.trace("pixiObserver.destroy");
-            this.dispose();
+            this._dispose();
             super.destroy(args);
         }
 

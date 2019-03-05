@@ -2,6 +2,8 @@ import {PassiveTreeResponse} from "./passive-skill-tree/internal-data/PassiveTre
 import {PassiveTree} from "./PassiveTree";
 import {Group} from "./Group";
 import {Node} from "./Node";
+import {Mod} from "./modifiers/Mod";
+import {UnsupportedModifier} from "./modifiers/UnsupportedModifier";
 
 export class PassiveTreeFactory {
     public static create(passiveTreeData: PassiveTreeResponse): PassiveTree {
@@ -45,7 +47,8 @@ export class PassiveTreeFactory {
                         nodeData.icon,
                         nodeData.type,
                         nodeData.ascendancyName,
-                        nodeData.className
+                        nodeData.className,
+                        this.parseMods(nodeData.description)
                     )
                 );
             }
@@ -61,5 +64,9 @@ export class PassiveTreeFactory {
             }
         }
         return nodes;
+    }
+
+    private static parseMods(description: string[]): Mod[] {
+        return description.map(description => new UnsupportedModifier(description));
     }
 }

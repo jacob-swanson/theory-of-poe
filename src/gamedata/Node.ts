@@ -99,6 +99,26 @@ export class Node implements NodeProps, Traversable {
         return {x, y};
     }
 
+    /**
+     * Get the radius of the graphics asset for this node.
+     */
+    public get radius(): number {
+        switch (this.type) {
+            case NodeType.JewelSocket:
+            case NodeType.AscendancyLarge:
+            case NodeType.Notable:
+                return 29;
+            case NodeType.Keystone:
+                return 42.5;
+            case NodeType.AscendancyStart:
+            case NodeType.AscendancySmall:
+            case NodeType.Normal:
+                return 20;
+            default:
+                throw new Error(`Radius missing for node.type=${this.type}`);
+        }
+    }
+
     @observable private _isAllocated: boolean = false;
 
     @computed get isAllocated(): boolean {
