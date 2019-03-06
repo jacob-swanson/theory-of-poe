@@ -335,6 +335,10 @@ ansi-regex@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
 
+ansi-regex@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-4.0.0.tgz#70de791edf021404c3fd615aa89118ae0432e5a9"
+
 ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
@@ -4514,6 +4518,10 @@ jest-get-type@^22.1.0, jest-get-type@^22.4.3:
   version "22.4.3"
   resolved "http://registry.npmjs.org/jest-get-type/-/jest-get-type-22.4.3.tgz#e3a8504d8479342dd4420236b322869f18900ce4"
 
+jest-get-type@^24.0.0:
+  version "24.2.0"
+  resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-24.2.0.tgz#00fc17a3ad08b68b6ab14ca47d4f949a82425e76"
+
 jest-haste-map@^22.4.2:
   version "22.4.3"
   resolved "http://registry.npmjs.org/jest-haste-map/-/jest-haste-map-22.4.3.tgz#25842fa2ba350200767ac27f658d58b9d5c2e20b"
@@ -4541,6 +4549,15 @@ jest-jasmine2@^22.4.4:
     jest-snapshot "^22.4.0"
     jest-util "^22.4.1"
     source-map-support "^0.5.0"
+
+jest-junit@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-6.3.0.tgz#99e64ebc54eddcb21238f0cc49f5820c89a8c785"
+  dependencies:
+    jest-validate "^24.0.0"
+    mkdirp "^0.5.1"
+    strip-ansi "^4.0.0"
+    xml "^1.0.1"
 
 jest-leak-detector@^22.4.0:
   version "22.4.3"
@@ -4664,6 +4681,16 @@ jest-validate@^22.4.4:
     jest-get-type "^22.1.0"
     leven "^2.1.0"
     pretty-format "^22.4.0"
+
+jest-validate@^24.0.0:
+  version "24.0.0"
+  resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-24.0.0.tgz#aa8571a46983a6538328fef20406b4a496b6c020"
+  dependencies:
+    camelcase "^5.0.0"
+    chalk "^2.0.1"
+    jest-get-type "^24.0.0"
+    leven "^2.1.0"
+    pretty-format "^24.0.0"
 
 jest-worker@^22.2.2, jest-worker@^22.4.3:
   version "22.4.3"
@@ -6371,6 +6398,13 @@ pretty-format@^22.4.0, pretty-format@^22.4.3:
   resolved "http://registry.npmjs.org/pretty-format/-/pretty-format-22.4.3.tgz#f873d780839a9c02e9664c8a082e9ee79eaac16f"
   dependencies:
     ansi-regex "^3.0.0"
+    ansi-styles "^3.2.0"
+
+pretty-format@^24.0.0:
+  version "24.0.0"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-24.0.0.tgz#cb6599fd73ac088e37ed682f61291e4678f48591"
+  dependencies:
+    ansi-regex "^4.0.0"
     ansi-styles "^3.2.0"
 
 private@^0.1.6, private@^0.1.8:
@@ -8697,6 +8731,10 @@ xml2js@^0.4.17:
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~9.0.1"
+
+xml@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
 
 xmlbuilder@~9.0.1:
   version "9.0.7"
