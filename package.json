@@ -67,6 +67,7 @@
     "start": "node ./lib/bin/server.js",
     "build": "rimraf ./lib && rimraf ./build &&  concurrently -n web,lib \"react-scripts-ts build\" \"tsc -p tsconfig.lib.json\"",
     "test": "react-scripts-ts test --env=jsdom",
+    "test-ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit",
     "eject": "react-scripts-ts eject",
     "scrape": "ts-node ./src/bin/scrape.ts",
     "vesper": "ts-node ./src/bin/vesper.ts"
