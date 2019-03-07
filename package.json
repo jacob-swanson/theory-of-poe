@@ -69,9 +69,9 @@
     "test": "react-scripts-ts test --env=jsdom",
     "test-ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit",
     "eject": "react-scripts-ts eject",
-    "scrape": "ts-node ./src/bin/scrape.ts"
+    "scrape": "ts-node ./src/bin/scrape.ts",
+    "heroku-postbuild": "yarn run build && rimraf ./public ./src"
   },
-  "heroku-run-build-script": true,
   "proxy": "http://localhost:9000",
   "engines": {
     "node": "10.x"
