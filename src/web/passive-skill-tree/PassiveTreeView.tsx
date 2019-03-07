@@ -17,6 +17,7 @@ import {Assert} from "../../utils/Assert";
 import {LoggerFactory} from "../../utils/logger/LoggerFactory";
 import {InteractiveScene} from "../pixi/InteractiveScene";
 import {InteractiveSceneState} from "../stores/InteractiveStageState";
+import * as PIXI from "pixi.js";
 
 const log = LoggerFactory.getLogger("PassiveTreeView");
 
@@ -99,7 +100,7 @@ export class PassiveTreeView extends Component<PassiveSkillTreeProps> {
         const character = Assert.notNull(this.props.character, "character must be set");
 
         const background = new PIXI.extras.TilingSprite(
-            PIXI.Texture.fromImage("gamedata/3.3.1/assets/Background1-0.3835.png"),
+            PIXI.loader.resources.Background1.texture,
             1000000,
             1000000
         );
