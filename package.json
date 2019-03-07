@@ -71,6 +71,7 @@
     "eject": "react-scripts-ts eject",
     "scrape": "ts-node ./src/bin/scrape.ts"
   },
+  "heroku-run-build-script": true,
   "proxy": "http://localhost:9000",
   "engines": {
     "node": "10.x"
