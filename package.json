@@ -70,7 +70,7 @@
     "test-ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit",
     "eject": "react-scripts-ts eject",
     "scrape": "ts-node ./src/bin/scrape.ts",
-    "heroku-postbuild": "yarn run build && rimraf ./public ./src"
+    "heroku-postbuild": "yarn run build && find . -type f -not -name 'build' -not -name 'lib' -not -name 'node_mnodules' -not -name 'package.json' -print0  | xargs -0 rm"
   },
   "proxy": "http://localhost:9000",
   "engines": {
