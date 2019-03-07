@@ -70,7 +70,7 @@
     "test-ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit",
     "eject": "react-scripts-ts eject",
     "scrape": "ts-node ./src/bin/scrape.ts",
-    "heroku-postbuild": "yarn run build && rimraf ./public ./src .gitignore app.json images.d.ts jest.config.js LICENSE README.md TODO.md tsconfig* tslint.json yarn.lock"
+    "heroku-postbuild": "yarn run test && yarn run build && rimraf ./public ./src .gitignore app.json images.d.ts jest.config.js LICENSE README.md TODO.md tsconfig* tslint.json yarn.lock"
   },
   "proxy": "http://localhost:9000",
   "engines": {
