@@ -67,10 +67,10 @@
     "start": "node ./lib/bin/server.js",
     "build": "rimraf ./lib && rimraf ./build &&  concurrently -n web,lib \"react-scripts-ts build\" \"tsc -p tsconfig.lib.json\"",
     "test": "react-scripts-ts test --env=jsdom",
-    "test-ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit",
+    "test-ci": "jest --ci --runInBand",
     "eject": "react-scripts-ts eject",
     "scrape": "ts-node ./src/bin/scrape.ts",
-    "heroku-postbuild": "yarn run test && yarn run build && rimraf ./public ./src .gitignore app.json images.d.ts jest.config.js LICENSE README.md TODO.md tsconfig* tslint.json yarn.lock"
+    "heroku-postbuild": "yarn run test-ci && yarn run build && rimraf ./public ./src .gitignore app.json images.d.ts jest.config.js LICENSE README.md TODO.md tsconfig* tslint.json yarn.lock"
   },
   "proxy": "http://localhost:9000",
   "engines": {
