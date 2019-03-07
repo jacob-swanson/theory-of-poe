@@ -70,7 +70,7 @@
     "test-ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit",
     "eject": "react-scripts-ts eject",
     "scrape": "ts-node ./src/bin/scrape.ts",
-    "heroku-postbuild": "rimraf !(build|lib|node_modules|package.json|yarn.lock)"
+    "heroku-postbuild": "shopt -s extglob && rm -- !(package.json|yarn.lock|node_modules|lib|build)"
   },
   "heroku-run-build-script": true,
   "proxy": "http://localhost:9000",
